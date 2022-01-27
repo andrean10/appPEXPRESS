@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryColor">#E5BE29</color>
+    <color name="primaryLightColor">#fff05f</color>
+    <color name="primaryDarkColor">#c49804</color>
+    <color name="toolbarColor">#deb422</color>
+    <!--    <color name="secondaryColor">#FF03DAC5</color>-->
+    <color name="secondaryColor">#ff5964</color>
+    <color name="secondaryLightColor">#ff8d92</color>
+    <color name="secondaryDarkColor">#c61e3a</color>
+    <color name="black">#B3000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparentColor">#00FFFFFF</color>
+    <color name="bg_gray">#F2FFFFFF</color>
+    <color name="gray">#99DDDDDD</color>
+
+    <color name="cardBackgroundColor">#CCC5CC</color>
+
+    <color name="tab_indicator_active">#FFDB3D</color>
+    <color name="tab_indicator_inactive">#707070</color>
+    <color name="bottom_nav_inactive">#5A5A5A</color>
+
+    <color name="text_green">#31B4AC</color>
+    <color name="bg_otp">#F6F5FA</color>
+
+    <color name="lines">#33000000</color>
+    <color name="bg_edittext">#F0F3FD</color>
+    <color name="stroke_edittext">#2E2300</color>
+
+    <!--    Light-->
+    <color name="primaryTextColorLight">#000000</color>
+    <color name="backgroundLight">#FFFFFFFF</color>
+    <color name="bgBottomNavLight">#FFDB3D</color>
+    <color name="secondaryTextColorLight">#707070</color>
+
+    <!--    Dark-->
+    <color name="primaryTextColorNight">#FFFFFF</color>
+    <color name="backgroundNight">#B3FFFFFF</color>
+    <color name="bgBottomNavNight">#0C0C0C</color>
+    <color name="secondaryTextColorDark">#707070</color>
+</resources>

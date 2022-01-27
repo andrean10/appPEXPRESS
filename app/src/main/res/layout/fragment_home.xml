@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.main.home.HomeFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/toolbarColor"
+        android:paddingTop="@dimen/dimen_12"
+        android:paddingBottom="@dimen/dimen_12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_12">
+
+            <ImageView
+                android:id="@+id/home_img_logo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_logo_header"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/CustomMenuCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_8"
+                app:cardBackgroundColor="@color/primaryDarkColor"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/home_img_logo"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_home"
+                        style="@style/CustomButtonText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="HOME"
+                        android:textAlignment="center"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/btn_tracking"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/btn_tracking"
+                        style="@style/CustomButtonText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Tracking"
+                        android:textAlignment="center"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/btn_history"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/btn_home"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/btn_history"
+                        style="@style/CustomButtonText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="History"
+                        android:textAlignment="center"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/btn_account"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/btn_tracking"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/btn_account"
+                        style="@style/CustomButtonText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Account"
+                        android:textAlignment="center"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/btn_history"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:paddingBottom="@dimen/dimen_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:cardCornerRadius="@dimen/dimen_2"
+            app:layout_constraintBottom_toTopOf="@+id/gd_slider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.smarteist.autoimageslider.SliderView
+                android:id="@+id/sliderView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:sliderAnimationDuration="600"
+                app:sliderAutoCycleDirection="right"
+                app:sliderIndicatorAnimationDuration="600"
+                app:sliderIndicatorGravity="bottom|center"
+                app:sliderIndicatorMargin="15dp"
+                app:sliderIndicatorOrientation="horizontal"
+                app:sliderIndicatorPadding="3dp"
+                app:sliderIndicatorRadius="2dp"
+                app:sliderIndicatorSelectedColor="@color/tab_indicator_active"
+                app:sliderIndicatorUnselectedColor="@color/tab_indicator_inactive"
+                app:sliderScrollTimeInSec="4"
+                app:sliderStartAutoCycle="true" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/dummy_layanan_home"
+            style="@style/PrimaryTextStyle.SemiBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_32"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:text="Layanan"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+
+        <FrameLayout
+            android:id="@+id/menu_tarif_flat"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dimen_12"
+            android:layout_marginEnd="@dimen/dimen_16"
+            app:layout_constraintBottom_toTopOf="@+id/textView"
+            app:layout_constraintEnd_toStartOf="@+id/gd_menu_vertical"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/dummy_layanan_home"
+            app:layout_constraintTop_toBottomOf="@+id/dummy_layanan_home">
+
+            <View
+                style="@style/CustomMenuCard"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:background="@drawable/bg_menu" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_4"
+                android:src="@drawable/ic_motorcycle" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/SecondaryTextStyle.Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Tarif Flat"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/primaryTextColorLight"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/gd_menu"
+            app:layout_constraintEnd_toEndOf="@+id/menu_tarif_flat"
+            app:layout_constraintStart_toStartOf="@+id/menu_tarif_flat" />
+
+        <FrameLayout
+            android:id="@+id/menu_tarif_kilometer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/dimen_16"
+            android:layout_marginEnd="@dimen/dimen_16"
+            app:layout_constraintBottom_toTopOf="@+id/placeholder_kilometer"
+            app:layout_constraintEnd_toStartOf="@+id/gd_menu_vertical2"
+            app:layout_constraintStart_toStartOf="@+id/gd_menu_vertical"
+            app:layout_constraintTop_toTopOf="@+id/menu_tarif_flat">
+
+            <View
+                style="@style/CustomMenuCard"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:background="@drawable/bg_menu" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_4"
+                android:src="@drawable/ic_motorcycle" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/placeholder_kilometer"
+            style="@style/SecondaryTextStyle.Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Tarif Kilometer"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/primaryTextColorLight"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/gd_menu"
+            app:layout_constraintEnd_toStartOf="@+id/gd_menu_vertical2"
+            app:layout_constraintStart_toStartOf="@+id/gd_menu_vertical" />
+
+        <FrameLayout
+            android:id="@+id/menu_pex_chargo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/dimen_16"
+            android:layout_marginEnd="@dimen/dimen_32"
+            app:layout_constraintBottom_toTopOf="@+id/placeholder_pex_chargo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/gd_menu_vertical2"
+            app:layout_constraintTop_toTopOf="@+id/menu_tarif_flat">
+
+            <View
+                style="@style/CustomMenuCard"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:background="@drawable/bg_menu" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dimen_4"
+                android:src="@drawable/ic_truck" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/placeholder_pex_chargo"
+            style="@style/SecondaryTextStyle.Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Pex Chargo"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/primaryTextColorLight"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/gd_menu"
+            app:layout_constraintEnd_toEndOf="@+id/menu_pex_chargo"
+            app:layout_constraintStart_toStartOf="@+id/menu_pex_chargo" />
+
+        <FrameLayout
+            android:id="@+id/menu_mitra"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/dimen_32"
+            android:layout_marginTop="@dimen/dimen_12"
+            android:layout_marginEnd="@dimen/dimen_16"
+            app:layout_constraintBottom_toTopOf="@+id/placeholder_tarif_flat"
+            app:layout_constraintEnd_toStartOf="@+id/gd_menu_vertical"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/gd_menu"
+            app:layout_constraintVertical_bias="0.0">
+
+            <View
+                style="@style/CustomMenuCard"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:background="@drawable/bg_menu" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dimen_4"
+                android:src="@drawable/ic_mitra" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/placeholder_tarif_flat"
+            style="@style/SecondaryTextStyle.Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Mitra"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/primaryTextColorLight"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/gd_menu2"
+            app:layout_constraintEnd_toEndOf="@+id/menu_mitra"
+            app:layout_constraintStart_toStartOf="@+id/menu_mitra" />
+
+        <FrameLayout
+            android:id="@+id/menu_cek_tarif"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/dimen_12"
+            android:layout_marginEnd="@dimen/dimen_12"
+            app:layout_constraintBottom_toTopOf="@+id/placeholder_cek_tarif"
+            app:layout_constraintEnd_toStartOf="@+id/gd_menu_vertical2"
+            app:layout_constraintStart_toStartOf="@+id/gd_menu_vertical"
+            app:layout_constraintTop_toTopOf="@+id/menu_mitra">
+
+            <View
+                style="@style/CustomMenuCard"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:background="@drawable/bg_menu" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_4"
+                android:src="@drawable/ic_price_check" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/placeholder_cek_tarif"
+            style="@style/SecondaryTextStyle.Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Cek Tarif"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/primaryTextColorLight"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/gd_menu2"
+            app:layout_constraintEnd_toStartOf="@+id/gd_menu_vertical2"
+            app:layout_constraintStart_toStartOf="@+id/gd_menu_vertical" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gd_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="370dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gd_menu2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="490dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gd_slider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="200dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gd_menu_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.34306568" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gd_menu_vertical2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="139dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

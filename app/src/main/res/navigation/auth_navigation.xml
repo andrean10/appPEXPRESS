@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/auth_navigation"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.pexpress.pexpresscustomer.view.auth.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_sendCodeFragment"
+            app:destination="@id/sendCodeFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_OTPFragment"
+            app:destination="@id/OTPFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sendCodeFragment"
+        android:name="com.pexpress.pexpresscustomer.view.auth.otp.SendCodeFragment"
+        android:label="fragment_send_code"
+        tools:layout="@layout/fragment_send_code">
+        <action
+            android:id="@+id/action_sendCodeFragment_to_OTPFragment"
+            app:destination="@id/OTPFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/OTPFragment"
+        android:name="com.pexpress.pexpresscustomer.view.auth.otp.OTPFragment"
+        android:label="fragment_otp"
+        tools:layout="@layout/fragment_otp">
+        <argument
+            android:name="numberPhone"
+            app:argType="string" />
+    </fragment>
+</navigation>

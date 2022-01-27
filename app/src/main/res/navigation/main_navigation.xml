@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.pexpress.pexpresscustomer.view.main.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_PFixRateFragment"
+            app:destination="@id/PFixRateFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_historyFragment"
+            app:destination="@id/navigation_history" />
+    </fragment>
+    <fragment
+        android:id="@+id/PFixRateFragment"
+        android:name="com.pexpress.pexpresscustomer.view.main.order.p_fix_rate.PFixRateFragment"
+        android:label="fragment_p_fix_rate"
+        tools:layout="@layout/fragment_p_fix_rate">
+        <action
+            android:id="@+id/action_PFixRateFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="com.pexpress.pexpresscustomer.view.main.order.checkout.CheckoutFragment"
+        android:label="fragment_checkout"
+        tools:layout="@layout/fragment_checkout">
+        <action
+            android:id="@+id/action_checkoutFragment_to_payoutFragment"
+            app:destination="@id/payoutFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/payoutFragment"
+        android:name="com.pexpress.pexpresscustomer.view.main.order.checkout.PayoutFragment"
+        android:label="fragment_payout"
+        tools:layout="@layout/fragment_payout">
+        <action
+            android:id="@+id/action_payoutFragment_to_completeOrderFragment"
+            app:destination="@id/completeOrderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/completeOrderFragment"
+        android:name="com.pexpress.pexpresscustomer.view.main.order.complete_order.CompleteOrderFragment"
+        android:label="fragment_complete_order"
+        tools:layout="@layout/fragment_complete_order">
+        <action
+            android:id="@+id/action_completeOrderFragment_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:popUpTo="@id/payoutFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_history"
+        android:name="com.pexpress.pexpresscustomer.view.main.history.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
+</navigation>
