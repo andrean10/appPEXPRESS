@@ -2,7 +2,8 @@ package com.pexpress.pexpresscustomer.view.splash.onboarding
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -87,10 +88,10 @@ class OnBoardingActivity : AppCompatActivity() {
                     )
 
                     if (childCount - 1 == position) {
-                        btnGetStarted.visibility = View.VISIBLE
+                        btnGetStarted.visibility = VISIBLE
                         btnGetStarted.setOnClickListener { moveToAuth() }
                     } else {
-                        btnGetStarted.visibility = View.INVISIBLE
+                        btnGetStarted.visibility = INVISIBLE
                     }
                 } else {
                     imageView?.setImageDrawable(

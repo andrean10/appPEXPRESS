@@ -241,3 +241,7 @@ fun miliSecondToTimer(milliSeconds: Long): String {
 fun hideViewBottomNav(activity: Activity) {
     activity.findViewById<BottomNavigationView>(R.id.nav_view).visibility = View.GONE
 }
+
+val outputDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).apply {
+    timeZone = TimeZone.getTimeZone("UTC")
+}

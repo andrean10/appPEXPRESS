@@ -1,6 +1,7 @@
 package com.pexpress.pexpresscustomer.view.main.order.p_fix_rate
 
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -19,7 +20,9 @@ import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentPFixRateBinding
+import com.pexpress.pexpresscustomer.utils.PickContact
 import com.pexpress.pexpresscustomer.utils.hideViewBottomNav
+import com.pexpress.pexpresscustomer.utils.outputDateFormat
 import com.pexpress.pexpresscustomer.view.main.order.dialog.ItemSizeDialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.dialog.PickLocationDialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.dialog.ServiceTypeDialogFragment
@@ -34,6 +37,8 @@ class PFixRateFragment : Fragment() {
     private lateinit var modalPickLocation: PickLocationDialogFragment
     private lateinit var modalServiceType: ServiceTypeDialogFragment
     private lateinit var modalItemsSize: ItemSizeDialogFragment
+
+    private var isPengirim = false
 
     private val TAG = PFixRateFragment::class.simpleName
 
@@ -106,19 +111,60 @@ class PFixRateFragment : Fragment() {
         prepareDataFixRate()
     }
 
+    private val pickContact = registerForActivityResult(PickContact()) {
+        it?.also { contactUri ->
+            val projection = arrayOf(
+                ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER
+            )
+
+            context?.contentResolver?.query(contactUri, projection, null, null, null)?.apply {
+                moveToFirst()
+
+                if (isPengirim) {
+                    binding.edtNumberPhonePengirim.setText(normalizedNumber(getString(0)))
+                } else {
+                    binding.edtNumberPhonePenerima.setText(normalizedNumber(getString(0)))
+                }
+
+                close()
+            }
+        }
+    }
+
+    private fun normalizedNumber(number: String): String {
+        return number.replace("+62", "0")
+//        return when {
+//            number.contains("^(+62|62)?[\'s-]?0?8[1-9]{1}d{1}[s-]?d{4}[s-]?d{2,5}$") -> {
+//                number.replace("^(+62|62)?[\'s-]?0?8[1-9]{1}d{1}[s-]?d{4}[s-]?d{2,5}$")
+//            }
+//            else -> {
+//                showMessage(requireActivity(), "Nomor Salah", "Nomor yang dimasukkan tidak sesuai", TOAST_WARNING)
+//                ""
+//            }
+//        }
+    }
+
     private fun prepareDataFixRate() {
         modalPickLocation = PickLocationDialogFragment()
         modalServiceType = ServiceTypeDialogFragment()
         modalItemsSize = ItemSizeDialogFragment()
 
         with(binding) {
+            /***---------------- DATA PENGIRIM -------------------****/
+
             // data info pengirim
             edtAsalPengirim.setOnClickListener {
                 modalPickLocation.setCodeForm(PickLocationDialogFragment.FORM_PENGIRIM)
                 modalPickLocation.show(parentFragmentManager, PickLocationDialogFragment.TAG)
             }
 
-            // cek form asal pengirim
+            // akses kontak pengirim
+            edtNumberPhonePengirim.setOnClickListener {
+                isPengirim = true
+                pickContact.launch(0)
+            }
+
+            // cek form asal pengirim didapatkan dari result maps
             var asalPengirim = ""
 
             viewModel.formAsalPengirim.observe(viewLifecycleOwner, { value ->
@@ -130,10 +176,18 @@ class PFixRateFragment : Fragment() {
             val noHandphonePengirim = edtNumberPhonePengirim.text.toString().trim()
             val catatanLokasiPengirim = edtCatatanLokasiPengirim.text.toString().trim()
 
+            /***---------------- DATA PENERIMA -------------------****/
+
             // data info penerima
             edtAsalPenerima.setOnClickListener {
                 modalPickLocation.setCodeForm(PickLocationDialogFragment.FORM_PENERIMA)
                 modalPickLocation.show(parentFragmentManager, PickLocationDialogFragment.TAG)
+            }
+
+            // akses kontak penerima
+            edtNumberPhonePenerima.setOnClickListener {
+                isPengirim = false
+                pickContact.launch(0)
             }
 
             var asalPenerima = ""
@@ -172,6 +226,10 @@ class PFixRateFragment : Fragment() {
                         .build()
 
                 datePicker.show(parentFragmentManager, "TAG")
+
+                datePicker.addOnPositiveButtonClickListener { selection ->
+                    edtTanggalPickup.setText(outputDateFormat.format(selection))
+                }
             }
 
             val catatanPickup = edtCatatanPickup.text.toString().trim()
