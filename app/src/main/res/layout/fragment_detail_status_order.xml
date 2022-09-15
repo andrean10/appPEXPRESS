@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.main.status_order.detail.view.DetailStatusOrderFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="Detail History" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cd_status_pesanan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="?attr/shapeAppearance">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_16">
+
+                    <TextView
+                        android:id="@+id/tv_status_order"
+                        style="@style/PrimaryTextStyle.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dimen_16"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_detail_order"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Pesanan Diterima" />
+
+                    <TextView
+                        android:id="@+id/tv_detail_order"
+                        style="@style/DetailTextStyle.Regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/history_lihat_detail"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/view"
+                        style="@style/LineStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/dimen_12"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_status_order" />
+
+                    <TextView
+                        android:id="@+id/tv_nomor_pemesanan"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_12"
+                        android:layout_marginEnd="@dimen/dimen_16"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_detail_resi"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view"
+                        tools:text="PEX2022030300022" />
+
+                    <TextView
+                        android:id="@+id/tv_detail_resi"
+                        style="@style/DetailTextStyle.Regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/history_lihat_resi"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tv_nomor_pemesanan" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_tanggal_pickup"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="@string/history_tanggal_pickup"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_nomor_pemesanan" />
+
+                    <TextView
+                        android:id="@+id/tv_tanggal_pickup"
+                        style="@style/DetailTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_16"
+                        android:gravity="end"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_placeholder_tanggal_pickup"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_tanggal_pickup"
+                        tools:text="20 Februari 2022" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cd_alamat_pengiriman"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cd_status_pesanan"
+                app:shapeAppearance="?attr/shapeAppearance">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_16">
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_title_info_pengiriman"
+                        style="@style/PrimaryTextStyle.SemiBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/history_informasi_pengiriman"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_pengirim"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="@string/history_pengirim"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_placeholder_title_info_pengiriman" />
+
+                    <TextView
+                        android:id="@+id/tv_pengirim"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_64"
+                        android:ellipsize="end"
+                        android:gravity="end"
+                        android:maxLines="1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_placeholder_pengirim"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_pengirim"
+                        tools:text="Armen Satri" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_telpon_pengirim"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="@string/history_telpon_pengirim"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_placeholder_pengirim" />
+
+                    <TextView
+                        android:id="@+id/tv_telpon_pengirim"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_16"
+                        android:gravity="end"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_placeholder_telpon_pengirim"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_telpon_pengirim"
+                        tools:text="082285072545" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_asal_pengirim"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="@string/history_asal_pengirim"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_placeholder_telpon_pengirim" />
+
+                    <TextView
+                        android:id="@+id/tv_informasi_asal_pengirim"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_4"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_placeholder_asal_pengirim"
+                        tools:text="Jalan Cilandak Dalam" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_patokan_alamat_pengirim"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="@string/history_patokan_alamat_pengirim"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_informasi_asal_pengirim" />
+
+                    <TextView
+                        android:id="@+id/tv_patokan_alamat_pengirim"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_4"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_placeholder_patokan_alamat_pengirim"
+                        tools:text="Jalan Cilandak Dalam" />
+
+                    <View
+                        android:id="@+id/view2"
+                        style="@style/LineStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/dimen_12"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_patokan_alamat_pengirim" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_penerima"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="@string/history_penerima"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+                    <TextView
+                        android:id="@+id/tv_penerima"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_64"
+                        android:ellipsize="end"
+                        android:gravity="end"
+                        android:maxLines="1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_placeholder_penerima"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_penerima"
+                        tools:text="Armen Satri" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_telpon_penerima"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="@string/history_telpon_pengirim"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_penerima" />
+
+                    <TextView
+                        android:id="@+id/tv_telpon_penerima"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_16"
+                        android:gravity="end"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_placeholder_telpon_penerima"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_telpon_penerima"
+                        tools:text="082285072545" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_tujuan_penerima"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="@string/history_tujuan_penerima"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_telpon_penerima" />
+
+                    <TextView
+                        android:id="@+id/tv_informasi_tujuan_penerima"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_4"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_placeholder_tujuan_penerima"
+                        tools:text="Jalan Cilandak Dalam" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_patokan_alamat_penerima"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="@string/history_patokan_alamat_penerima"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_informasi_tujuan_penerima" />
+
+                    <TextView
+                        android:id="@+id/tv_patokan_alamat_penerima"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_4"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_placeholder_patokan_alamat_penerima"
+                        tools:text="Jalan Cilandak Dalam" />
+
+                    <View
+                        android:id="@+id/view3"
+                        style="@style/LineStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/dimen_12"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_patokan_alamat_penerima" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_jenis_layanan"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="@string/history_jenis_layanan"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+                    <TextView
+                        android:id="@+id/tv_jenis_layanan"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_64"
+                        android:gravity="end"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_placeholder_jenis_layanan"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_jenis_layanan"
+                        tools:text="Within City (Dalam Kota)" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_ukuran_barang"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="@string/history_ukuran_barang"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_jenis_layanan" />
+
+                    <TextView
+                        android:id="@+id/tv_ukuran_barang"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_64"
+                        android:gravity="end"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_placeholder_ukuran_barang"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_ukuran_barang"
+                        tools:text="Medium" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_berat"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="@string/history_berat"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_ukuran_barang" />
+
+                    <TextView
+                        android:id="@+id/tv_berat"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_64"
+                        android:gravity="end"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_placeholder_berat"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_berat"
+                        tools:text="5 kg" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_jenis_barang"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="@string/history_jenis_barang"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_berat" />
+
+                    <TextView
+                        android:id="@+id/tv_jenis_barang"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_16"
+                        android:gravity="end"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_placeholder_jenis_barang"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_jenis_barang"
+                        tools:text="Makanan Kering" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cd_rincian_pembayaran"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cd_alamat_pengiriman"
+                app:shapeAppearance="?attr/shapeAppearance">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_16">
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_title_rincian_pembayaran"
+                        style="@style/PrimaryTextStyle.SemiBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/history_rincinan_pembayaran"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_metode_pembayaran"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="@string/history_metode_pembayaran"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_placeholder_title_rincian_pembayaran" />
+
+                    <TextView
+                        android:id="@+id/tv_pembayaran"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_64"
+                        android:gravity="end"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_placeholder_metode_pembayaran"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_metode_pembayaran"
+                        tools:text="Transfer" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_ongkir"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="@string/history_tarif"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_pembayaran" />
+
+                    <TextView
+                        android:id="@+id/tv_ongkir"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_64"
+                        android:gravity="end"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_placeholder_ongkir"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_ongkir"
+                        tools:text="Rp. 25.000" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

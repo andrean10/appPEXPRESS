@@ -1,8 +1,10 @@
 package com.pexpress.pexpresscustomer.view.splash.first_screen
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.Window
+import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.pexpress.pexpresscustomer.R
@@ -25,11 +27,16 @@ class SplashActivity : AppCompatActivity() {
         //hiding title bar of this activity
         window.requestFeature(Window.FEATURE_NO_TITLE)
         //making this activity full screen
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
         setContentView(R.layout.activity_splash)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            @Suppress("DEPRECATION")
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
 
         activityScope.launch {
             delay(TIME_DELAY_SCREEN)

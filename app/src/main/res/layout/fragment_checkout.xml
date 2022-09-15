@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/BgStyle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".view.main.order.checkout.CheckoutFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -14,272 +14,491 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_back"
-        app:title="Checkout" />
+        app:title="@string/checkout_toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/layout_total_price"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/dimen_16"
+            android:paddingTop="@dimen/dimen_16"
+            android:paddingEnd="@dimen/dimen_16"
+            android:paddingBottom="@dimen/dimen_16"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <TextView
+                android:id="@+id/placeholder_method_pay"
+                style="@style/PrimaryTextStyle.SemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:text="@string/checkout_metode_pembayaran"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cd_asuransi" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cd_method_cash"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/placeholder_method_pay">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_16">
+
+                    <TextView
+                        android:id="@+id/placeholder_cash"
+                        style="@style/PrimaryTextStyle.SemiBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkout_tunai"
+                        android:textAllCaps="true"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cd_method_transfer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cd_method_cash">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/method_transfer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/placeholder_transfer"
+                        style="@style/PrimaryTextStyle.SemiBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dimen_16"
+                        android:text="@string/checkout_transfer"
+                        android:textAllCaps="true"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/ic_dropright_transfer"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <ImageView
+                        android:id="@+id/ic_dropright_transfer"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dimen_16"
+                        android:src="@drawable/ic_arrow_right"
+                        app:layout_constraintBottom_toBottomOf="@+id/placeholder_transfer"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/placeholder_transfer" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_choose_transfer"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_16"
+                        android:paddingBottom="@dimen/dimen_16"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/placeholder_transfer">
+
+                        <View
+                            android:id="@+id/line"
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:background="@color/grayLight"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/img_logo_bank"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_marginTop="@dimen/dimen_12"
+                            android:adjustViewBounds="true"
+                            android:background="@null"
+                            android:scaleType="centerInside"
+                            app:layout_constraintBottom_toTopOf="@+id/gd_va2"
+                            app:layout_constraintEnd_toStartOf="@+id/gd_va"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/line"
+                            app:layout_constraintVertical_bias="0.0"
+                            tools:src="@drawable/bca" />
+
+                        <TextView
+                            android:id="@+id/tv_name_bank"
+                            style="@style/PrimaryTextStyle.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_marginEnd="@dimen/dimen_16"
+                            app:layout_constraintBottom_toBottomOf="@+id/img_logo_bank"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/img_logo_bank"
+                            app:layout_constraintTop_toTopOf="@+id/img_logo_bank"
+                            tools:text="BCA" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/gd_va"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_begin="70dp" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/gd_va2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            app:layout_constraintGuide_begin="40dp" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cd_method_ewallet"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cd_method_transfer">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/method_e_wallet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/placeholder_ewallet"
+                        style="@style/PrimaryTextStyle.SemiBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dimen_16"
+                        android:text="@string/checkout_e_wallet"
+                        android:textAllCaps="true"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/ic_dropright_e_wallet"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <ImageView
+                        android:id="@+id/ic_dropright_e_wallet"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dimen_16"
+                        android:src="@drawable/ic_arrow_right"
+                        app:layout_constraintBottom_toBottomOf="@+id/placeholder_ewallet"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/placeholder_ewallet" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_choose_ewallet"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_16"
+                        android:paddingBottom="@dimen/dimen_16"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/placeholder_ewallet">
+
+                        <View
+                            android:id="@+id/line2"
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:background="@color/grayLight"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/img_logo_ewallet"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_marginTop="@dimen/dimen_12"
+                            android:adjustViewBounds="true"
+                            android:background="@null"
+                            android:scaleType="centerInside"
+                            app:layout_constraintBottom_toTopOf="@+id/gd_ewallet2"
+                            app:layout_constraintEnd_toStartOf="@+id/gd_ewallet"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0"
+                            tools:src="@drawable/dana" />
+
+                        <TextView
+                            android:id="@+id/tv_name_ewallet"
+                            style="@style/PrimaryTextStyle.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_marginEnd="@dimen/dimen_16"
+                            app:layout_constraintBottom_toBottomOf="@+id/img_logo_ewallet"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/img_logo_ewallet"
+                            app:layout_constraintTop_toTopOf="@+id/img_logo_ewallet"
+                            tools:text="Dana" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/gd_ewallet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_begin="70dp" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/gd_ewallet2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            app:layout_constraintGuide_begin="40dp" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!--            <com.google.android.material.card.MaterialCardView-->
+            <!--                android:id="@+id/cd_method_qris"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/dimen_8"-->
+            <!--                android:clickable="true"-->
+            <!--                android:focusable="true"-->
+            <!--                app:cardUseCompatPadding="true"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/cd_method_ewallet">-->
+
+            <!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--                    android:id="@+id/method_qris"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:padding="@dimen/dimen_16">-->
+
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/placeholder_qris"-->
+            <!--                        style="@style/PrimaryTextStyle.SemiBold"-->
+            <!--                        android:layout_width="0dp"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:text="@string/checkout_qris"-->
+            <!--                        android:textSize="16sp"-->
+            <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                        app:layout_constraintStart_toStartOf="parent"-->
+            <!--                        app:layout_constraintTop_toTopOf="parent" />-->
+
+            <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+            <!--            </com.google.android.material.card.MaterialCardView>-->
+
+            <TextView
+                android:id="@+id/placeholder_jenis_pembayaran"
+                style="@style/PrimaryTextStyle.SemiBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Pembayaran Paket Fix Rate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cd_total_pay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/placeholder_jenis_pembayaran">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_16">
+
+                    <TextView
+                        android:id="@+id/placeholder_jumlah_pembayaran"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkout_jumlah_pembayaran"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_jumlah_pembayaran"
+                        style="@style/PriceTextStyle.SemiBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_32"
+                        android:gravity="end"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/placeholder_jumlah_pembayaran"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Rp 25.000" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cd_asuransi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cd_total_pay">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/dimen_16"
+                    android:paddingTop="@dimen/dimen_8"
+                    android:paddingEnd="@dimen/dimen_16"
+                    android:paddingBottom="@dimen/dimen_8">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/checkbox_asuransi_pengiriman"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dimen_24"
+                        android:text="@string/checkout_biaya_asuransi"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_price_asuransi"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/placeholder_asuransi_pengiriman"
+                        style="@style/PrimaryTextStyle.Light"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_32"
+                        android:text="@string/checkout_asuransi_pengiriman_description"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/checkbox_asuransi_pengiriman"
+                        app:layout_constraintTop_toBottomOf="@+id/checkbox_asuransi_pengiriman" />
+
+                    <TextView
+                        android:id="@+id/tv_price_asuransi"
+                        style="@style/PriceTextStyle.SemiBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/checkbox_asuransi_pengiriman"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/checkbox_asuransi_pengiriman"
+                        tools:text="Rp 500" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingStart="@dimen/dimen_32"
-        android:paddingTop="@dimen/dimen_32"
-        android:paddingEnd="@dimen/dimen_32"
-        android:paddingBottom="@dimen/dimen_32"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
-
-        <TextView
-            android:id="@+id/placeholder_method_pay"
-            style="@style/PrimaryTextStyle.Regular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Metode Pembayaran"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/method_cash"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_12"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/placeholder_method_pay">
-
-            <ImageView
-                android:id="@+id/ic_cash"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_tunai"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/placeholder_cash"
-                style="@style/PrimaryTextStyle.SemiBold"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_12"
-                android:text="Tunai"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/ic_cash"
-                app:layout_constraintStart_toEndOf="@+id/ic_cash"
-                app:layout_constraintTop_toTopOf="@+id/ic_cash" />
-
-            <ImageView
-                android:id="@+id/ic_dropright_cash"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_right"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/dimen_8"
-                android:background="@color/lines"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/placeholder_cash"
-                app:layout_constraintTop_toBottomOf="@+id/ic_cash" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/method_transfer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_8"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/method_cash">
-
-            <ImageView
-                android:id="@+id/ic_transfer"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_transfer"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/placeholder_transfer"
-                style="@style/PrimaryTextStyle.SemiBold"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_12"
-                android:text="Transfer"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/ic_transfer"
-                app:layout_constraintStart_toEndOf="@+id/ic_transfer"
-                app:layout_constraintTop_toTopOf="@+id/ic_transfer" />
-
-            <ImageView
-                android:id="@+id/ic_dropright_transfer"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_right"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/dimen_8"
-                android:background="@color/lines"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/placeholder_transfer"
-                app:layout_constraintTop_toBottomOf="@+id/ic_transfer" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/method_e_wallet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_8"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/method_transfer">
-
-            <ImageView
-                android:id="@+id/ic_e_wallet"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_e_wallet"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/placeholder_e_wallet"
-                style="@style/PrimaryTextStyle.SemiBold"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_12"
-                android:text="E-Wallet"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/ic_e_wallet"
-                app:layout_constraintStart_toEndOf="@+id/ic_e_wallet"
-                app:layout_constraintTop_toTopOf="@+id/ic_e_wallet" />
-
-            <ImageView
-                android:id="@+id/ic_dropright_e_wallet"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_right"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/dimen_8"
-                android:background="@color/lines"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/placeholder_e_wallet"
-                app:layout_constraintTop_toBottomOf="@+id/ic_e_wallet" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/method_qris"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_8"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/method_e_wallet">
-
-            <ImageView
-                android:id="@+id/ic_qris"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_qris"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/placeholder_qris"
-                style="@style/PrimaryTextStyle.SemiBold"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_12"
-                android:text="QRIS Scan Pembayaran"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/ic_qris"
-                app:layout_constraintStart_toEndOf="@+id/ic_qris"
-                app:layout_constraintTop_toTopOf="@+id/ic_qris" />
-
-            <ImageView
-                android:id="@+id/ic_dropright_qris"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_right"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/dimen_4"
-                android:background="@color/lines"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/placeholder_qris"
-                app:layout_constraintTop_toBottomOf="@+id/ic_qris" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        android:id="@+id/layout_total_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/placeholder_total_pay"
-            style="@style/PrimaryTextStyle.SemiBold"
-            android:layout_width="wrap_content"
+            style="@style/SecondaryTextStyle.Medium"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_32"
-            android:text="Jumlah Pembayaran"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="@dimen/dimen_16"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:layout_marginEnd="@dimen/dimen_16"
+            android:gravity="end"
+            android:text="@string/checkout_total_pembayaran"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_total_pay"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/method_qris"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_total_pay"
-            style="@style/PrimaryTextStyle.SemiBold"
+            style="@style/PriceTextStyle.SemiBold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_32"
+            android:layout_marginTop="@dimen/dimen_4"
+            android:layout_marginBottom="@dimen/dimen_16"
             android:gravity="end"
-            android:text="Rp25.000"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/placeholder_total_pay"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/placeholder_total_pay"
-            app:layout_constraintTop_toTopOf="@+id/placeholder_total_pay" />
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/placeholder_total_pay"
+            app:layout_constraintStart_toStartOf="@+id/placeholder_total_pay"
+            tools:text="Rp 25.000" />
 
-        <!--        <com.google.android.material.button.MaterialButton-->
-        <!--            android:id="@+id/btn_book_now"-->
-        <!--            style="@style/CustomButton"-->
-        <!--            android:layout_width="0dp"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginStart="@dimen/dimen_16"-->
-        <!--            android:layout_marginEnd="@dimen/dimen_16"-->
-        <!--            android:text="Bayar"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent" />-->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_pay_now"
+            style="@style/ButtonStyle2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:enabled="false"
+            android:text="@string/checkout_bayar_sekarang"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="190dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,62 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/dimen_16">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/img_onboarding"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/img_onboarding"
-        app:layout_constraintBottom_toTopOf="@+id/tv_title_onboarding"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <TextView
-        android:id="@+id/tv_title_onboarding"
-        style="@style/PrimaryTextStyle.SemiBold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_16"
-        android:layout_marginTop="@dimen/dimen_32"
-        android:layout_marginEnd="@dimen/dimen_16"
-        android:maxLines="2"
-        android:text="@string/lorem_ipsum_title"
-        android:textAlignment="center"
-        android:textSize="26sp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_desc_onboarding"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_onboarding" />
-
-    <TextView
-        android:id="@+id/tv_desc_onboarding"
-        style="@style/SecondaryTextStyle.Regular"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_16"
-        android:layout_marginTop="@dimen/dimen_16"
-        android:layout_marginEnd="@dimen/dimen_16"
-        android:text="@string/lorem_ipsum"
-        android:textAlignment="center"
-        android:textSize="16sp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/placeholder_image_onboarding"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title_onboarding"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:src="@drawable/onboarding" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.55" />
 </androidx.constraintlayout.widget.ConstraintLayout>

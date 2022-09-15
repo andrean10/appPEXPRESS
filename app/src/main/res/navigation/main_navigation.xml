@@ -15,7 +15,22 @@
             app:destination="@id/PFixRateFragment" />
         <action
             android:id="@+id/action_navigation_home_to_historyFragment"
-            app:destination="@id/navigation_history" />
+            app:destination="@id/fragment_history" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_account"
+            app:destination="@id/navigation_account" />
+        <action
+            android:id="@+id/action_navigation_home_to_PKilometerFragment"
+            app:destination="@id/PKilometerFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_ongkirFragment"
+            app:destination="@id/ongkirFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_status_pembayaran"
+            app:destination="@id/navigation_status_pembayaran" />
+        <action
+            android:id="@+id/action_navigation_home_to_trackingOrderFragment"
+            app:destination="@id/navigation_tracking" />
     </fragment>
     <fragment
         android:id="@+id/PFixRateFragment"
@@ -24,7 +39,18 @@
         tools:layout="@layout/fragment_p_fix_rate">
         <action
             android:id="@+id/action_PFixRateFragment_to_checkoutFragment"
-            app:destination="@id/checkoutFragment" />
+            app:destination="@id/checkoutFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_PFixRateFragment_to_pickPlaceLocationFragment"
+            app:destination="@id/pickLocationFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/checkoutFragment"
@@ -32,31 +58,233 @@
         android:label="fragment_checkout"
         tools:layout="@layout/fragment_checkout">
         <action
-            android:id="@+id/action_checkoutFragment_to_payoutFragment"
-            app:destination="@id/payoutFragment" />
+            android:id="@+id/action_checkoutFragment_to_cashPaymentFragment"
+            app:destination="@id/cashPaymentFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left" />
+        <argument
+            android:name="no_invoice"
+            android:defaultValue='""'
+            app:argType="string" />
+        <argument
+            android:name="total_payment"
+            android:defaultValue='""'
+            app:argType="string" />
+        <argument
+            android:name="name"
+            android:defaultValue='""'
+            app:argType="string" />
+        <action
+            android:id="@+id/action_checkoutFragment_to_vaPaymentFragment"
+            app:destination="@id/vaPaymentFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_checkoutFragment_to_EWalletPaymentFragment"
+            app:destination="@id/EWalletPaymentFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left" />
     </fragment>
     <fragment
-        android:id="@+id/payoutFragment"
-        android:name="com.pexpress.pexpresscustomer.view.main.order.checkout.PayoutFragment"
-        android:label="fragment_payout"
-        tools:layout="@layout/fragment_payout">
+        android:id="@+id/vaPaymentFragment"
+        android:name="com.pexpress.pexpresscustomer.view.main.order.checkout.transfer.VAPaymentFragment"
+        android:label="fragment_va_payment"
+        tools:layout="@layout/fragment_va_payment">
         <action
-            android:id="@+id/action_payoutFragment_to_completeOrderFragment"
-            app:destination="@id/completeOrderFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/completeOrderFragment"
-        android:name="com.pexpress.pexpresscustomer.view.main.order.complete_order.CompleteOrderFragment"
-        android:label="fragment_complete_order"
-        tools:layout="@layout/fragment_complete_order">
+            android:id="@+id/action_payoutFragment_to_checkOrderFragment"
+            app:destination="@id/checkOrderFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+        <argument
+            android:name="data_va"
+            app:argType="com.pexpress.pexpresscustomer.db.payments.VAPayment" />
         <action
-            android:id="@+id/action_completeOrderFragment_to_navigation_home"
+            android:id="@+id/action_vaPaymentFragment_to_navigation_home"
             app:destination="@id/navigation_home"
-            app:popUpTo="@id/payoutFragment" />
+            app:popUpTo="@id/main_navigation"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/navigation_history"
-        android:name="com.pexpress.pexpresscustomer.view.main.history.HistoryFragment"
+        android:id="@+id/fragment_history"
+        android:name="com.pexpress.pexpresscustomer.view.main.status_order.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@+id/navigation_account"
+        android:name="com.pexpress.pexpresscustomer.view.main.account.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account">
+        <action
+            android:id="@+id/action_navigation_account_to_manageProfileFragment"
+            app:destination="@id/manageProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cashPaymentFragment"
+        android:name="com.pexpress.pexpresscustomer.view.main.order.checkout.cash.CashPaymentFragment"
+        android:label="fragment_cash_payment"
+        tools:layout="@layout/fragment_cash_payment">
+        <argument
+            android:name="data_cash"
+            app:argType="com.pexpress.pexpresscustomer.db.payments.CashPayment" />
+        <action
+            android:id="@+id/action_cashPaymentFragment_to_checkOrderFragment"
+            app:destination="@id/checkOrderFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left" />
+        <argument
+            android:name="isFromOrder"
+            android:defaultValue="false"
+            app:argType="boolean" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkOrderFragment"
+        android:name="com.pexpress.pexpresscustomer.view.main.order.checkout.check_order.CheckOrderFragment"
+        android:label="fragment_check_order"
+        tools:layout="@layout/fragment_check_order">
+        <argument
+            android:name="isCashPayment"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <argument
+            android:name="no_invoice"
+            android:defaultValue='""'
+            app:argType="string" />
+        <action
+            android:id="@+id/action_checkOrderFragment_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left"
+            app:popUpTo="@id/main_navigation"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/EWalletPaymentFragment"
+        android:name="com.pexpress.pexpresscustomer.view.main.order.checkout.ewallet.EWalletPaymentFragment"
+        android:label="fragment_e_wallet_payment"
+        tools:layout="@layout/fragment_e_wallet_payment">
+        <argument
+            android:name="data_ewallet"
+            app:argType="com.pexpress.pexpresscustomer.db.payments.EWalletPayment" />
+        <action
+            android:id="@+id/action_EWalletPaymentFragment_to_checkOrderFragment"
+            app:destination="@id/checkOrderFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_EWalletPaymentFragment_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_EWalletPaymentFragment_to_EWalletWebViewFragment"
+            app:destination="@id/EWalletWebViewFragment" />
+        <argument
+            android:name="isFromOrder"
+            android:defaultValue="false"
+            app:argType="boolean" />
+    </fragment>
+    <fragment
+        android:id="@+id/PKilometerFragment"
+        android:name="com.pexpress.pexpresscustomer.view.main.order.p_kilometer.PKilometerFragment"
+        android:label="fragment_p_kilometer"
+        tools:layout="@layout/fragment_p_kilometer">
+        <action
+            android:id="@+id/action_PKilometerFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_PKilometerFragment_to_pickLocationFragment"
+            app:destination="@id/pickLocationFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/pickLocationFragment"
+        android:name="com.pexpress.pexpresscustomer.view.main.order.dialog.maps.PickPlaceLocationFragment"
+        android:label="fragment_pick_location"
+        tools:layout="@layout/fragment_pick_place_location">
+        <argument
+            android:name="code_form"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="type_package"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/manageProfileFragment"
+        android:name="com.pexpress.pexpresscustomer.view.main.account.ManageProfileFragment"
+        android:label="fragment_manage_profile"
+        tools:layout="@layout/fragment_manage_profile" />
+    <fragment
+        android:id="@+id/ongkirFragment"
+        android:name="com.pexpress.pexpresscustomer.view.main.ongkir.OngkirFragment"
+        android:label="fragment_ongkir"
+        tools:layout="@layout/fragment_ongkir" />
+    <fragment
+        android:id="@+id/navigation_status_pembayaran"
+        android:name="com.pexpress.pexpresscustomer.view.main.status_pembayaran.StatusPembayaranFragment"
+        android:label="fragment_status_pembayaran"
+        tools:layout="@layout/fragment_status_pembayaran">
+        <action
+            android:id="@+id/action_navigation_status_pembayaran_to_cashPaymentFragment"
+            app:destination="@id/cashPaymentFragment" />
+        <action
+            android:id="@+id/action_navigation_status_pembayaran_to_vaPaymentFragment"
+            app:destination="@id/vaPaymentFragment" />
+        <action
+            android:id="@+id/action_navigation_status_pembayaran_to_EWalletPaymentFragment"
+            app:destination="@id/EWalletPaymentFragment" />
+        <action
+            android:id="@+id/action_navigation_status_pembayaran_to_detailStatusPembayaranFragment"
+            app:destination="@id/detailStatusPembayaranFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailStatusPembayaranFragment"
+        android:name="com.pexpress.pexpresscustomer.view.main.status_pembayaran.detail.DetailStatusPembayaranFragment"
+        android:label="fragment_detail_status_pembayaran"
+        tools:layout="@layout/fragment_detail_status_pembayaran">
+        <argument
+            android:name="noInvoice"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_tracking"
+        android:name="com.pexpress.pexpresscustomer.view.main.tracking_order.TrackingOrderFragment"
+        android:label="fragment_tracking_order"
+        tools:layout="@layout/fragment_tracking_order">
+        <action
+            android:id="@+id/action_navigation_tracking_to_scannerQRFragment"
+            app:destination="@id/scannerQRFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scannerQRFragment"
+        android:name="com.pexpress.pexpresscustomer.view.main.tracking_order.scanner_qr_code.ScannerQRFragment"
+        android:label="fragment_scanner_qr"
+        tools:layout="@layout/fragment_scanner_qr" />
+    <fragment
+        android:id="@+id/EWalletWebViewFragment"
+        android:name="com.pexpress.pexpresscustomer.view.main.order.checkout.ewallet.EWalletWebViewFragment"
+        android:label="fragment_e_wallet_web_view"
+        tools:layout="@layout/fragment_e_wallet_web_view">
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
 </navigation>

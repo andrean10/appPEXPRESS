@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/history_navigation.xml"
+    app:startDestination="@id/detailStatusOrderFragment">
+
+    <fragment
+        android:id="@+id/detailStatusOrderFragment"
+        android:name="com.pexpress.pexpresscustomer.view.main.status_order.detail.view.DetailStatusOrderFragment"
+        android:label="fragment_detail_status_order"
+        tools:layout="@layout/fragment_detail_status_order">
+        <action
+            android:id="@+id/action_detailStatusOrderFragment_to_resiFragment"
+            app:destination="@id/resiFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_detailStatusOrderFragment_to_milestoneFragment"
+            app:destination="@id/milestoneFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/resiFragment"
+        android:name="com.pexpress.pexpresscustomer.view.main.status_order.resi.ResiFragment"
+        android:label="fragment_resi"
+        tools:layout="@layout/fragment_resi">
+        <argument
+            android:name="no_invoice"
+            android:defaultValue='""'
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/milestoneFragment"
+        android:name="com.pexpress.pexpresscustomer.view.main.status_order.detail.view.MilestoneFragment"
+        android:label="fragment_milestone"
+        tools:layout="@layout/fragment_milestone">
+        <argument
+            android:name="id"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_milestoneFragment_to_proofDeliveryFragment"
+            app:destination="@id/proofDeliveryFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/proofDeliveryFragment"
+        android:name="com.pexpress.pexpresscustomer.view.main.status_order.detail.view.proofdelivery.ProofDeliveryFragment"
+        android:label="fragment_proof_delivery"
+        tools:layout="@layout/fragment_proof_delivery">
+        <argument
+            android:name="img"
+            app:argType="string" />
+    </fragment>
+</navigation>

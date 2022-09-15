@@ -9,7 +9,6 @@
         <item name="colorSecondary">@color/secondaryColor</item>
         <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
         <item name="colorOnSecondary">@color/black</item>
-        <item name="android:colorBackground">@color/bg_gray</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
@@ -81,6 +80,10 @@
         <item name="android:fontFamily">@font/poppins_semibold</item>
     </style>
 
+    <style name="PrimaryTextStyle.Bold" parent="PrimaryTextStyle">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
+
     <style name="SecondaryTextStyle" parent="Widget.MaterialComponents.TextView">
         <item name="android:textColor">@color/secondaryTextColorDark</item>
     </style>
@@ -99,6 +102,26 @@
 
     <style name="SecondaryTextStyle.SemiBold" parent="Widget.MaterialComponents.TextView">
         <item name="android:fontFamily">@font/poppins_semibold</item>
+    </style>
+
+    <style name="SecondaryTextStyle.Bold" parent="Widget.MaterialComponents.TextView">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
+
+    <style name="PriceTextStyle" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">@color/primaryColor</item>
+    </style>
+
+    <style name="PriceTextStyle.SemiBold" parent="PriceTextStyle">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+    </style>
+
+    <style name="DetailTextStyle.Regular" parent="PriceTextStyle">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+
+    <style name="PriceBackgroundStyle">
+        <item name="android:background">@color/primaryColor</item>
     </style>
 
     <style name="PrimaryTextButtonStyle" parent="Widget.MaterialComponents.TextView">
@@ -128,7 +151,6 @@
     </style>
 
     <style name="CustomButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">@color/primaryTextColorLight</item>
         <item name="android:paddingStart">@dimen/dimen_12</item>
         <item name="android:paddingEnd">@dimen/dimen_12</item>
         <item name="android:paddingTop">@dimen/dimen_16</item>
@@ -139,9 +161,31 @@
         <item name="cornerRadius">@dimen/dimen_16</item>
     </style>
 
-    <style name="CustomOutlineButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
-
+    <style name="CustomButtonCard" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">?attr/colorPrimary</item>
+        <item name="cardCornerRadius">@dimen/dimen_16</item>
     </style>
+
+    <style name="ButtonStyle2" parent="Widget.MaterialComponents.Button">
+        <item name="android:insetTop">@dimen/dimen_0</item>
+        <item name="android:insetBottom">@dimen/dimen_0</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/poppins_bold</item>
+        <item name="shapeAppearance">?attr/shapeAppearance</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <!--    <style name="CustomButtonMaps" parent="Widget.MaterialComponents.Button">-->
+    <!--        <item name="android:textColor">@color/primaryTextColorLight</item>-->
+    <!--        <item name="textAllCaps">false</item>-->
+    <!--        <item name="fontFamily">@font/poppins_medium</item>-->
+    <!--        <item name="android:paddingStart">@dimen/dimen_8</item>-->
+    <!--        <item name="android:paddingEnd">@dimen/dimen_8</item>-->
+    <!--        <item name="android:paddingTop">@dimen/dimen_6</item>-->
+    <!--        <item name="android:paddingBottom">@dimen/dimen_6</item>-->
+    <!--        <item name="cornerRadius">@dimen/dimen_24</item>-->
+    <!--        <item name="iconSize">@dimen/dimen_20</item>-->
+    <!--    </style>-->
 
     <style name="CustomOutlinedEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
 
@@ -150,6 +194,13 @@
         <item name="boxCornerRadiusTopEnd">@dimen/dimen_16</item>
         <item name="boxCornerRadiusBottomEnd">@dimen/dimen_16</item>
         <item name="boxCornerRadiusBottomStart">@dimen/dimen_16</item>
+    </style>
+
+    <style name="CustomOutlinedEditText.Corner.Mini" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxCornerRadiusTopStart">@dimen/dimen_24</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/dimen_24</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/dimen_24</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/dimen_24</item>
     </style>
 
     <style name="CustomOutlinedEditText.Corner2" parent="CustomOutlinedEditText">
@@ -180,13 +231,50 @@
 
     <style name="CustomMenuCard" parent="Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/backgroundLight</item>
-        <item name="cardCornerRadius">@dimen/dimen_12</item>
+        <item name="cardCornerRadius">@dimen/dimen_20</item>
         <item name="cardElevation">@dimen/dimen_2</item>
     </style>
 
     <style name="CustomTextInputEditText">
         <item name="android:fontFamily">@font/poppins_regular</item>
-        <item name="android:padding">@dimen/dimen_16</item>
         <item name="android:textSize">16sp</item>
     </style>
+
+    <style name="Theme.PEXpressCustomer.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.PEXpressCustomer.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="BgItemPembayaran">
+        <item name="android:background">@color/grayLight</item>
+    </style>
+
+    <style name="BgResi" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/white</item>
+    </style>
+
+    <style name="CustomTabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="android:background">@color/bgTab</item>
+    </style>
+
+    <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+
+    <style name="CustomOutlinedSalin" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">11sp</item>
+        <item name="textAllCaps">false</item>
+        <item name="strokeColor">@color/black</item>
+    </style>
+
+    <style name="BgStyle">
+        <item name="android:background">@color/bg_gray_page</item>
+    </style>
+
+    <style name="LineStyle">
+        <item name="android:background">@color/lines</item>
+    </style>
+
+
 </resources>

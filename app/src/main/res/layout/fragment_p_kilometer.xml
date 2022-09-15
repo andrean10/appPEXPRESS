@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.main.order.p_kilometer.PKilometerFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="Paket Kilometer" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/layout_nested"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/layout_total_price"
+        android:layout_below="@id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cd_info_pengirim"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginEnd="@dimen/dimen_16"
+                app:cardCornerRadius="@dimen/dimen_12"
+                app:cardElevation="@dimen/dimen_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:rippleColor="@color/transparentColor">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_16">
+
+                    <TextView
+                        android:id="@+id/placeholder_info_pengirim"
+                        style="@style/PrimaryTextStyle.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dimen_16"
+                        android:layout_toStartOf="@id/ic_dropdown_pengirim"
+                        android:text="@string/checkout_info_pengirim"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/ic_dropdown_pengirim"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:contentDescription="@string/checkout_dropdown"
+                        android:src="@drawable/ic_drop_right" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/expand_info_pengirim"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/placeholder_info_pengirim"
+                        android:layout_marginTop="@dimen/dimen_12"
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ti_asal_pengirim"
+                            style="@style/CustomOutlinedEditText.Corner2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_2"
+                            android:hint="@string/checkout_asal_pengirim"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edt_asal_pengirim"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusableInTouchMode="false"
+                                android:imeOptions="actionNext"
+                                android:inputType="none"
+                                android:maxLines="3"
+                                tools:text="Pekanbaru, Riau" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ti_nama_pengirim"
+                            style="@style/CustomOutlinedEditText.Corner2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_16"
+                            android:hint="@string/checkout_nama_pengirim"
+                            app:endIconMode="clear_text"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ti_asal_pengirim">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edt_nama_pengirim"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                tools:text="Ujang Syamsuar" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/layout_number_phone_pengirim"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_16"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ti_nama_pengirim">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/ti_number_phone_pengirim"
+                                style="@style/CustomOutlinedEditText.Corner2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/checkout_nomor_handphone_pengirim"
+                                app:endIconDrawable="@drawable/ic_contact_phone"
+                                app:endIconMode="custom"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:prefixText="+62">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/edt_number_phone_pengirim"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:imeOptions="actionNext"
+                                    android:inputType="numberDecimal|number"
+                                    android:maxLength="20"
+                                    android:maxLines="1"
+                                    tools:text="82212345678" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ti_patokan_alamat_pengirim"
+                            style="@style/CustomOutlinedEditText.Corner2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_16"
+                            android:hint="@string/checkout_patokan_alamat"
+                            app:endIconMode="clear_text"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/layout_number_phone_pengirim">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edt_patokan_alamat_pengirim"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:imeOptions="actionNext"
+                                android:inputType="textLongMessage|textMultiLine"
+                                android:maxLines="5"
+                                tools:text="@string/lorem_ipsum" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ti_catatan_lokasi_pengirim"
+                            style="@style/CustomOutlinedEditText.Corner2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_16"
+                            android:hint="@string/checkout_catatan"
+                            app:endIconMode="clear_text"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ti_patokan_alamat_pengirim">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edt_catatan_lokasi_pengirim"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:imeOptions="actionNext"
+                                android:inputType="textLongMessage|textMultiLine"
+                                android:maxLines="5"
+                                tools:text="@string/lorem_ipsum" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cd_info_penerima"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:layout_marginBottom="@dimen/dimen_16"
+                app:cardCornerRadius="@dimen/dimen_12"
+                app:cardElevation="@dimen/dimen_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cd_info_pengirim"
+                app:rippleColor="@color/transparentColor">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_16">
+
+                    <TextView
+                        android:id="@+id/placeholder_info_penerima"
+                        style="@style/PrimaryTextStyle.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dimen_16"
+                        android:layout_toStartOf="@id/ic_dropdown_penerima"
+                        android:text="@string/checkout_info_penerima"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/ic_dropdown_penerima"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:contentDescription="@string/placeholder_icon_arrow"
+                        android:src="@drawable/ic_drop_right" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/expand_info_penerima"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/placeholder_info_penerima"
+                        android:layout_marginTop="@dimen/dimen_12"
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ti_asal_penerima"
+                            style="@style/CustomOutlinedEditText.Corner2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/checkout_tujuan_penerima"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edt_asal_penerima"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusableInTouchMode="false"
+                                android:imeOptions="actionNext"
+                                android:inputType="none"
+                                android:maxLines="3"
+                                tools:text="Tembilahan, Indragiri Hilir, Riau" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ti_nama_penerima"
+                            style="@style/CustomOutlinedEditText.Corner2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_16"
+                            android:hint="@string/checkout_nama_penerima"
+                            app:endIconMode="clear_text"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ti_asal_penerima">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edt_nama_penerima"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                tools:text="Ujang Syamsuar" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/layout_number_phone_penerima"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_16"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ti_nama_penerima">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/ti_number_phone_penerima"
+                                style="@style/CustomOutlinedEditText.Corner2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/checkout_nomor_handphone_penerima"
+                                app:endIconDrawable="@drawable/ic_contact_phone"
+                                app:endIconMode="custom"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:prefixText="+62">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/edt_number_phone_penerima"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:imeOptions="actionNext"
+                                    android:inputType="numberDecimal"
+                                    android:maxLength="20"
+                                    android:maxLines="1"
+                                    tools:text="82212345678" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ti_patokan_alamat_penerima"
+                            style="@style/CustomOutlinedEditText.Corner2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_16"
+                            android:hint="@string/checkout_patokan_alamat"
+                            app:endIconMode="clear_text"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/layout_number_phone_penerima">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edt_patokan_alamat_penerima"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="textLongMessage|textMultiLine"
+                                android:maxLines="5"
+                                tools:text="@string/lorem_ipsum" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ti_catatan_lokasi_penerima"
+                            style="@style/CustomOutlinedEditText.Corner2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_16"
+                            android:hint="@string/checkout_catatan"
+                            app:endIconMode="clear_text"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ti_patokan_alamat_penerima">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edt_catatan_lokasi_penerima"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="textLongMessage|textMultiLine"
+                                android:maxLines="5"
+                                tools:text="@string/lorem_ipsum" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cd_info_pickup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:layout_marginBottom="@dimen/dimen_20"
+                app:cardCornerRadius="@dimen/dimen_12"
+                app:cardElevation="@dimen/dimen_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cd_info_penerima"
+                app:rippleColor="@color/transparentColor">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_16">
+
+                    <TextView
+                        android:id="@+id/placeholder_info_pickup"
+                        style="@style/PrimaryTextStyle.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dimen_16"
+                        android:layout_toStartOf="@id/ic_dropdown_pickup"
+                        android:text="@string/checkout_info_pickup"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/ic_dropdown_pickup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:contentDescription="@string/placeholder_icon_arrow"
+                        android:src="@drawable/ic_drop_right" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/expand_info_pickup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/placeholder_info_pickup"
+                        android:layout_marginTop="@dimen/dimen_12"
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ti_jarak"
+                            style="@style/CustomOutlinedEditText.Corner2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/checkout_jarak"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edt_jarak"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:enabled="false"
+                                android:inputType="none"
+                                android:text="@string/placeholder_default_jarak" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ti_jenis_layanan_pickup"
+                            style="@style/CustomOutlinedEditText.Corner2.DropDown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_16"
+                            android:hint="@string/checkout_jenis_layanan_pickup"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ti_jarak">
+
+                            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                android:id="@+id/edt_jenis_layanan_pickup"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusableInTouchMode="false"
+                                android:imeOptions="actionNext"
+                                android:inputType="none"
+                                android:maxLines="1"
+                                tools:text="Reguler" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ti_ukuran_barang_pickup"
+                            style="@style/CustomOutlinedEditText.Corner2.DropDown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_16"
+                            android:hint="@string/checkout_ukuran_barang_pickup"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ti_jenis_layanan_pickup">
+
+                            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                android:id="@+id/edt_ukuran_barang_pickup"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="none"
+                                android:maxLines="1"
+                                tools:text="Small" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ti_tanggal_pickup"
+                            style="@style/CustomOutlinedEditText.Corner2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_16"
+                            android:hint="@string/checkout_tanggal_pickup"
+                            app:endIconDrawable="@drawable/ic_date"
+                            app:endIconMode="custom"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ti_ukuran_barang_pickup">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edt_tanggal_pickup"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusableInTouchMode="false"
+                                android:imeOptions="actionNext"
+                                android:inputType="date"
+                                android:maxLines="1"
+                                tools:text="30 Desember 2021" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ti_jenis_barang"
+                            style="@style/CustomOutlinedEditText.Corner2.DropDown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_16"
+                            android:hint="@string/checkout_jenis_barang_pickup"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ti_tanggal_pickup">
+
+                            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                android:id="@+id/edt_jenis_barang_pickup"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="none"
+                                android:maxLines="1"
+                                tools:enabled="false"
+                                tools:text="Makanan Kering" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/box_lainnya"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_4"
+                            android:text="@string/checkout_lainnya_pickup"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ti_jenis_barang"
+                            tools:checked="true" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ti_jenis_barang_lainnya"
+                            style="@style/CustomOutlinedEditText.Corner2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_8"
+                            android:hint="@string/checkout_jenis_barang_lainnya_pickup"
+                            android:visibility="gone"
+                            app:endIconMode="clear_text"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/box_lainnya">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edt_jenis_barang_lainnya"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="textLongMessage|textMultiLine"
+                                android:maxLines="5"
+                                tools:text="@string/lorem_ipsum" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_total_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:elevation="@dimen/dimen_8">
+
+        <TextView
+            android:id="@+id/placeholder_subtotal"
+            style="@style/SecondaryTextStyle.Bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_16"
+            android:layout_marginTop="@dimen/dimen_6"
+            android:layout_marginEnd="@dimen/dimen_16"
+            android:gravity="end"
+            android:text="@string/order_subtotal"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_total_subtotal"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/tv_total_subtotal"
+            style="@style/PriceTextStyle.SemiBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_4"
+            android:layout_marginBottom="@dimen/dimen_6"
+            android:gravity="end"
+            android:text="@string/placeholder_default_subtotal"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/placeholder_subtotal"
+            app:layout_constraintStart_toStartOf="@+id/placeholder_subtotal" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_checkout"
+            style="@style/ButtonStyle2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:enabled="false"
+            android:text="@string/order_checkout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

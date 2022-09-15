@@ -12,7 +12,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparentColor">#00FFFFFF</color>
     <color name="bg_gray">#F2FFFFFF</color>
-    <color name="gray">#99DDDDDD</color>
+    <color name="color_onboarding">#E2B62A</color>
 
     <color name="cardBackgroundColor">#CCC5CC</color>
 
@@ -26,16 +26,29 @@
     <color name="lines">#33000000</color>
     <color name="bg_edittext">#F0F3FD</color>
     <color name="stroke_edittext">#2E2300</color>
+    <color name="red">#E32E21</color>
+
+    <color name="bg_button_header_item_menu">#E5CB74</color>
 
     <!--    Light-->
     <color name="primaryTextColorLight">#000000</color>
     <color name="backgroundLight">#FFFFFFFF</color>
     <color name="bgBottomNavLight">#FFDB3D</color>
     <color name="secondaryTextColorLight">#707070</color>
+    <color name="grayLight">#998F8F8F</color>
+    <color name="bgTab">#FFFFFF</color>
+    <!--    <color name="priceColorLight">#F7BB07</color>-->
 
     <!--    Dark-->
     <color name="primaryTextColorNight">#FFFFFF</color>
     <color name="backgroundNight">#B3FFFFFF</color>
     <color name="bgBottomNavNight">#0C0C0C</color>
     <color name="secondaryTextColorDark">#707070</color>
+    <color name="grayDark">#DDDDDD</color>
+    <color name="bgTabNig">#121212</color>
+
+    <color name="success">#00C853</color>
+    <color name="bg_gray_page">#EEF3FA</color>
+
+    <color name="colorku">#c61e3a</color>
 </resources>

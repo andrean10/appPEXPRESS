@@ -22,8 +22,6 @@ class OnBoardingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOnBoardingBinding
     private lateinit var onBoardingAdapter: OnBoardingAdapter
 
-    private val TAG = OnBoardingActivity::class.simpleName
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOnBoardingBinding.inflate(layoutInflater)
@@ -47,11 +45,12 @@ class OnBoardingActivity : AppCompatActivity() {
 
     private fun setupOnBoardingItems() {
         val mList = listOf(
-            ScreenItem("Title 1", getString(R.string.lorem_ipsum), R.drawable.img_onboarding),
-            ScreenItem("Title 2", getString(R.string.lorem_ipsum), R.drawable.img_onboarding2),
-            ScreenItem("Title 3", getString(R.string.lorem_ipsum), R.drawable.img_onboarding3),
-            ScreenItem("Title 4", getString(R.string.lorem_ipsum), R.drawable.img_onboarding4)
+            ScreenItem(R.drawable.onboarding),
+            ScreenItem(R.drawable.onboarding2),
+            ScreenItem(R.drawable.onboarding3),
+            ScreenItem(R.drawable.onboarding4)
         )
+
         onBoardingAdapter = OnBoardingAdapter(mList)
     }
 

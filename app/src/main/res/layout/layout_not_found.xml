@@ -20,7 +20,7 @@
 
     <TextView
         android:id="@+id/dummy_not_found_title"
-        style="@style/Title"
+        style="@style/PrimaryTextStyle.SemiBold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -35,6 +35,7 @@
 
     <TextView
         android:id="@+id/dummy_not_found_desc"
+        style="@style/PrimaryTextStyle.Light"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

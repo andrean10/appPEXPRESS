@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/BgStyle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.main.order.checkout.transfer.VAPaymentFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Pembayaran" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/dimen_16"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_16"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/placeholder_title_payout"
+                        style="@style/PrimaryTextStyle.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pembayaran_title"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_desc_payout"
+                        style="@style/PrimaryTextStyle.Light"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/placeholder_title_payout"
+                        tools:text="@string/pembayaran_message" />
+
+                    <TextView
+                        android:id="@+id/placeholder_title_va"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_16"
+                        android:text="@string/pembayaran_no_va"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_desc_payout" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/layout_va"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        app:cardBackgroundColor="@color/bg_gray"
+                        app:cardCornerRadius="@dimen/dimen_4"
+                        app:cardElevation="@dimen/dimen_0"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/placeholder_title_va">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            style="@style/BgItemPembayaran"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/dimen_12"
+                            android:paddingTop="@dimen/dimen_4"
+                            android:paddingEnd="@dimen/dimen_12"
+                            android:paddingBottom="@dimen/dimen_4">
+
+                            <TextView
+                                android:id="@+id/tv_va"
+                                style="@style/PrimaryTextStyle.Medium"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginEnd="@dimen/dimen_12"
+                                android:textSize="18sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/gd_va"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="712312471" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_copy_va"
+                                style="@style/CustomOutlinedSalin"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dimen_4"
+                                android:layout_marginTop="@dimen/dimen_4"
+                                android:layout_marginBottom="@dimen/dimen_4"
+                                android:text="@string/pembayaran_salin"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="@+id/gd_va"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:strokeWidth="2dp" />
+
+                            <androidx.constraintlayout.widget.Guideline
+                                android:id="@+id/gd_va"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                app:layout_constraintGuide_percent="0.75" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:id="@+id/placeholder_nominal"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:text="@string/pembayaran_nominal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_va" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/layout_nominal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        app:cardBackgroundColor="@color/bg_gray"
+                        app:cardCornerRadius="@dimen/dimen_4"
+                        app:cardElevation="@dimen/dimen_0"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/placeholder_nominal">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            style="@style/BgItemPembayaran"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/dimen_12"
+                            android:paddingTop="@dimen/dimen_2"
+                            android:paddingEnd="@dimen/dimen_12"
+                            android:paddingBottom="@dimen/dimen_4">
+
+                            <TextView
+                                android:id="@+id/tv_nominal"
+                                style="@style/PrimaryTextStyle.Medium"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginEnd="@dimen/dimen_12"
+                                android:textSize="18sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/gd_nominal"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="Rp 25.000" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_copy_nominal"
+                                style="@style/CustomOutlinedSalin"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dimen_4"
+                                android:layout_marginTop="@dimen/dimen_4"
+                                android:layout_marginBottom="@dimen/dimen_4"
+                                android:text="@string/pembayaran_salin"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="@+id/gd_nominal"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:strokeWidth="2dp" />
+
+                            <androidx.constraintlayout.widget.Guideline
+                                android:id="@+id/gd_nominal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                app:layout_constraintGuide_percent="0.75" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:id="@+id/placeholder_desc_payout2"
+                        style="@style/PrimaryTextStyle.Light"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_64"
+                        android:layout_marginTop="@dimen/dimen_24"
+                        android:layout_marginEnd="@dimen/dimen_64"
+                        android:gravity="center"
+                        android:text="@string/pembayaran_placeholder_desc3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_nominal" />
+
+                    <TextView
+                        android:id="@+id/tv_time_payout"
+                        style="@style/SecondaryTextStyle.SemiBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        android:gravity="center"
+                        app:layout_constraintEnd_toEndOf="@+id/placeholder_desc_payout2"
+                        app:layout_constraintStart_toStartOf="@+id/placeholder_desc_payout2"
+                        app:layout_constraintTop_toBottomOf="@+id/placeholder_desc_payout2"
+                        tools:text="15:00 WIB" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/placeholder_title_payout2"
+                style="@style/PrimaryTextStyle.SemiBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_8"
+                android:layout_marginTop="@dimen/dimen_32"
+                android:text="@string/pembayaran_title2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardView2" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8"
+                android:layout_marginBottom="@dimen/dimen_8"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/placeholder_title_payout2">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_16">
+
+                    <TextView
+                        android:id="@+id/placeholder_desc_payout3"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dimen_8"
+                        android:text="@string/pembayaran_placeholder_desc_payout3"
+                        app:layout_constraintBottom_toTopOf="@+id/btn_book_now"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_book_now"
+                        style="@style/CustomButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/dimen_14"
+                        android:paddingBottom="@dimen/dimen_14"
+                        android:text="@string/pembayaran_done"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

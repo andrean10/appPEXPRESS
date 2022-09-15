@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.main.ongkir.pick_location.PickPlaceLocationActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="Pilih Lokasi" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ti_place_prediction"
+        style="@style/CustomOutlinedEditText.Corner.Mini"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:layout_marginEnd="@dimen/dimen_24"
+        android:hint="@string/pick_location_cari_lokasi"
+        app:endIconMode="clear_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_place_prediction"
+            style="@style/CustomTextInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionSearch"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--    <com.google.android.material.button.MaterialButton-->
+    <!--        android:id="@+id/btn_choose_map"-->
+    <!--        style="@style/CustomButtonMaps"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="@dimen/dimen_20"-->
+    <!--        android:layout_marginTop="@dimen/dimen_12"-->
+    <!--        android:layout_marginEnd="@dimen/dimen_20"-->
+    <!--        android:enabled="false"-->
+    <!--        android:text="@string/pick_place_pilih_titik_lokasi"-->
+    <!--        android:textSize="11sp"-->
+    <!--        android:visibility="gone"-->
+    <!--        app:icon="@drawable/ic_map"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/ti_place_prediction" />-->
+
+    <View
+        android:id="@+id/line_pick_location"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:background="@color/grayLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ti_place_prediction" />
+
+    <ProgressBar
+        android:id="@+id/pb_place_prediction"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line_pick_location" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_place_prediction"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line_pick_location"
+        app:layout_constraintVertical_bias="0.0"
+        tools:itemCount="5"
+        tools:listitem="@layout/items_place_prediction" />
+
+    <LinearLayout
+        android:id="@+id/layout_loading"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0.75"
+        android:background="@color/grayLight"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

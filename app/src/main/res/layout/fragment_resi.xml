@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.main.status_order.resi.ResiFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="Resi" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/layout_receipt"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/receipt"
+            style="@style/BgResi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_32"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:layout_marginEnd="@dimen/dimen_32"
+            app:cardBackgroundColor="@color/bg_gray"
+            app:cardCornerRadius="@dimen/dimen_12">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dimen_32"
+                android:paddingTop="@dimen/dimen_32"
+                android:paddingEnd="@dimen/dimen_32"
+                android:paddingBottom="@dimen/dimen_48"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                app:layout_constraintVertical_bias="0.0">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/placeholder_logo_pexpresss"
+                    android:src="@drawable/pexpress_dark"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_jenis_layanan"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:gravity="center"
+                    android:textColor="@color/primaryTextColorLight"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView"
+                    tools:text="Jenis Layanan" />
+
+                <TextView
+                    android:id="@+id/tv_no_resi"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:gravity="center"
+                    android:textColor="@color/primaryTextColorLight"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_jenis_layanan"
+                    tools:text="PEX2022021700041" />
+
+                <View
+                    android:id="@+id/line_resi"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:background="@drawable/line_resi"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_no_resi" />
+
+                <TextView
+                    android:id="@+id/placeholder_resi_tanggal"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:text="@string/resi_tanggal"
+                    android:textColor="@color/primaryTextColorLight"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/line_resi" />
+
+                <TextView
+                    android:id="@+id/tv_tanggal_transaction"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:gravity="end"
+                    android:textColor="@color/primaryTextColorLight"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/placeholder_resi_tanggal"
+                    app:layout_constraintTop_toBottomOf="@+id/line_resi"
+                    tools:text="2022-02-17 08:19" />
+
+                <TextView
+                    android:id="@+id/placeholder_resi_pengirim"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:text="@string/resi_pengirim"
+                    android:textColor="@color/primaryTextColorLight"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/placeholder_resi_tanggal" />
+
+                <TextView
+                    android:id="@+id/tv_nama_pengirim"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:gravity="end"
+                    android:textColor="@color/primaryTextColorLight"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/placeholder_resi_pengirim"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_tanggal_transaction"
+                    tools:text="Ranti" />
+
+                <TextView
+                    android:id="@+id/placeholder_resi_telpon"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:text="@string/resi_telpon"
+                    android:textColor="@color/primaryTextColorLight"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nama_pengirim" />
+
+                <TextView
+                    android:id="@+id/tv_telpon_pengirim"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:gravity="end"
+                    android:textColor="@color/primaryTextColorLight"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/placeholder_resi_telpon"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nama_pengirim"
+                    tools:text="085320707984" />
+
+                <TextView
+                    android:id="@+id/placeholder_resi_asal"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:text="@string/resi_asal"
+                    android:textColor="@color/primaryTextColorLight"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_telpon_pengirim" />
+
+                <TextView
+                    android:id="@+id/tv_asal_pengirim"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_32"
+                    android:gravity="end"
+                    android:textColor="@color/primaryTextColorLight"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/placeholder_resi_asal"
+                    app:layout_constraintTop_toTopOf="@+id/placeholder_resi_asal"
+                    tools:text="Cilandak, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta" />
+
+                <View
+                    android:id="@+id/line_resi2"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:background="@drawable/line_resi"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_asal_pengirim" />
+
+                <TextView
+                    android:id="@+id/placeholder_resi_penerima"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:text="@string/resi_penerima"
+                    android:textColor="@color/primaryTextColorLight"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/line_resi2" />
+
+                <TextView
+                    android:id="@+id/tv_nama_penerima"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:gravity="end"
+                    android:textColor="@color/primaryTextColorLight"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/placeholder_resi_penerima"
+                    app:layout_constraintTop_toBottomOf="@+id/line_resi2"
+                    tools:text="Indah" />
+
+                <TextView
+                    android:id="@+id/placeholder_resi_telpon_penerima"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:text="@string/resi_telpon"
+                    android:textColor="@color/primaryTextColorLight"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nama_penerima" />
+
+                <TextView
+                    android:id="@+id/tv_telpon_penerima"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_12"
+                    android:gravity="end"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/placeholder_resi_telpon_penerima"
+                    app:layout_constraintTop_toTopOf="@+id/placeholder_resi_telpon_penerima"
+                    tools:text="081286126617" />
+
+                <TextView
+                    android:id="@+id/placeholder_resi_alamat_penerima"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:text="@string/resi_alamat_penerima"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_telpon_penerima" />
+
+                <TextView
+                    android:id="@+id/tv_alamat_penerima"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/placeholder_resi_alamat_penerima"
+                    tools:text="Jagakarsa, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta" />
+
+                <View
+                    android:id="@+id/line_resi3"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:background="@drawable/line_resi"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_alamat_penerima" />
+
+                <TextView
+                    android:id="@+id/placeholder_resi_berat"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:text="@string/resi_ukuran"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/line_resi3" />
+
+                <TextView
+                    android:id="@+id/tv_berat"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_12"
+                    android:gravity="end"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/placeholder_resi_berat"
+                    app:layout_constraintTop_toTopOf="@+id/placeholder_resi_berat"
+                    tools:text="Medium (2 Kg)" />
+
+                <TextView
+                    android:id="@+id/placeholder_jenis_barang"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:text="@string/resi_jenis_barang"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_berat" />
+
+                <TextView
+                    android:id="@+id/tv_jenis_barang"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_12"
+                    android:gravity="end"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/placeholder_jenis_barang"
+                    app:layout_constraintTop_toTopOf="@+id/placeholder_jenis_barang"
+                    tools:text="Makanan Kering" />
+
+                <TextView
+                    android:id="@+id/placeholder_catatan_pengirim"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:text="@string/resi_catatan"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_jenis_barang" />
+
+                <TextView
+                    android:id="@+id/tv_catatan_pengiriman"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_32"
+                    android:gravity="end"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/placeholder_catatan_pengirim"
+                    app:layout_constraintTop_toTopOf="@+id/placeholder_catatan_pengirim"
+                    tools:text="Barang-nya dijaga baik-baik ya" />
+
+                <TextView
+                    android:id="@+id/placeholder_resi_ongkir"
+                    style="@style/PrimaryTextStyle.SemiBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_8"
+                    android:text="@string/resi_tarif"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_catatan_pengiriman" />
+
+                <TextView
+                    android:id="@+id/tv_ongkir"
+                    style="@style/PrimaryTextStyle.SemiBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_12"
+                    android:gravity="end"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/placeholder_resi_ongkir"
+                    app:layout_constraintTop_toTopOf="@+id/placeholder_resi_ongkir"
+                    tools:text="Rp. 25.000" />
+
+                <ImageView
+                    android:id="@+id/img_barcode_resi"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_32"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/placeholder_barcode_resi"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_barcode2"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_barcode"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_ongkir"
+                    tools:background="@color/black" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_barcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="70dp" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_barcode2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="70dp" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/pb_resi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,5 @@
 package com.pexpress.pexpresscustomer.view.auth.login
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,11 +12,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentLoginBinding
+import com.pexpress.pexpresscustomer.session.UserPreference
 import com.pexpress.pexpresscustomer.utils.showMessage
 import com.pexpress.pexpresscustomer.view.auth.viewmodel.AuthViewModel
-import com.pexpress.pexpresscustomer.view.main.MainActivity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import www.sanju.motiontoast.MotionToast
 
 class LoginFragment : Fragment() {
@@ -25,27 +22,19 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private val viewModel by activityViewModels<AuthViewModel>()
-
-    private val activityScope = CoroutineScope(Dispatchers.Main)
-
-    private companion object {
-        const val REQUIRED_NUMBER_PHONE = "Nomor Handphone Harus Di isi"
-        private const val TIME_DELAY = 1000L
-    }
+    private lateinit var userPreference: UserPreference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    private val TAG = LoginFragment::class.simpleName
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        userPreference = UserPreference(requireContext())
         numberPhoneObserve()
 
         with(binding) {
@@ -60,16 +49,11 @@ class LoginFragment : Fragment() {
                 setButtonState(true)
 
                 val numberPhone = binding.edtNumberPhone.text.toString().trim()
-                viewModel.checkLogin(numberPhone)
-
-//                val numberPhoneDummy = "082113032502"
-
-                viewModel.auth.observe(viewLifecycleOwner, { response ->
+                viewModel.login(numberPhone).observe(viewLifecycleOwner) { response ->
                     setButtonState(false)
                     if (response != null) {
                         if (response.success!!) {
-                            startActivity(Intent(requireContext(), MainActivity::class.java))
-                            activity?.finish()
+                            moveToOTP(numberPhone)
                         } else {
                             tiNumberPhone.error = response.message
                         }
@@ -81,7 +65,7 @@ class LoginFragment : Fragment() {
                             MotionToast.TOAST_WARNING
                         )
                     }
-                })
+                }
             }
         }
     }
@@ -110,7 +94,7 @@ class LoginFragment : Fragment() {
                         cardBtnLogin.setCardBackgroundColor(
                             ResourcesCompat.getColor(
                                 resources,
-                                R.color.gray,
+                                R.color.bg_gray,
                                 null
                             )
                         )
@@ -134,14 +118,13 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun moveToSendCode() {
-        findNavController().navigate(R.id.action_loginFragment_to_sendCodeFragment)
+    private fun moveToOTP(numberPhone: String) {
+        val toOTP = LoginFragmentDirections.actionLoginFragmentToVerifyOTPFragment(numberPhone)
+        findNavController().navigate(toOTP)
     }
 
-    private fun moveToOTP(numberPhone: String) {
-        val toOTP =
-            LoginFragmentDirections.actionLoginFragmentToOTPFragment(numberPhone)
-        findNavController().navigate(toOTP)
+    private fun moveToSendCode() {
+        findNavController().navigate(R.id.action_loginFragment_to_sendCodeFragment)
     }
 
     override fun onDestroy() {

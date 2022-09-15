@@ -14,16 +14,21 @@ internal class UserPreference(context: Context) {
         private const val PREFS_NAME = "user_pref"
         private const val KEY_USER_ID = "user_id"
         private const val KEY_USER_FULLNAME = "user_fullname"
+        private const val KEY_USER_EMAIL = "user_email"
+        private const val KEY_USER_OTP = "user_otp"
         private const val KEY_USER_PROFILE_IMAGE = "user_profile_image"
+        private const val KEY_USER_CONTACT = "user_contact"
         private const val KEY_LAUCH_APP = "user_launch_app"
         private const val KEY_LOGIN = "user_login"
     }
 
     fun setUser(values: User) {
         preferences.edit {
-            putInt(KEY_USER_ID, values.idUser!!)
-            putString(KEY_USER_FULLNAME, values.namaUser)
-            putString(KEY_USER_PROFILE_IMAGE, values.fotoProfile)
+            putInt(KEY_USER_ID, values.id ?: 0)
+            putString(KEY_USER_FULLNAME, values.name)
+            putString(KEY_USER_CONTACT, values.numberPhone)
+            putString(KEY_USER_EMAIL, values.email)
+            putInt(KEY_USER_OTP, values.otp ?: 0)
         }
     }
 
@@ -39,9 +44,11 @@ internal class UserPreference(context: Context) {
 
     fun getUser(): User {
         return User(
-            idUser = preferences.getInt(KEY_USER_ID, 0),
-            namaUser = preferences.getString(KEY_USER_FULLNAME, ""),
-            fotoProfile = preferences.getString(KEY_USER_PROFILE_IMAGE, "")
+            id = preferences.getInt(KEY_USER_ID, 0),
+            name = preferences.getString(KEY_USER_FULLNAME, ""),
+            numberPhone = preferences.getString(KEY_USER_CONTACT, ""),
+            email = preferences.getString(KEY_USER_EMAIL, ""),
+            otp = preferences.getInt(KEY_USER_OTP, 0)
         )
     }
 
@@ -57,7 +64,9 @@ internal class UserPreference(context: Context) {
         preferences.edit {
             remove(KEY_USER_ID)
             remove(KEY_USER_FULLNAME)
-            remove(KEY_USER_PROFILE_IMAGE)
+            remove(KEY_USER_CONTACT)
+            remove(KEY_USER_EMAIL)
+            remove(KEY_USER_OTP)
         }
     }
 

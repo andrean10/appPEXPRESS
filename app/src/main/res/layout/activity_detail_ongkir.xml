@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.main.ongkir.detail.DetailOngkirActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="Detail Ongkir" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:layout_marginEnd="@dimen/dimen_16">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_16">
+
+            <ImageView
+                android:id="@+id/placeholder_icon_asal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_asal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/placeholder_detail_ongkir_asal"
+                style="@style/PrimaryTextStyle.Medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_4"
+                android:text="@string/detail_ongkir_asal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/placeholder_icon_asal"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_ongkir_asal"
+                style="@style/PrimaryTextStyle.Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/placeholder_detail_ongkir_asal"
+                app:layout_constraintTop_toBottomOf="@+id/placeholder_detail_ongkir_asal"
+                tools:text="Jl. Cilandak Dalam RT. 04, Cilandak Barat, Jakarta Timur" />
+
+            <ImageView
+                android:id="@+id/placeholder_icon_tujuan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_24"
+                android:src="@drawable/ic_location"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_ongkir_asal" />
+
+            <TextView
+                android:id="@+id/placeholder_detail_ongkir_tujuan"
+                style="@style/PrimaryTextStyle.Medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_4"
+                android:text="@string/detail_ongkir_tujuan"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/placeholder_icon_tujuan"
+                app:layout_constraintTop_toTopOf="@+id/placeholder_icon_tujuan" />
+
+            <TextView
+                android:id="@+id/tv_ongkir_tujuan"
+                style="@style/PrimaryTextStyle.Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/placeholder_detail_ongkir_tujuan"
+                app:layout_constraintTop_toBottomOf="@+id/placeholder_detail_ongkir_tujuan"
+                tools:text="Jl. Jagakarsa Biru RT.04/RW.12, Cilandak, Jakarta Selatan" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:background="?attr/colorPrimary"
+                app:layout_constraintBottom_toTopOf="@+id/placeholder_icon_tujuan"
+                app:layout_constraintEnd_toEndOf="@+id/placeholder_icon_asal"
+                app:layout_constraintStart_toStartOf="@+id/placeholder_icon_asal"
+                app:layout_constraintTop_toBottomOf="@+id/placeholder_icon_asal"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:layout_marginEnd="@dimen/dimen_16">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_16">
+
+            <TextView
+                android:id="@+id/placeholder_ongkir_jenis_layanan"
+                style="@style/PrimaryTextStyle.Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/detail_ongkir_jenis_layanan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_ongkir_jenis_layanan"
+                style="@style/PrimaryTextStyle.Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_32"
+                android:gravity="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/placeholder_ongkir_jenis_layanan"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Sameday" />
+
+            <TextView
+                android:id="@+id/placeholder_ongkir_info_layanan"
+                style="@style/PrimaryTextStyle.Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12"
+                android:text="@string/detail_ongkir_info_layanan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_ongkir_jenis_layanan" />
+
+            <TextView
+                android:id="@+id/tv_ongkir_info_layanan"
+                style="@style/PrimaryTextStyle.Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_32"
+                android:gravity="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/placeholder_ongkir_info_layanan"
+                app:layout_constraintTop_toTopOf="@+id/placeholder_ongkir_info_layanan"
+                tools:text="Pengiriman 3-8 Jam" />
+
+            <TextView
+                android:id="@+id/placeholder_ongkir_ukuran_barang"
+                style="@style/PrimaryTextStyle.Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12"
+                android:text="@string/detail_ongkir_ukuran_barang"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_ongkir_info_layanan" />
+
+            <TextView
+                android:id="@+id/tv_ongkir_ukuran_barang"
+                style="@style/PrimaryTextStyle.Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_32"
+                android:gravity="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/placeholder_ongkir_ukuran_barang"
+                app:layout_constraintTop_toTopOf="@+id/placeholder_ongkir_ukuran_barang"
+                tools:text="Small" />
+
+            <TextView
+                android:id="@+id/placeholder_ongkir_berat_barang"
+                style="@style/PrimaryTextStyle.Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12"
+                android:text="@string/detail_ongkir_berat_barang"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_ongkir_ukuran_barang" />
+
+            <TextView
+                android:id="@+id/tv_ongkir_berat_barang"
+                style="@style/PrimaryTextStyle.Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_32"
+                android:gravity="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/placeholder_ongkir_berat_barang"
+                app:layout_constraintTop_toTopOf="@+id/placeholder_ongkir_berat_barang"
+                tools:text="5 Kg" />
+
+            <TextView
+                android:id="@+id/placeholder_jarak_tempuh"
+                style="@style/PrimaryTextStyle.Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12"
+                android:text="@string/detail_ongkir_jarak_tempuh"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_ongkir_berat_barang" />
+
+            <TextView
+                android:id="@+id/tv_ongkir_jarak_tempuh"
+                style="@style/PrimaryTextStyle.Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_32"
+                android:gravity="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/placeholder_jarak_tempuh"
+                app:layout_constraintTop_toTopOf="@+id/placeholder_jarak_tempuh"
+                tools:text="6 Kilometer (Km)" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:layout_marginEnd="@dimen/dimen_16">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_16">
+
+            <TextView
+                android:id="@+id/placeholder_ongkir"
+                style="@style/PrimaryTextStyle.SemiBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/detail_tarif"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_ongkir"
+                style="@style/PriceTextStyle.SemiBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_32"
+                android:gravity="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/placeholder_ongkir"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Rp. 18.000" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

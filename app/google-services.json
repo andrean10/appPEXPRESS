@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "349319815965",
+    "project_id": "apppexpress",
+    "storage_bucket": "apppexpress.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349319815965:android:0a5b848c6de9944ff8b7f4",
+        "android_client_info": {
+          "package_name": "com.pexpress.pexpresscustomer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349319815965-l4uautb6ug6o103841q1j93crfpd6f0k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pexpress.pexpresscustomer",
+            "certificate_hash": "ed5588bab740bc4f6245d1c9b68e53eb8fa5d1c4"
+          }
+        },
+        {
+          "client_id": "349319815965-7hglp6qbjbuv8rp2gd52lo3ent24c4e3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJv1pdlNI5qJaQHjscBlzjL-VpLoPg_iU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349319815965-7hglp6qbjbuv8rp2gd52lo3ent24c4e3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

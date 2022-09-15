@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dimen_16"
+    android:layout_marginTop="@dimen/dimen_8"
+    android:layout_marginEnd="@dimen/dimen_16"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_16">
+
+        <TextView
+            android:id="@+id/tv_no_pemesanan"
+            style="@style/PrimaryTextStyle.SemiBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_32"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_tagihan_pembayaran"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="PEX2022032900003" />
+
+        <TextView
+            android:id="@+id/tv_jenis_pembayaran"
+            style="@style/SecondaryTextStyle.Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_4"
+            android:layout_marginEnd="@dimen/dimen_48"
+            android:ellipsize="end"
+            android:maxLines="2"
+            app:layout_constraintEnd_toStartOf="@+id/tv_tagihan_pembayaran"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_no_pemesanan"
+            tools:text="Transfer - BCA" />
+
+        <TextView
+            android:id="@+id/tv_tagihan_pembayaran"
+            style="@style/PrimaryTextStyle.Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_12"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_no_pemesanan"
+            tools:text="Rp. 100.000" />
+
+        <TextView
+            android:id="@+id/tv_status_pembayaran"
+            style="@style/SecondaryTextStyle.Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_4"
+            android:ellipsize="end"
+            android:gravity="end"
+            android:maxLines="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_tagihan_pembayaran"
+            tools:text="PENDING" />
+
+        <TextView
+            android:id="@+id/tv_expired_date_pembayaran"
+            style="@style/SecondaryTextStyle.Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_4"
+            android:layout_marginEnd="@dimen/dimen_48"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_status_pembayaran"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_jenis_pembayaran"
+            tools:text="01 Februari 2022, 17:35" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

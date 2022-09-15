@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/dimen_16"
+    tools:context=".view.main.ongkir.tabview.TarifKilometerOngkirFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/dimen_12"
+        app:cardElevation="@dimen/dimen_2">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dimen_16"
+            android:paddingTop="@dimen/dimen_32"
+            android:paddingEnd="@dimen/dimen_16"
+            android:paddingBottom="@dimen/dimen_32">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_asal"
+                style="@style/CustomOutlinedEditText.Corner2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/cek_ongkir_asal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_asal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="false"
+                    android:imeOptions="actionNext"
+                    android:inputType="none"
+                    tools:text="Pekanbaru, Riau" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_tujuan"
+                style="@style/CustomOutlinedEditText.Corner2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:hint="@string/cek_ongkir_tujuan"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ti_asal">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_tujuan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="false"
+                    android:imeOptions="actionNext"
+                    android:inputType="none"
+                    tools:text="Jagakarsa II, Jagakarsa" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_jenis_layanan"
+                style="@style/CustomOutlinedEditText.Corner2.DropDown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:hint="@string/cek_ongkir_jenis_layanan"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ti_tujuan">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/edt_jenis_layanan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="false"
+                    android:imeOptions="actionNext"
+                    android:inputType="none"
+                    android:maxLines="1"
+                    tools:text="Reguler" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_ukuran_barang"
+                style="@style/CustomOutlinedEditText.Corner2.DropDown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:hint="@string/cek_ongkir_ukuran_barang"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ti_jenis_layanan">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/edt_ukuran_barang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="none"
+                    android:maxLines="1"
+                    tools:text="Small" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_cek_ongkir"
+        style="@style/CustomButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:text="@string/tarif_btn_cek_ongkir_sekarang" />
+
+</LinearLayout>

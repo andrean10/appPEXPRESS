@@ -1,33 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar_main"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/toolbarColor"
+        android:paddingTop="@dimen/dimen_12"
+        android:paddingBottom="@dimen/dimen_12"
+        app:contentInsetStart="@dimen/dimen_0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_12">
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/CustomMenuCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_8"
+                app:cardBackgroundColor="@color/primaryDarkColor"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_home"
+                        style="@style/CustomButtonText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/main_menu_home"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textSize="12sp"
+                        app:backgroundTint="@color/bg_button_header_item_menu"
+                        app:cornerRadius="18dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/btn_payment"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_payment"
+                        style="@style/CustomButtonText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/main_menu_payment"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textSize="12sp"
+                        app:cornerRadius="18dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/btn_tracking"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/btn_home"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_tracking"
+                        style="@style/CustomButtonText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/main_menu_tracking"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textSize="12sp"
+                        app:cornerRadius="18dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/btn_account"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/btn_payment"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_account"
+                        style="@style/CustomButtonText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="3dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/main_menu_account"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textSize="12sp"
+                        app:cornerRadius="18dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/btn_tracking"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
     <fragment
         android:id="@+id/nav_host_fragment_activity_main"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_main"
+        app:layout_constraintVertical_bias="0.0"
         app:navGraph="@navigation/main_navigation" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/nav_view"
-        style="@style/BgBottomNav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginStart="@dimen/dimen_32"
-        android:layout_marginEnd="@dimen/dimen_32"
-        android:layout_marginBottom="@dimen/dimen_32"
-        app:itemIconTint="@drawable/bottom_navigation_selector"
-        app:itemTextAppearanceActive="@style/TextAppearance.Bottom.Headline6"
-        app:itemTextAppearanceInactive="@style/TextAppearance.Bottom.Headline6"
-        app:itemTextColor="@drawable/bottom_navigation_selector"
-        app:labelVisibilityMode="unlabeled"
-        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
-        app:menu="@menu/bottom_nav_menu" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

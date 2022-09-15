@@ -12,25 +12,33 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_sendCodeFragment"
-            app:destination="@id/sendCodeFragment" />
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <action
-            android:id="@+id/action_loginFragment_to_OTPFragment"
-            app:destination="@id/OTPFragment" />
+            android:id="@+id/action_loginFragment_to_verifyOTPFragment"
+            app:destination="@id/verifyOTPFragment" />
     </fragment>
     <fragment
-        android:id="@+id/sendCodeFragment"
-        android:name="com.pexpress.pexpresscustomer.view.auth.otp.SendCodeFragment"
-        android:label="fragment_send_code"
-        tools:layout="@layout/fragment_send_code">
+        android:id="@+id/registerFragment"
+        android:name="com.pexpress.pexpresscustomer.view.auth.register.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register">
         <action
-            android:id="@+id/action_sendCodeFragment_to_OTPFragment"
-            app:destination="@id/OTPFragment" />
+            android:id="@+id/action_registerFragment_to_verifyOTPFragment"
+            app:destination="@id/verifyOTPFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
-        android:id="@+id/OTPFragment"
-        android:name="com.pexpress.pexpresscustomer.view.auth.otp.OTPFragment"
-        android:label="fragment_otp"
-        tools:layout="@layout/fragment_otp">
+        android:id="@+id/verifyOTPFragment"
+        android:name="com.pexpress.pexpresscustomer.view.auth.otp.VerifyOTPFragment"
+        android:label="fragment_verify_otp"
+        tools:layout="@layout/fragment_verify_otp">
         <argument
             android:name="numberPhone"
             app:argType="string" />

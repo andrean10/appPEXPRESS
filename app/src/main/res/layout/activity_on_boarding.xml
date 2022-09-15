@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E2B62A"
     tools:context=".view.splash.onboarding.OnBoardingActivity">
+
+    <!--    android:background="@color/primaryColor"-->
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_get_started"

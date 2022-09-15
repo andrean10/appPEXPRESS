@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/BgStyle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.main.order.checkout.ewallet.EWalletPaymentFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="Konfirmasi Tagihan" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/dimen_16"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_16"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/placeholder_title_payout"
+                        style="@style/PrimaryTextStyle.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pembayaran_title"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_desc_payout"
+                        style="@style/PrimaryTextStyle.Light"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/placeholder_title_payout"
+                        tools:text="@string/pembayaran_e_wallet_desc" />
+
+                    <TextView
+                        android:id="@+id/placeholder_title_ewallet"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_16"
+                        android:text="@string/pembayaran_e_wallet"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_desc_payout" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/layout_name_e_wallet"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        app:cardBackgroundColor="@color/bg_gray"
+                        app:cardCornerRadius="@dimen/dimen_4"
+                        app:cardElevation="@dimen/dimen_0"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/placeholder_title_ewallet">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            style="@style/BgItemPembayaran"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/dimen_12"
+                            android:paddingTop="@dimen/dimen_16"
+                            android:paddingEnd="@dimen/dimen_12"
+                            android:paddingBottom="@dimen/dimen_16">
+
+                            <ImageView
+                                android:id="@+id/img_logo_ewallet"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerInside"
+                                app:layout_constraintBottom_toTopOf="@+id/gd_ewallet2"
+                                app:layout_constraintEnd_toStartOf="@+id/gd_ewallet"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.0"
+                                tools:src="@drawable/dana" />
+
+                            <TextView
+                                android:id="@+id/tv_name_ewallet"
+                                style="@style/PrimaryTextStyle.Medium"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dimen_16"
+                                android:layout_marginEnd="@dimen/dimen_16"
+                                android:textSize="18sp"
+                                app:layout_constraintBottom_toBottomOf="@+id/img_logo_ewallet"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toEndOf="@+id/img_logo_ewallet"
+                                app:layout_constraintTop_toTopOf="@+id/img_logo_ewallet"
+                                tools:text="Dana" />
+
+                            <androidx.constraintlayout.widget.Guideline
+                                android:id="@+id/gd_ewallet"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                app:layout_constraintGuide_begin="65dp" />
+
+                            <androidx.constraintlayout.widget.Guideline
+                                android:id="@+id/gd_ewallet2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layout_constraintGuide_begin="40dp" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:id="@+id/placeholder_nominal"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:text="@string/pembayaran_nominal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_name_e_wallet" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/layout_nominal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        app:cardBackgroundColor="@color/bg_gray"
+                        app:cardCornerRadius="@dimen/dimen_4"
+                        app:cardElevation="@dimen/dimen_0"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/placeholder_nominal">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            style="@style/BgItemPembayaran"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/dimen_12"
+                            android:paddingTop="@dimen/dimen_16"
+                            android:paddingEnd="@dimen/dimen_12"
+                            android:paddingBottom="@dimen/dimen_16">
+
+                            <TextView
+                                android:id="@+id/tv_nominal"
+                                style="@style/PrimaryTextStyle.Medium"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginEnd="@dimen/dimen_12"
+                                android:textSize="18sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="Rp 25.000" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:id="@+id/placeholder_no_telp"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:text="@string/pembayaran_placeholder_e_wallet"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_nominal" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/ti_no_handphone"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:endIconDrawable="@drawable/ic_contact_phone"
+                        app:endIconMode="custom"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/placeholder_no_telp"
+                        app:prefixText="+62"
+                        app:prefixTextAppearance="?attr/textAppearanceHeadline6">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_no_handphone"
+                            style="@style/PrimaryTextStyle.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionDone"
+                            android:inputType="number|phone"
+                            android:maxLength="20"
+                            android:textSize="20sp"
+                            tools:text="812345678901" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_48"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardView2">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_16">
+
+                    <TextView
+                        android:id="@+id/placeholder_desc_payout3"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dimen_8"
+                        android:text="@string/pembayaran_cash_desc2"
+                        app:layout_constraintBottom_toTopOf="@+id/btn_confirm"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_confirm"
+                        style="@style/CustomButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/dimen_14"
+                        android:paddingBottom="@dimen/dimen_14"
+                        android:text="@string/pembayaran_cash_button"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

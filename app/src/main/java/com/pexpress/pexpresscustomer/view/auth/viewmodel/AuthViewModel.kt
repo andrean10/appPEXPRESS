@@ -1,86 +1,145 @@
 package com.pexpress.pexpresscustomer.view.auth.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import com.pexpress.pexpresscustomer.model.ResponseAuth
+import com.pexpress.pexpresscustomer.model.auth.ResponseLogin
+import com.pexpress.pexpresscustomer.model.auth.ResponseOTP
+import com.pexpress.pexpresscustomer.model.auth.ResponseRegister
 import com.pexpress.pexpresscustomer.network.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class AuthViewModel : ViewModel() {
+
+    private var _login: MutableLiveData<ResponseLogin?>? = null
+    private var _register: MutableLiveData<ResponseRegister?>? = null
+    private var _otp: MutableLiveData<ResponseOTP?>? = null
+
     private val TAG = AuthViewModel::class.simpleName
 
-    private val _auth = MutableLiveData<ResponseAuth?>()
+    fun login(contact: String): LiveData<ResponseLogin?> {
+        _login = MutableLiveData()
+        checkLogin(contact)
+        return _login as MutableLiveData<ResponseLogin?>
+    }
 
-    val auth: LiveData<ResponseAuth?> = _auth
+    fun register(contact: String): LiveData<ResponseRegister?> {
+        _register = MutableLiveData()
+        checkRegister(contact)
+        return _register as MutableLiveData<ResponseRegister?>
+    }
 
-    fun checkLogin(contact: String) {
+    fun otp(params: HashMap<String, String>): LiveData<ResponseOTP?> {
+        _otp = MutableLiveData()
+        verifyOTP(params)
+        return _otp as MutableLiveData<ResponseOTP?>
+    }
+
+    fun getOtpAgain(numberPhone: String): LiveData<ResponseOTP?> {
+        _otp = MutableLiveData()
+        retryOTP(numberPhone)
+        return _otp as MutableLiveData<ResponseOTP?>
+    }
+
+    private fun checkLogin(contact: String) {
         val client = ApiConfig.getApiService().login(contact)
-        client.enqueue(object : Callback<ResponseAuth> {
-            override fun onResponse(call: Call<ResponseAuth>, response: Response<ResponseAuth>) {
+        client.enqueue(object : Callback<ResponseLogin> {
+            override fun onResponse(call: Call<ResponseLogin>, response: Response<ResponseLogin>) {
                 if (response.isSuccessful) {
                     val result = response.body()
                     if (result != null) {
-                        _auth.postValue(result)
+                        _login!!.postValue(result)
                     }
                 } else {
-                    val error =
-                        Gson().fromJson(response.errorBody()?.string(), ResponseAuth::class.java)
-                    _auth.postValue(error)
+                    val error = Gson().fromJson(
+                        response.errorBody()?.string(),
+                        ResponseLogin::class.java
+                    )
+                    _login!!.postValue(error)
                 }
             }
 
-            override fun onFailure(call: Call<ResponseAuth>, t: Throwable) {
-                _auth.postValue(null)
+            override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
+                _login!!.postValue(null)
             }
         })
     }
 
-    fun register(params: HashMap<String, String>) {
-        val client = ApiConfig.getApiService().register(params)
-        client.enqueue(object : Callback<ResponseAuth> {
-            override fun onResponse(call: Call<ResponseAuth>, response: Response<ResponseAuth>) {
+    private fun checkRegister(contact: String) {
+        val client = ApiConfig.getApiService().register(contact)
+        client.enqueue(object : Callback<ResponseRegister> {
+            override fun onResponse(
+                call: Call<ResponseRegister>,
+                response: Response<ResponseRegister>
+            ) {
                 if (response.isSuccessful) {
                     val result = response.body()
                     if (result != null) {
-                        _auth.postValue(result)
+                        _register!!.postValue(result)
                     }
                 } else {
                     val error =
-                        Gson().fromJson(response.errorBody()?.string(), ResponseAuth::class.java)
-                    _auth.postValue(error)
+                        Gson().fromJson(
+                            response.errorBody()?.string(),
+                            ResponseRegister::class.java
+                        )
+                    _register!!.postValue(error)
                 }
             }
 
-            override fun onFailure(call: Call<ResponseAuth>, t: Throwable) {
-                _auth.postValue(null)
+            override fun onFailure(call: Call<ResponseRegister>, t: Throwable) {
+                _register!!.postValue(null)
+
+                Log.d(TAG, "onFailure: Error Dijalankan")
             }
         })
     }
 
-    fun verifyOTP(params: HashMap<String, String>) {
+    private fun verifyOTP(params: HashMap<String, String>) {
         val client = ApiConfig.getApiService().verifyOTP(params)
-        client.enqueue(object : Callback<ResponseAuth> {
-            override fun onResponse(call: Call<ResponseAuth>, response: Response<ResponseAuth>) {
+        client.enqueue(object : Callback<ResponseOTP> {
+            override fun onResponse(call: Call<ResponseOTP>, response: Response<ResponseOTP>) {
                 if (response.isSuccessful) {
                     val result = response.body()
                     if (result != null) {
-                        _auth.postValue(result)
+                        _otp!!.postValue(result)
                     }
                 } else {
                     val error =
-                        Gson().fromJson(response.errorBody()?.string(), ResponseAuth::class.java)
-                    _auth.postValue(error)
+                        Gson().fromJson(response.errorBody()?.string(), ResponseOTP::class.java)
+                    _otp!!.postValue(error)
                 }
             }
 
-            override fun onFailure(call: Call<ResponseAuth>, t: Throwable) {
-                _auth.postValue(null)
+            override fun onFailure(call: Call<ResponseOTP>, t: Throwable) {
+                _otp!!.postValue(null)
             }
         })
     }
 
+    private fun retryOTP(numberPhone: String) {
+        val client = ApiConfig.getApiService().retryOTP(numberPhone)
+        client.enqueue(object : Callback<ResponseOTP> {
+            override fun onResponse(call: Call<ResponseOTP>, response: Response<ResponseOTP>) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    if (result != null) {
+                        _otp!!.postValue(result)
+                    }
+                } else {
+                    val error =
+                        Gson().fromJson(response.errorBody()?.string(), ResponseOTP::class.java)
+                    _otp!!.postValue(error)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseOTP>, t: Throwable) {
+                _otp!!.postValue(null)
+            }
+        })
+    }
 }

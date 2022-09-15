@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.main.history.HistoryFragment">
+    tools:context=".view.main.status_order.HistoryFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
@@ -16,17 +16,28 @@
         app:navigationIcon="@drawable/ic_back"
         app:title="History" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_history"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:padding="@dimen/dimen_16"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        style="@style/CustomTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:tabStripEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.0"
-        tools:itemCount="5"
-        tools:listitem="@layout/items_history_order" />
+        app:tabMode="fixed"
+        app:tabTextAppearance="@style/MyCustomTextAppearance"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabs" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

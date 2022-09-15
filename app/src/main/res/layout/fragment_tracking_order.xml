@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/BgStyle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.main.tracking_order.TrackingOrderFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorSurface"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="Lacak Paket" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSurface"
+            android:paddingStart="@dimen/dimen_16"
+            android:paddingTop="@dimen/dimen_8"
+            android:paddingEnd="@dimen/dimen_16"
+            android:paddingBottom="@dimen/dimen_8">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_search"
+                style="@style/CustomOutlinedEditText.Corner.Mini"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_12"
+                android:background="@drawable/bg_search2"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="@string/tracking_input_resi"
+                android:inputType="text"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_check_resi"
+                app:layout_constraintEnd_toStartOf="@+id/btn_check_resi"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btn_check_resi"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="125153141" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btn_check_resi"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:backgroundTint="?attr/colorPrimary"
+                app:cardCornerRadius="@dimen/dimen_8"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dimen_16">
+
+                    <TextView
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/tracking_btn_cek_resi"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/layout_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dimen_16">
+
+                        <TextView
+                            android:id="@+id/placeholder_tanggal_order"
+                            style="@style/PrimaryTextStyle.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/placeholder_tanggal_order"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_tanggal_order"
+                            style="@style/PrimaryTextStyle.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_12"
+                            android:textAlignment="textEnd"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/gd_layanan"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="2022-04-10 02:32:44" />
+
+                        <TextView
+                            android:id="@+id/placeholder_no_resi"
+                            style="@style/PrimaryTextStyle.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_12"
+                            android:text="@string/placeholder_no_resi"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_tanggal_order" />
+
+                        <TextView
+                            android:id="@+id/tv_no_resi"
+                            style="@style/PrimaryTextStyle.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_12"
+                            android:textAlignment="textEnd"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/gd_layanan"
+                            app:layout_constraintTop_toTopOf="@+id/placeholder_no_resi"
+                            tools:text="JBD00056JBD220418" />
+
+                        <TextView
+                            android:id="@+id/placeholder_status"
+                            style="@style/PrimaryTextStyle.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_12"
+                            android:text="@string/placeholder_status"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_no_resi" />
+
+                        <TextView
+                            android:id="@+id/tv_status"
+                            style="@style/PrimaryTextStyle.Bold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_12"
+                            android:textAlignment="textEnd"
+                            android:textAllCaps="true"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/gd_layanan"
+                            app:layout_constraintTop_toTopOf="@+id/placeholder_status"
+                            tools:text="WAITING FOR PICKUP" />
+
+                        <View
+                            android:id="@+id/line_tracking_order"
+                            android:layout_width="0dp"
+                            android:layout_height="2dp"
+                            android:layout_marginTop="@dimen/dimen_24"
+                            android:background="@drawable/line_resi"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_status" />
+
+                        <TextView
+                            android:id="@+id/placeholder_pengirim"
+                            style="@style/PrimaryTextStyle.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_24"
+                            android:text="@string/placeholder_pengirim"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/line_tracking_order" />
+
+                        <TextView
+                            android:id="@+id/tv_nama_pengirim"
+                            style="@style/PrimaryTextStyle.Bold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_2"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/placeholder_pengirim"
+                            tools:text="Imam" />
+
+                        <TextView
+                            android:id="@+id/tv_asal_pengirim"
+                            style="@style/PrimaryTextStyle.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_2"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_nama_pengirim"
+                            tools:text="Cilandak, Kota Jakarta Selatan" />
+
+                        <TextView
+                            android:id="@+id/placeholder_penerima"
+                            style="@style/PrimaryTextStyle.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_24"
+                            android:text="@string/placeholder_penerima"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_asal_pengirim" />
+
+                        <TextView
+                            android:id="@+id/tv_nama_penerima"
+                            style="@style/PrimaryTextStyle.Bold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_2"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/placeholder_penerima"
+                            tools:text="Badru" />
+
+                        <TextView
+                            android:id="@+id/tv_asal_penerima"
+                            style="@style/PrimaryTextStyle.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_2"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_nama_penerima"
+                            tools:text="Jl. Pisangan Baru Tengah, Kota Jakarta Timur" />
+
+                        <View
+                            android:id="@+id/line_tracking_order2"
+                            android:layout_width="0dp"
+                            android:layout_height="2dp"
+                            android:layout_marginTop="@dimen/dimen_24"
+                            android:background="@drawable/line_resi"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_asal_penerima" />
+
+                        <TextView
+                            android:id="@+id/placeholder_layanan"
+                            style="@style/PrimaryTextStyle.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_24"
+                            android:layout_marginEnd="@dimen/dimen_4"
+                            android:text="@string/placeholder_layanan"
+                            android:textAlignment="center"
+                            app:layout_constraintEnd_toStartOf="@+id/gd_layanan"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/line_tracking_order2" />
+
+                        <TextView
+                            android:id="@+id/tv_jenis_layanan"
+                            style="@style/PrimaryTextStyle.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_2"
+                            android:textAlignment="center"
+                            app:layout_constraintEnd_toEndOf="@+id/placeholder_layanan"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/placeholder_layanan"
+                            tools:text="Sameday" />
+
+                        <TextView
+                            android:id="@+id/placeholder_berat"
+                            style="@style/PrimaryTextStyle.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_4"
+                            android:layout_marginTop="@dimen/dimen_24"
+                            android:layout_marginEnd="@dimen/dimen_4"
+                            android:text="@string/placeholder_berat"
+                            android:textAlignment="center"
+                            app:layout_constraintEnd_toStartOf="@+id/gd_layanan2"
+                            app:layout_constraintStart_toStartOf="@+id/gd_layanan"
+                            app:layout_constraintTop_toBottomOf="@id/line_tracking_order2" />
+
+                        <TextView
+                            android:id="@+id/tv_jenis_berat"
+                            style="@style/PrimaryTextStyle.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_2"
+                            android:textAlignment="center"
+                            app:layout_constraintEnd_toEndOf="@+id/placeholder_berat"
+                            app:layout_constraintStart_toStartOf="@+id/placeholder_berat"
+                            app:layout_constraintTop_toBottomOf="@id/placeholder_berat"
+                            tools:text="5 Kg" />
+
+                        <TextView
+                            android:id="@+id/placeholder_tarif"
+                            style="@style/PrimaryTextStyle.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_4"
+                            android:layout_marginTop="@dimen/dimen_24"
+                            android:text="@string/placeholder_tarif"
+                            android:textAlignment="center"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/gd_layanan2"
+                            app:layout_constraintTop_toBottomOf="@id/line_tracking_order2" />
+
+                        <TextView
+                            android:id="@+id/tv_tarif"
+                            style="@style/PrimaryTextStyle.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_2"
+                            android:textAlignment="center"
+                            app:layout_constraintEnd_toEndOf="@+id/placeholder_tarif"
+                            app:layout_constraintStart_toStartOf="@+id/placeholder_tarif"
+                            app:layout_constraintTop_toBottomOf="@id/placeholder_tarif"
+                            tools:text="Rp. 4000" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/gd_layanan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_begin="120dp" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/gd_layanan2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_end="120dp" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:layout_marginBottom="@dimen/dimen_64">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/placeholder_title_milestone"
+                            style="@style/PrimaryTextStyle.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dimen_16"
+                            android:text="@string/milestone_status_pemesanan"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_milestone"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_24"
+                            android:nestedScrollingEnabled="false"
+                            android:overScrollMode="never"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/placeholder_title_milestone"
+                            app:layout_constraintVertical_bias="0.0"
+                            tools:itemCount="7"
+                            tools:listitem="@layout/items_milestone" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+            android:id="@+id/layout_empty_tracking_order"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/img_empty_status_pembayaran"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_not_found" />
+
+            <TextView
+                style="@style/PrimaryTextStyle.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_32"
+                android:gravity="center"
+                android:text="@string/empty_tracking_order"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_empty_status_pembayaran" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

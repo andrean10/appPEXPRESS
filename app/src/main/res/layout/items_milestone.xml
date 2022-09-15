@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/dimen_16"
+    android:paddingEnd="@dimen/dimen_16">
+
+    <View
+        android:id="@+id/lines_milestone"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="@color/primaryDarkColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/dot_milestone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/dot_milestone"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/dot_milestone"
+        app:layout_constraintBottom_toTopOf="@+id/gd_milestone"
+        app:layout_constraintEnd_toStartOf="@+id/gd_milestone2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_8"
+        android:layout_marginEnd="@dimen/dimen_12"
+        android:layout_marginBottom="@dimen/dimen_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/gd_milestone2"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_status"
+            style="@style/PrimaryTextStyle.SemiBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_6"
+            android:textAllCaps="true"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="DELIVERED" />
+
+        <TextView
+            android:id="@+id/tv_detail_status_pengiriman"
+            style="@style/PrimaryTextStyle.Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_2"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_status"
+            app:layout_constraintTop_toBottomOf="@+id/tv_status"
+            tools:text="Pembayaran telah diterima PEXpress dan pesanan Anda akan segera dipickup [Kurir: Prasetyo]" />
+
+        <TextView
+            android:id="@+id/tv_tanggal_status"
+            style="@style/PrimaryTextStyle.Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_2"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_detail_status_pengiriman"
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_status_pengiriman"
+            tools:text="Kam, 28 April 2022 21:45 WIB" />
+
+        <TextView
+            android:id="@+id/tv_foto_penerima_pengiriman"
+            style="@style/PriceTextStyle.SemiBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_2"
+            android:text="@string/milestone_lihat_foto_penerima"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_tanggal_status"
+            app:layout_constraintTop_toBottomOf="@+id/tv_tanggal_status" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gd_milestone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="12dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gd_milestone2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.035" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.main.status_pembayaran.detail.DetailStatusPembayaranFragment">
+
+    <ProgressBar
+        android:id="@+id/pb_detail_pembayaran"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/layout_detail_status_pembayaran"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cd_status_pembayaran"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_16">
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/lottie_anim_payment"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintBottom_toTopOf="@+id/guideline_icon2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:lottie_autoPlay="true" />
+
+                    <TextView
+                        android:id="@+id/tv_status_payment"
+                        style="@style/PrimaryTextStyle.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        android:textAlignment="center"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/guideline_icon2"
+                        tools:text="Pembayaran Berhasil" />
+
+                    <TextView
+                        android:id="@+id/tv_status_payment_detail"
+                        style="@style/PrimaryTextStyle.Light"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_4"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_status_payment"
+                        app:layout_constraintVertical_bias="0.0"
+                        tools:text="Yeaayy, Pembayaran Kamu Berhasil dengan nomor pemesanan PEX2022040300006" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_icon2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_begin="200dp" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cd_informasi_detail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cd_status_pembayaran">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_16">
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_title_info_detail"
+                        style="@style/PrimaryTextStyle.SemiBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Informasi Detail"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_jenis_pembayaran"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="Jenis Pembayaran"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_placeholder_title_info_detail" />
+
+                    <TextView
+                        android:id="@+id/tv_jenis_pembayaran"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_64"
+                        android:ellipsize="end"
+                        android:gravity="end"
+                        android:maxLines="1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_placeholder_jenis_pembayaran"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_jenis_pembayaran"
+                        tools:text="Pembayaran Transfer" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_nama_bank"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="Bank"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_placeholder_jenis_pembayaran"
+                        tools:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/tv_bank"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_16"
+                        android:gravity="end"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_placeholder_nama_bank"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_nama_bank"
+                        tools:text="Mandiri"
+                        tools:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_ewallet"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="E-Wallet"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_bank"
+                        tools:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/tv_ewallet"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_16"
+                        android:gravity="end"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_placeholder_ewallet"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_ewallet"
+                        tools:text="Dana"
+                        tools:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_waktu_bayar"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="Tanggal Bayar"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_ewallet"
+                        tools:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/tv_waktu_bayar"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_16"
+                        android:gravity="end"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_placeholder_waktu_bayar"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_waktu_bayar"
+                        tools:text="2022-04-03 02:49"
+                        tools:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_ongkir"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="Tarif"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_waktu_bayar" />
+
+                    <TextView
+                        android:id="@+id/tv_ongkir"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_16"
+                        android:gravity="end"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_placeholder_ongkir"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_ongkir"
+                        tools:text="Rp. 50.000" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

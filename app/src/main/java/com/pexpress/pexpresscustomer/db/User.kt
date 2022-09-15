@@ -1,7 +1,9 @@
 package com.pexpress.pexpresscustomer.db
 
 data class User(
-    var idUser: Int? = 0,
-    var namaUser: String?,
-    var fotoProfile: String?
+    var id: Int? = null,
+    var name: String? = null,
+    var numberPhone: String?,
+    var email: String? = null,
+    var otp: Int? = null
 )
