@@ -48,13 +48,13 @@ class HomeFragment : Fragment() {
         userPreference = UserPreference(requireContext())
 
         prepareSlider()
-        prepareMainMenu()
         getDataProfile()
+        prepareMainMenu()
     }
 
     private fun getDataProfile() {
-        val numberphone = userPreference.getUser().numberPhone.toString()
-        viewModel.getProfile(numberphone)
+        val numberPhone = userPreference.getUser().numberPhone.toString()
+        viewModel.getProfile(numberPhone)
             .observe(viewLifecycleOwner) { response ->
                 if (response != null) {
                     if (response.success!!) {
@@ -68,6 +68,7 @@ class HomeFragment : Fragment() {
                                 otp = responseDetail?.otp
                             )
                         )
+                        checkCompletedProfileUser(userPreference.getUser().name)
                     } else {
                         moveToAuth()
                     }
@@ -95,11 +96,9 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun prepareMainMenu() {
-        val nameUser = UserPreference(requireContext()).getUser().name
-
+    private fun checkCompletedProfileUser(name: String?) {
         with(binding) {
-            if (nameUser.isNullOrEmpty()) {
+            if (name.isNullOrEmpty()) {
                 layoutUncompletedProfile.visibility = VISIBLE
                 menuTarifFlat.apply {
                     isEnabled = false
@@ -120,7 +119,11 @@ class HomeFragment : Fragment() {
                     alpha = 1f
                 }
             }
+        }
+    }
 
+    private fun prepareMainMenu() {
+        with(binding) {
             menuTarifFlat.setOnClickListener { moveToTarifFlat() }
             menuTarifKilometer.setOnClickListener { moveToTarifKilometer() }
             menuPexCargo.setOnClickListener {

@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -19,6 +20,7 @@ import com.pexpress.pexpresscustomer.utils.FormatDate
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_FROM_API
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_TIME_VIEW_MILESTONE
 import com.pexpress.pexpresscustomer.utils.formatRegexRupiah
+import com.pexpress.pexpresscustomer.utils.setVisibilityBottomHead
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,11 +30,17 @@ class VAPaymentFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var dataVA: VAPayment
 
+    private var isOrder = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         requireActivity().onBackPressedDispatcher.addCallback(this) {
-            findNavController().navigate(R.id.action_vaPaymentFragment_to_navigation_home)
+            if (isOrder) {
+                findNavController().navigate(R.id.action_vaPaymentFragment_to_navigation_home)
+            } else {
+                findNavController().navigateUp()
+            }
         }
     }
 
@@ -48,7 +56,10 @@ class VAPaymentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setToolbar()
 
-        dataVA = VAPaymentFragmentArgs.fromBundle(arguments as Bundle).dataVa
+        val args = VAPaymentFragmentArgs.fromBundle(arguments as Bundle)
+        dataVA = args.dataVa
+        isOrder = args.isFromOrder
+
         prepareDataPayout()
 
         with(binding) {
@@ -66,6 +77,11 @@ class VAPaymentFragment : Fragment() {
             }
             btnBookNow.setOnClickListener { checkPayment() }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!isOrder) setVisibilityBottomHead(requireActivity(), false)
     }
 
     private fun prepareDataPayout() {
@@ -140,6 +156,17 @@ class VAPaymentFragment : Fragment() {
 
     private fun setToolbar() {
         (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            if (isOrder) {
+                findNavController().navigate(R.id.action_vaPaymentFragment_to_navigation_home)
+            } else {
+                findNavController().navigateUp()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {

@@ -2,6 +2,7 @@ package com.pexpress.pexpresscustomer.view.main.order.checkout.cash
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
@@ -15,6 +16,7 @@ import com.pexpress.pexpresscustomer.databinding.FragmentCashPaymentBinding
 import com.pexpress.pexpresscustomer.db.payments.CashPayment
 import com.pexpress.pexpresscustomer.utils.formatRegexRupiah
 import com.pexpress.pexpresscustomer.utils.getAuthToken
+import com.pexpress.pexpresscustomer.utils.setVisibilityBottomHead
 import com.pexpress.pexpresscustomer.utils.showMessage
 import com.pexpress.pexpresscustomer.view.main.order.viewmodel.PaymentViewModel
 import www.sanju.motiontoast.MotionToast
@@ -27,12 +29,17 @@ class CashPaymentFragment : Fragment() {
 
     private lateinit var authorization: String
     private lateinit var dataCash: CashPayment
+    private var isOrder = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         requireActivity().onBackPressedDispatcher.addCallback(this) {
-            // back
+            if (isOrder) {
+                findNavController().navigate(R.id.action_cashPaymentFragment_to_navigation_home)
+            } else {
+                findNavController().navigateUp()
+            }
         }
     }
 
@@ -50,7 +57,7 @@ class CashPaymentFragment : Fragment() {
 
         val args = CashPaymentFragmentArgs.fromBundle(arguments as Bundle)
         dataCash = args.dataCash
-        val isOrder = args.isFromOrder
+        isOrder = args.isFromOrder
 
         setupView()
 
@@ -65,6 +72,11 @@ class CashPaymentFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!isOrder) setVisibilityBottomHead(requireActivity(), false)
     }
 
     private fun setupView() {
@@ -122,6 +134,17 @@ class CashPaymentFragment : Fragment() {
 
     private fun setToolbar() {
         (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            if (isOrder) {
+                findNavController().navigate(R.id.action_cashPaymentFragment_to_navigation_home)
+            } else {
+                findNavController().navigateUp()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroyView() {

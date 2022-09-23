@@ -2,7 +2,7 @@ package com.pexpress.pexpresscustomer.model.profile
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 data class ResponseProfile(
 
@@ -41,5 +41,9 @@ data class ResultProfile(
     val fullname: String? = null,
 
     @field:SerializedName("email")
-    val email: String? = null
+    val email: String? = null,
+
+    @field:SerializedName("device_id")
+    val deviceId: String? = null,
+
 ) : Parcelable

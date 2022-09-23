@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
+import com.pexpress.pexpresscustomer.model.distance.ResponseDistance
 import com.pexpress.pexpresscustomer.model.fix_rate.ongkir.ResponseCheckOngkirFixRate
 import com.pexpress.pexpresscustomer.model.kilometer.ongkir.ResponseCheckOngkirKilometer
 import com.pexpress.pexpresscustomer.network.ApiConfig
@@ -13,6 +14,7 @@ import retrofit2.Response
 
 class OngkirViewModel : ViewModel() {
 
+    private var _distance: MutableLiveData<ResponseDistance?>? = null
     private var _cekOngkirFixRate: MutableLiveData<ResponseCheckOngkirFixRate?>? = null
     private var _cekOngkirKilometer: MutableLiveData<ResponseCheckOngkirKilometer?>? = null
 
@@ -82,5 +84,30 @@ class OngkirViewModel : ViewModel() {
                 _cekOngkirKilometer!!.postValue(null)
             }
         })
+    }
+
+    fun checkDistance(params: HashMap<String, String>): LiveData<ResponseDistance?> {
+        _distance = MutableLiveData()
+        val client = ApiConfig.getApiService(true).checkDirections(params)
+        client.enqueue(object : Callback<ResponseDistance> {
+            override fun onResponse(
+                call: Call<ResponseDistance>,
+                response: Response<ResponseDistance>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    result.also {
+                        _distance?.postValue(it)
+                    }
+                } else {
+                    _distance?.postValue(ResponseDistance(status = "FAILED"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseDistance>, t: Throwable) {
+                _distance?.postValue(null)
+            }
+        })
+        return _distance as MutableLiveData<ResponseDistance?>
     }
 }

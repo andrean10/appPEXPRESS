@@ -9,17 +9,24 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.TextInputLayout
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentTarifFixRateOngkirBinding
 import com.pexpress.pexpresscustomer.utils.UtilsCode
+import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_ASAL
+import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_TUJUAN
+import com.pexpress.pexpresscustomer.utils.UtilsCode.TARIF_TYPE_PACKAGE_FIXRATE
+import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_FIXRATE
 import com.pexpress.pexpresscustomer.utils.showMessage
 import com.pexpress.pexpresscustomer.view.main.ongkir.detail.DetailOngkirActivity
 import com.pexpress.pexpresscustomer.view.main.ongkir.pick_location.PickPlaceLocationActivity
 import com.pexpress.pexpresscustomer.view.main.ongkir.viewmodel.OngkirViewModel
+import com.pexpress.pexpresscustomer.view.main.ongkir.viewmodel.TarifFixRateViewModel
 import com.pexpress.pexpresscustomer.view.main.order.dialog.jenis_layanan.JenisLayananDialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.dialog.ukuran_barang.UkuranBarangDialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.viewmodel.OrderPaketViewModel
+import com.pexpress.pexpresscustomer.view.main.order.viewmodel.PFixRateViewModel
 import www.sanju.motiontoast.MotionToast
 
 class TarifFixRateOngkirFragment : Fragment() {
@@ -27,8 +34,8 @@ class TarifFixRateOngkirFragment : Fragment() {
     private var _binding: FragmentTarifFixRateOngkirBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by activityViewModels<OngkirViewModel>()
-    private val viewModel2 by activityViewModels<OrderPaketViewModel>()
+    private val viewModel by viewModels<OngkirViewModel>()
+    private val viewModelTarifFixRate by activityViewModels<TarifFixRateViewModel>()
 
     private lateinit var modalJenisLayanan: JenisLayananDialogFragment
     private lateinit var modalUkuranBarang: UkuranBarangDialogFragment
@@ -39,8 +46,6 @@ class TarifFixRateOngkirFragment : Fragment() {
     private var gKecTujuan = ""
     private var jenisPengiriman = ""
     private var jenisUkuran = ""
-
-    private val TAG = TarifFixRateOngkirFragment::class.simpleName
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,19 +61,21 @@ class TarifFixRateOngkirFragment : Fragment() {
 
         with(binding) {
             edtAsal.setOnClickListener {
-                moveToPickPlaceLocation(UtilsCode.FORM_ASAL)
+                moveToPickPlaceLocation(FORM_ASAL)
             }
 
             edtTujuan.setOnClickListener {
-                moveToPickPlaceLocation(UtilsCode.FORM_TUJUAN)
+                moveToPickPlaceLocation(FORM_TUJUAN)
             }
 
             edtJenisLayanan.setOnClickListener {
-                modalJenisLayanan.show(parentFragmentManager, JenisLayananDialogFragment.TAG)
+                modalJenisLayanan.newInstance(TARIF_TYPE_PACKAGE_FIXRATE)
+                    .show(parentFragmentManager, JenisLayananDialogFragment.TAG)
             }
 
             edtUkuranBarang.setOnClickListener {
-                modalUkuranBarang.show(parentFragmentManager, UkuranBarangDialogFragment.TAG)
+                modalUkuranBarang.newInstance(TARIF_TYPE_PACKAGE_FIXRATE)
+                    .show(parentFragmentManager, UkuranBarangDialogFragment.TAG)
             }
 
             btnCekOngkir.setOnClickListener { checkOngkir() }
@@ -128,7 +135,7 @@ class TarifFixRateOngkirFragment : Fragment() {
                 val idForm = result.data?.getIntExtra(PickPlaceLocationActivity.EXTRA_FORM, 0)
                 with(binding) {
                     when (idForm) {
-                        UtilsCode.FORM_ASAL -> {
+                        FORM_ASAL -> {
                             cabangAsal =
                                 result.data?.getStringExtra(PickPlaceLocationActivity.EXTRA_CABANG)
                                     .toString()
@@ -140,7 +147,7 @@ class TarifFixRateOngkirFragment : Fragment() {
                                     .toString()
                             )
                         }
-                        UtilsCode.FORM_TUJUAN -> {
+                        FORM_TUJUAN -> {
                             cabangTujuan =
                                 result.data?.getStringExtra(PickPlaceLocationActivity.EXTRA_CABANG)
                                     .toString()
@@ -162,10 +169,7 @@ class TarifFixRateOngkirFragment : Fragment() {
             if (response != null) {
                 if (response.success!!) {
                     val intent = Intent(requireContext(), DetailOngkirActivity::class.java).apply {
-                        putExtra(
-                            DetailOngkirActivity.EXTRA_TYPE_PACKAGE,
-                            UtilsCode.TYPE_PACKAGE_FIXRATE
-                        )
+                        putExtra(DetailOngkirActivity.EXTRA_TYPE_PACKAGE, TYPE_PACKAGE_FIXRATE)
                         putExtra(DetailOngkirActivity.EXTRA_DATA_ASAL, gKecAsal)
                         putExtra(DetailOngkirActivity.EXTRA_DATA_TUJUAN, gKecTujuan)
                         putExtra(DetailOngkirActivity.EXTRA_DATA, response.data?.get(0))
@@ -191,14 +195,14 @@ class TarifFixRateOngkirFragment : Fragment() {
     }
 
     private fun observeJenisLayanan() {
-        viewModel2.formJenisLayanan.observe(viewLifecycleOwner) { value ->
+        viewModelTarifFixRate.formJenisLayanan.observe(viewLifecycleOwner) { value ->
             jenisPengiriman = value.idlayanan.toString()
             binding.edtJenisLayanan.setText(value.layanan)
         }
     }
 
     private fun observeUkuranBarang() {
-        viewModel2.formUkuranBarang.observe(viewLifecycleOwner) { value ->
+        viewModelTarifFixRate.formUkuranBarang.observe(viewLifecycleOwner) { value ->
             jenisUkuran = value.idjenisukuran.toString()
             binding.edtUkuranBarang.setText(value.jenisukuran)
         }
@@ -207,7 +211,7 @@ class TarifFixRateOngkirFragment : Fragment() {
     private fun moveToPickPlaceLocation(idForm: Int) {
         val bundle = Bundle().apply {
             putInt(PickPlaceLocationActivity.EXTRA_FORM, idForm)
-            putInt(PickPlaceLocationActivity.EXTRA_TYPE_PACKAGE, UtilsCode.TYPE_PACKAGE_FIXRATE)
+            putInt(PickPlaceLocationActivity.EXTRA_TYPE_PACKAGE, TYPE_PACKAGE_FIXRATE)
         }
 
         val intent = Intent(requireContext(), PickPlaceLocationActivity::class.java).apply {
@@ -223,5 +227,9 @@ class TarifFixRateOngkirFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        viewModelTarifFixRate.apply {
+            removeFormJenisLayanan()
+            removeFormUkuranBarang()
+        }
     }
 }

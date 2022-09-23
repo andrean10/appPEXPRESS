@@ -201,11 +201,12 @@ class PickPlaceLocationFragment : Fragment() {
                     }
                 }
             }
-            checkDistrict(kecamatan, address, gkec)
+
+            checkDistrict(kecamatan, address, gkec, place.id)
         }
     }
 
-    private fun checkDistrict(kecamatan: String, address: String, gKec: String) {
+    private fun checkDistrict(kecamatan: String, address: String, gKec: String, placeId: String?) {
         val layanan = when (idTypePackage) {
             TYPE_PACKAGE_FIXRATE -> "fix_rate"
             TYPE_PACKAGE_KILOMETER -> "kilometer"
@@ -217,7 +218,7 @@ class PickPlaceLocationFragment : Fragment() {
                 if (response.success!!) {
                     val result = response.data?.get(0)
                     val idDistrict = result?.idDistrict ?: 0
-                    checkCabang(idDistrict, address, gKec)
+                    checkCabang(idDistrict, address, gKec, placeId)
                 } else {
                     showMessage(
                         requireActivity(),
@@ -239,7 +240,7 @@ class PickPlaceLocationFragment : Fragment() {
         }
     }
 
-    private fun checkCabang(idDistrict: Int, address: String, gKec: String) {
+    private fun checkCabang(idDistrict: Int, address: String, gKec: String, placeId: String?) {
         viewModel.checkCabang(idDistrict).observe(viewLifecycleOwner) { response ->
             isLoadingClickDetail(false)
             Log.d(TAG, "checkCabang: $response")
@@ -248,7 +249,7 @@ class PickPlaceLocationFragment : Fragment() {
                     val result = response.data?.get(0)
                     result?.also {
                         if (it.isactive == 1) {
-                            setFormDataLocation(result.idCabang ?: 0, address, gKec, idDistrict)
+                            setFormDataLocation(result.idCabang ?: 0, address, gKec, idDistrict, placeId)
                             showMessage(
                                 requireActivity(),
                                 getString(R.string.text_success),
@@ -286,7 +287,8 @@ class PickPlaceLocationFragment : Fragment() {
         idCabang: Int = 0,
         address: String,
         gKec: String,
-        idDistrict: Int
+        idDistrict: Int,
+        placeId: String?
     ) {
         when (idForm) {
             FORM_PENGIRIM -> {
@@ -297,6 +299,7 @@ class PickPlaceLocationFragment : Fragment() {
                     "kecamatanpengirim" to idDistrict,
                 )
                 val valueLatLng = hashMapOf(
+                    "placeId" to placeId.toString(),
                     "latpengirim" to pointMapAutocomplete?.latitude.toString(),
                     "longpengirim" to pointMapAutocomplete?.longitude.toString()
                 )
@@ -321,6 +324,7 @@ class PickPlaceLocationFragment : Fragment() {
                     "kecamatanpenerima" to idDistrict,
                 )
                 val valueLatLng = hashMapOf(
+                    "placeId" to placeId.toString(),
                     "latpenerima" to pointMapAutocomplete?.latitude.toString(),
                     "longpenerima" to pointMapAutocomplete?.longitude.toString()
                 )

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
 import android.util.Base64
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
@@ -14,7 +15,11 @@ import androidx.fragment.app.FragmentActivity
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.appbar.MaterialToolbar
 import com.pexpress.pexpresscustomer.R
+import com.pexpress.pexpresscustomer.model.distance.Distance
+import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 import www.sanju.motiontoast.MotionToast
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
 import kotlin.math.PI
@@ -245,3 +250,30 @@ val String.capitalizeEachWords
             }
         }
     }
+
+fun Distance.parseKm(): String {
+    var newValue = ""
+    val value = this.value ?: 0
+    val text = this.text ?: ""
+
+    with(text) {
+        when {
+            contains("km") -> {
+                newValue = replace("km", "").trim()
+            }
+            contains("m") -> {
+                val km = value.toDouble() / 1000
+                val formatKm = String.format(Locale.US, "%.2f", km)
+                Log.d(TAG, "parseKm: $formatKm")
+                newValue = formatKm
+            }
+        }
+    }
+    return newValue
+}
+
+fun roundingDistance(jarak: Double): String {
+    val df = DecimalFormat("#")
+    df.roundingMode = RoundingMode.UP
+    return df.format(jarak)
+}

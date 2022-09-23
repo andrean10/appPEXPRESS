@@ -4,12 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.pexpress.pexpresscustomer.BuildConfig
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentAccountBinding
 import com.pexpress.pexpresscustomer.session.UserPreference
@@ -40,6 +43,7 @@ class AccountFragment : Fragment() {
         userPreference = UserPreference(requireContext())
 
         with(binding) {
+            tvAppVersionNumber.text = BuildConfig.VERSION_NAME
             btnEditProfile.setOnClickListener { moveToManageProfile() }
             btnSignOut.setOnClickListener { exitApp() }
         }
@@ -97,13 +101,13 @@ class AccountFragment : Fragment() {
     private fun isLoading(state: Boolean) {
         with(binding) {
             if (state) {
-                layoutLoading.visibility = View.VISIBLE
+                layoutLoading.visibility = VISIBLE
                 requireActivity().window.setFlags(
                     WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                     WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
                 )
             } else {
-                layoutLoading.visibility = View.GONE
+                layoutLoading.visibility = GONE
                 requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             }
         }

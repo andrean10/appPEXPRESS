@@ -2,6 +2,7 @@ package com.pexpress.pexpresscustomer.view.auth.otp
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.common.internal.FallbackServiceBroker
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentVerifyOtpBinding
 import com.pexpress.pexpresscustomer.db.User
@@ -35,6 +37,8 @@ class VerifyOTPFragment : Fragment() {
     private var otp3 = false
     private var otp4 = false
 
+    private lateinit var stringAndroidID: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -53,8 +57,8 @@ class VerifyOTPFragment : Fragment() {
         setToolbar()
 
         numberPhone = VerifyOTPFragmentArgs.fromBundle(arguments as Bundle).numberPhone
-        setupViewOTP()
 
+        setupViewOTP()
         observeInputOTP()
 
         with(binding) {
@@ -66,6 +70,8 @@ class VerifyOTPFragment : Fragment() {
     private fun setupViewOTP() {
         userPreference = UserPreference(requireContext())
         binding.tvOtpDesc.text = getString(R.string.otp_desc, numberPhone)
+
+        stringAndroidID = Settings.Secure.getString(requireActivity().contentResolver, Settings.Secure.ANDROID_ID)
     }
 
     private fun getOTPAgain() {
@@ -185,7 +191,8 @@ class VerifyOTPFragment : Fragment() {
 
             val params = hashMapOf(
                 "contact" to numberPhone,
-                "otp" to otp
+                "otp" to otp,
+                "device_id" to stringAndroidID
             )
 
             viewModel.otp(params).observe(viewLifecycleOwner) { response ->
@@ -196,7 +203,8 @@ class VerifyOTPFragment : Fragment() {
                             setLogin(UtilsApplications(isLoginValid = true))
                             setUser(
                                 User(
-                                    numberPhone = numberPhone
+                                    numberPhone = numberPhone,
+                                    deviceId = stringAndroidID
                                 )
                             )
                         }
@@ -222,7 +230,9 @@ class VerifyOTPFragment : Fragment() {
     }
 
     private fun moveToMainActivity() {
-        startActivity(Intent(requireContext(), MainActivity::class.java))
+        startActivity(Intent(requireContext(), MainActivity::class.java).apply {
+            putExtra(MainActivity.EXTRA_IS_FROM_AUTH, true)
+        })
         activity?.finish()
     }
 

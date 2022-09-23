@@ -39,6 +39,7 @@ class PFixRateViewModel : ViewModel() {
     }
     private val _formLatLongPengirim = MutableLiveData<HashMap<String, String>>().apply {
         value = hashMapOf(
+            "placeId" to "",
             "latpengirim" to "",
             "longpengirim" to ""
         )
@@ -53,6 +54,7 @@ class PFixRateViewModel : ViewModel() {
     }
     private val _formLatLongPenerima = MutableLiveData<HashMap<String, String>>().apply {
         value = hashMapOf(
+            "placeId" to "",
             "latpenerima" to "",
             "longpenerima" to ""
         )
@@ -64,7 +66,6 @@ class PFixRateViewModel : ViewModel() {
     private var _checkSubTotal = MutableLiveData<Boolean>()
     private var _cekOngkirFixRate: MutableLiveData<ResponseCheckOngkirFixRate?>? = null
     private var _checkout: MutableLiveData<ResponseCheckout?>? = null
-    private var _checkoutUpdate: MutableLiveData<ResponseCheckoutUpdate?>? = null
 
     fun setStateInfoPengirim(state: Boolean) {
         _stateInfoPengirim.value = state

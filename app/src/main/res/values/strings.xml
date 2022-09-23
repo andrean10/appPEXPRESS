@@ -16,12 +16,6 @@
     <string name="onboarding_description2">Kamu hanya perlu duduk santai karena Warrior Pexpress selalu siap <i>pick up</i> paket secara gratis dan tanpa minimum <i>order</i>.</string>
     <string name="onboarding_description3">Tidak perlu repot untuk <i>input</i> alamat secara berulang, cukup simpan beberapa alamat favorit kamu untuk menentukan titik <i>pick up</i> dan tujuan pengiriman paket.</string>
     <string name="onboarding_description4">Metode pembayaran <i>cash</i> maupun <i>cashless</i> dapat dipilih sesuai kebutuhanmu. Transaksi menjadi semakin aman, nyaman, dan mudah.</string>
-    <string name="lorem_ipsum_title">Lorem Ipsum</string>
-    <string name="lorem_ipsum">Lorem Ipsum is simply placeholder text of the printing and
-        typesetting industry. Lorem Ipsum has been the industry\'s standard placeholder text ever
-        since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
-        type specimen book"
-    </string>
 
     <string name="title_activity_on_boarding">OnBoardingActivity</string>
     <string name="tab_text_1">Tab 1</string>
@@ -218,8 +212,8 @@
     <string name="jenis_ukuran_title">Jenis Ukuran</string>
     <string name="jenis_barang_title">Jenis Barang</string>
     <string name="home_profil_anda_belum_lengkap">Profil anda belum lengkap!</string>
-    <string name="home_menu_pex_chargo">Untuk order pex cargo hubungi CS Pex Jakarta 0895–8100-30066. Terima kasih</string>
-    <string name="home_menu_mitra">Untuk menjadi mitra Pex hubungi nomor 0895–6034-15486. Terima kasih</string>
+    <string name="home_menu_pex_chargo">Untuk order pex cargo hubungi CS Pex Jakarta 0895&#8211;8100&#8211;30066. Terima kasih</string>
+    <string name="home_menu_mitra">Untuk menjadi mitra Pex hubungi nomor 0895&#8211;6034&#8211;15486. Terima kasih</string>
     <string name="home_menu_pex_chargo_number_phone">+62895810030066</string>
     <string name="home_menu_mitra_number_phone">+62895603415486</string>
     <string name="detail_title_status_succes">Pembayaran Berhasil</string>
@@ -280,5 +274,10 @@
     <string name="placeholder_logo_pexpresss">Logo PEXPRESSS</string>
     <string name="placeholder_image_onboarding">Image OnBoarding</string>
     <string name="placeholder_image_banner">Image Banner</string>
+    <string name="placeholder_paket">Pembayaran Paket %s</string>
+    <string name="desc_ubah_profile">Icon Ubah Profile</string>
+    <string name="desc_logout">Icon Logout</string>
+    <string name="desc_right">Icon Arrow Right</string>
+    <string name="desc_logo_bank">Logo Bank</string>
 
 </resources>

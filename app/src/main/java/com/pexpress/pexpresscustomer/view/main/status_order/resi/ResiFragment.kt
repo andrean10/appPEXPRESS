@@ -280,8 +280,6 @@ class ResiFragment : Fragment() {
         return returnedBitmap
     }
 
-    private val TAG = ResiFragment::class.simpleName
-
     private fun updateOrRequestPermission() {
         val hasReadPermission = checkSelfPermission(
             requireContext(),

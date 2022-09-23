@@ -138,6 +138,19 @@
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.21354166666666666" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/mipmap-anydpi-v26/ic_launcher_old.xml" value="0.1" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/xml/network_security_config.xml" value="0.10989583333333333" />
+        <entry key="app/src/main/res/font/poppins_bold.xml" value="0.5583333333333333" />
+        <entry key="app/src/main/res/font/poppins_light.xml" value="0.5583333333333333" />
+        <entry key="app/src/main/res/font/poppins_medium.xml" value="0.5583333333333333" />
+        <entry key="app/src/main/res/font/poppins_regular.xml" value="0.5583333333333333" />
+        <entry key="app/src/main/res/font/poppins_semibold.xml" value="0.5583333333333333" />
+        <entry key="app/src/main/res/layout/activity_detail_ongkir.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_account.xml" value="0.2817028985507246" />
+        <entry key="app/src/main/res/layout/fragment_cash_payment.xml" value="0.2801418439716312" />
+        <entry key="app/src/main/res/layout/fragment_checkout.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2801418439716312" />
+        <entry key="app/src/main/res/layout/fragment_p_kilometer.xml" value="0.28020833333333334" />
+        <entry key="app/src/main/res/layout/fragment_status_pembayaran.xml" value="0.38333333333333336" />
+        <entry key="app/src/main/res/layout/fragment_va_payment.xml" value="0.2801418439716312" />
       </map>
     </option>
   </component>

@@ -21,6 +21,7 @@ import com.pexpress.pexpresscustomer.databinding.FragmentEWalletPaymentBinding
 import com.pexpress.pexpresscustomer.db.payments.EWalletPayment
 import com.pexpress.pexpresscustomer.network.ApiConfig
 import com.pexpress.pexpresscustomer.utils.*
+import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 import com.pexpress.pexpresscustomer.view.main.order.viewmodel.PaymentViewModel
 import www.sanju.motiontoast.MotionToast
 
@@ -32,15 +33,18 @@ class EWalletPaymentFragment : Fragment() {
 
     private var dataEWallet: EWalletPayment? = null
     private var isCreateEWallet = false
-
-    private val TAG = EWalletPaymentFragment::class.simpleName
+    private var isOrder = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         requireActivity().onBackPressedDispatcher.addCallback(this) {
-            if (isCreateEWallet) { // kalau order sudah dibuat tombol kembali ke halaman home
-                findNavController().navigate(R.id.action_EWalletPaymentFragment_to_navigation_home)
+            if (isOrder) {
+                if (isCreateEWallet) { // kalau order sudah dibuat tombol kembali ke halaman home
+                    findNavController().navigate(R.id.action_EWalletPaymentFragment_to_navigation_home)
+                } else {
+                    findNavController().navigateUp()
+                }
             } else {
                 findNavController().navigateUp()
             }
@@ -61,7 +65,9 @@ class EWalletPaymentFragment : Fragment() {
 
         val args = EWalletPaymentFragmentArgs.fromBundle(arguments as Bundle)
         dataEWallet = args.dataEwallet
-        val isOrder = args.isFromOrder
+        isOrder = args.isFromOrder
+
+        Log.d(TAG, "onViewCreated: $isOrder")
 
         setupView()
 
@@ -82,6 +88,11 @@ class EWalletPaymentFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!isOrder) setVisibilityBottomHead(requireActivity(), false)
     }
 
     private fun setupView() {
@@ -150,7 +161,6 @@ class EWalletPaymentFragment : Fragment() {
                         if (!actions.mobileDeeplinkCheckoutUrl.isNullOrEmpty()) { // deep link url
                             val uri = Uri.parse(actions.mobileDeeplinkCheckoutUrl)
                             startActivity(Intent(Intent.ACTION_VIEW, uri))
-                            Log.d(TAG, "observeCreateEWallet: Berjalan di mobile deep link")
                         } else if (!actions.mobileWebCheckoutUrl.isNullOrEmpty()) { // web url
 //                            val toEWalletWebView =
 //                                EWalletPaymentFragmentDirections.actionEWalletPaymentFragmentToEWalletWebViewFragment(
@@ -205,8 +215,12 @@ class EWalletPaymentFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            if (isCreateEWallet) { // kalau order sudah dibuat tombol kembali ke halaman home
-                findNavController().navigate(R.id.action_EWalletPaymentFragment_to_navigation_home)
+            if (isOrder) {
+                if (isCreateEWallet) { // kalau order sudah dibuat tombol kembali ke halaman home
+                    findNavController().navigate(R.id.action_EWalletPaymentFragment_to_navigation_home)
+                } else {
+                    findNavController().navigateUp()
+                }
             } else {
                 findNavController().navigateUp()
             }

@@ -15,8 +15,13 @@ import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentJenisLayananDialogBinding
 import com.pexpress.pexpresscustomer.model.order.ResultJenisLayanan
 import com.pexpress.pexpresscustomer.utils.UtilsCode.CONSTANT_TYPE_PACKAGE
+import com.pexpress.pexpresscustomer.utils.UtilsCode.TARIF_TYPE_PACKAGE_FIXRATE
+import com.pexpress.pexpresscustomer.utils.UtilsCode.TARIF_TYPE_PACKAGE_KILOMETER
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_FIXRATE
+import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_KILOMETER
 import com.pexpress.pexpresscustomer.utils.showMessage
+import com.pexpress.pexpresscustomer.view.main.ongkir.viewmodel.TarifFixRateViewModel
+import com.pexpress.pexpresscustomer.view.main.ongkir.viewmodel.TarifKilometerViewModel
 import com.pexpress.pexpresscustomer.view.main.order.dialog.jenis_layanan.adapter.JenisLayananAdapter
 import com.pexpress.pexpresscustomer.view.main.order.viewmodel.OrderPaketViewModel
 import com.pexpress.pexpresscustomer.view.main.order.viewmodel.PFixRateViewModel
@@ -31,10 +36,12 @@ class JenisLayananDialogFragment : BottomSheetDialogFragment() {
     private val viewModel by viewModels<OrderPaketViewModel>()
     private val viewModelFixRate by activityViewModels<PFixRateViewModel>()
     private val viewModelKilometer by activityViewModels<PKilometerViewModel>()
+    private val viewModelTarifFixRate by activityViewModels<TarifFixRateViewModel>()
+    private val viewModelTarifKilometer by activityViewModels<TarifKilometerViewModel>()
 
     private lateinit var jenisLayananAdapter: JenisLayananAdapter
 
-    private var typePackage = 0
+    private var type = 0
 
     companion object {
         val TAG = JenisLayananDialogFragment::class.simpleName
@@ -62,7 +69,7 @@ class JenisLayananDialogFragment : BottomSheetDialogFragment() {
         prepareServiceType()
 
         if (arguments != null) {
-            typePackage = arguments!!.getInt(CONSTANT_TYPE_PACKAGE, 0)
+            type = arguments!!.getInt(CONSTANT_TYPE_PACKAGE, 0)
         }
 
         binding.btnClose.setOnClickListener {
@@ -108,10 +115,15 @@ class JenisLayananDialogFragment : BottomSheetDialogFragment() {
                 jenisLayananAdapter.setOnItemClickCallBack(object :
                     JenisLayananAdapter.OnItemClickCallBack {
                     override fun onItemClicked(result: ResultJenisLayanan) {
-                        if (typePackage == TYPE_PACKAGE_FIXRATE) {
-                            viewModelFixRate.setFormJenisLayanan(result)
-                        } else {
-                            viewModelKilometer.setFormJenisLayanan(result)
+                        when (type) {
+                            TYPE_PACKAGE_FIXRATE -> viewModelFixRate.setFormJenisLayanan(result)
+                            TYPE_PACKAGE_KILOMETER -> viewModelKilometer.setFormJenisLayanan(result)
+                            TARIF_TYPE_PACKAGE_FIXRATE -> viewModelTarifFixRate.setFormJenisLayanan(
+                                result
+                            )
+                            TARIF_TYPE_PACKAGE_KILOMETER -> viewModelTarifKilometer.setFormJenisLayanan(
+                                result
+                            )
                         }
                         dialog?.dismiss()
                     }

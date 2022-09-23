@@ -9,6 +9,8 @@ import com.pexpress.pexpresscustomer.databinding.ActivityDetailOngkirBinding
 import com.pexpress.pexpresscustomer.model.fix_rate.ongkir.ResultCheckOngkirFixRate
 import com.pexpress.pexpresscustomer.model.kilometer.ongkir.ResultCheckOngkirKilometer
 import com.pexpress.pexpresscustomer.utils.UtilsCode
+import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_FIXRATE
+import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_KILOMETER
 import com.pexpress.pexpresscustomer.utils.formatRupiah
 
 class DetailOngkirActivity : AppCompatActivity() {
@@ -40,7 +42,7 @@ class DetailOngkirActivity : AppCompatActivity() {
             val tujuan = intent.getStringExtra(EXTRA_DATA_TUJUAN)
 
             when (idTypePackage) {
-                UtilsCode.TYPE_PACKAGE_FIXRATE -> {
+                TYPE_PACKAGE_FIXRATE -> {
                     val data = intent.getParcelableExtra<ResultCheckOngkirFixRate>(EXTRA_DATA)
                     data?.also {
                         tvOngkirAsal.text = asal
@@ -56,7 +58,7 @@ class DetailOngkirActivity : AppCompatActivity() {
                     placeholderJarakTempuh.visibility = View.GONE
                     tvOngkirJarakTempuh.visibility = View.GONE
                 }
-                UtilsCode.TYPE_PACKAGE_KILOMETER -> {
+                TYPE_PACKAGE_KILOMETER -> {
                     val data = intent.getParcelableExtra<ResultCheckOngkirKilometer>(EXTRA_DATA)
                     val jarak = intent.getStringExtra(EXTRA_DATA_JARAK)
                     data?.also {

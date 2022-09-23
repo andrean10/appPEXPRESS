@@ -118,6 +118,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/dimen_16"
                         android:src="@drawable/ic_arrow_right"
+                        android:contentDescription="@string/desc_right"
                         app:layout_constraintBottom_toBottomOf="@+id/placeholder_transfer"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/placeholder_transfer" />
@@ -152,6 +153,7 @@
                             android:adjustViewBounds="true"
                             android:background="@null"
                             android:scaleType="centerInside"
+                            android:contentDescription="@string/desc_logo_bank"
                             app:layout_constraintBottom_toTopOf="@+id/gd_va2"
                             app:layout_constraintEnd_toStartOf="@+id/gd_va"
                             app:layout_constraintHorizontal_bias="0.0"
@@ -229,6 +231,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/dimen_16"
                         android:src="@drawable/ic_arrow_right"
+                        android:contentDescription="@string/desc_right"
                         app:layout_constraintBottom_toBottomOf="@+id/placeholder_ewallet"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/placeholder_ewallet" />
@@ -240,6 +243,7 @@
                         android:layout_marginTop="@dimen/dimen_16"
                         android:paddingBottom="@dimen/dimen_16"
                         android:visibility="gone"
+                        android:contentDescription="@string/desc_right"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -263,6 +267,7 @@
                             android:adjustViewBounds="true"
                             android:background="@null"
                             android:scaleType="centerInside"
+                            android:contentDescription="@string/desc_logo_bank"
                             app:layout_constraintBottom_toTopOf="@+id/gd_ewallet2"
                             app:layout_constraintEnd_toStartOf="@+id/gd_ewallet"
                             app:layout_constraintHorizontal_bias="0.0"
@@ -336,15 +341,15 @@
             <!--            </com.google.android.material.card.MaterialCardView>-->
 
             <TextView
-                android:id="@+id/placeholder_jenis_pembayaran"
+                android:id="@+id/tv_title_jenis_pembayaran"
                 style="@style/PrimaryTextStyle.SemiBold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Pembayaran Paket Fix Rate"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Pembayaran Paket Fix Rate" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cd_total_pay"
@@ -353,7 +358,7 @@
                 android:layout_marginTop="@dimen/dimen_8"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/placeholder_jenis_pembayaran">
+                app:layout_constraintTop_toBottomOf="@+id/tv_title_jenis_pembayaran">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

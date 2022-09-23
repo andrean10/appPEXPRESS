@@ -18,6 +18,18 @@ import retrofit2.Response
 
 class PKilometerViewModel : ViewModel() {
 
+    private val _stateInfoPengirim = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+
+    private val _stateInfoPenerima = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+
+    private val _stateInfoPickup = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+
     private val _formAsalPengirim = MutableLiveData<HashMap<String, Any>>().apply {
         value = hashMapOf(
             "id_cabang_asal" to 0,
@@ -54,7 +66,18 @@ class PKilometerViewModel : ViewModel() {
     private var _checkSubTotal = MutableLiveData<Boolean>()
     private var _cekOngkirKilometer: MutableLiveData<ResponseCheckOngkirKilometer?>? = null
     private var _checkout: MutableLiveData<ResponseCheckoutKilometer?>? = null
-    private var _checkoutUpdate: MutableLiveData<ResponseCheckoutUpdate?>? = null
+
+    fun setStateInfoPengirim(state: Boolean) {
+        _stateInfoPengirim.value = state
+    }
+
+    fun setStateInfoPenerima(state: Boolean) {
+        _stateInfoPenerima.value = state
+    }
+
+    fun setStateInfoPickup(state: Boolean) {
+        _stateInfoPickup.value = state
+    }
 
     fun setFormAsalPengirim(value: HashMap<String, Any>) {
         _formAsalPengirim.value = value
@@ -183,12 +206,7 @@ class PKilometerViewModel : ViewModel() {
                         _distance?.postValue(it)
                     }
                 } else {
-                    val error =
-                        Gson().fromJson(
-                            response.errorBody()?.string(),
-                            ResponseDistance::class.java
-                        )
-                    _distance?.postValue(error)
+                    _distance?.postValue(ResponseDistance(status = "FAILED"))
                 }
             }
 
@@ -229,6 +247,10 @@ class PKilometerViewModel : ViewModel() {
         })
         return _checkout as MutableLiveData<ResponseCheckoutKilometer?>
     }
+
+    val stateInfoPengirim: LiveData<Boolean> = _stateInfoPengirim
+    val stateInfoPenerima: LiveData<Boolean> = _stateInfoPenerima
+    val stateInfoPickup: LiveData<Boolean> = _stateInfoPickup
 
     val formAsalPengirim: LiveData<HashMap<String, Any>> = _formAsalPengirim
     val formAsalPenerima: LiveData<HashMap<String, Any>> = _formAsalPenerima

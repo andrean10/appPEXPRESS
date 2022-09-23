@@ -3,6 +3,7 @@ package com.pexpress.pexpresscustomer.view.main.ongkir.tabview
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,19 +11,24 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.textfield.TextInputLayout
+import com.pexpress.pexpresscustomer.BuildConfig
+import com.pexpress.pexpresscustomer.BuildConfig.MAPS_API_KEY
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentTarifKilometerOngkirBinding
 import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_ASAL
 import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_TUJUAN
+import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
+import com.pexpress.pexpresscustomer.utils.UtilsCode.TARIF_TYPE_PACKAGE_KILOMETER
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_KILOMETER
-import com.pexpress.pexpresscustomer.utils.distance
+import com.pexpress.pexpresscustomer.utils.parseKm
+import com.pexpress.pexpresscustomer.utils.roundingDistance
 import com.pexpress.pexpresscustomer.utils.showMessage
 import com.pexpress.pexpresscustomer.view.main.ongkir.detail.DetailOngkirActivity
 import com.pexpress.pexpresscustomer.view.main.ongkir.pick_location.PickPlaceLocationActivity
 import com.pexpress.pexpresscustomer.view.main.ongkir.viewmodel.OngkirViewModel
+import com.pexpress.pexpresscustomer.view.main.ongkir.viewmodel.TarifKilometerViewModel
 import com.pexpress.pexpresscustomer.view.main.order.dialog.jenis_layanan.JenisLayananDialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.dialog.ukuran_barang.UkuranBarangDialogFragment
-import com.pexpress.pexpresscustomer.view.main.order.viewmodel.OrderPaketViewModel
 import www.sanju.motiontoast.MotionToast
 
 class TarifKilometerOngkirFragment : Fragment() {
@@ -30,7 +36,7 @@ class TarifKilometerOngkirFragment : Fragment() {
     private var _binding: FragmentTarifKilometerOngkirBinding? = null
     private val binding get() = _binding!!
     private val viewModel by activityViewModels<OngkirViewModel>()
-    private val viewModel2 by activityViewModels<OrderPaketViewModel>()
+    private val viewModelTarifKilometer by activityViewModels<TarifKilometerViewModel>()
 
     private lateinit var modalJenisLayanan: JenisLayananDialogFragment
     private lateinit var modalUkuranBarang: UkuranBarangDialogFragment
@@ -45,7 +51,10 @@ class TarifKilometerOngkirFragment : Fragment() {
     private var longAsal = ""
     private var latTujuan = ""
     private var longTujuan = ""
+    private var idLocPenerima = ""
+    private var idLocPengirim = ""
     private var jarak = ""
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,11 +74,13 @@ class TarifKilometerOngkirFragment : Fragment() {
             edtTujuan.setOnClickListener { moveToPickPlaceLocation(FORM_TUJUAN) }
 
             edtJenisLayanan.setOnClickListener {
-                modalJenisLayanan.show(parentFragmentManager, JenisLayananDialogFragment.TAG)
+                modalJenisLayanan.newInstance(TARIF_TYPE_PACKAGE_KILOMETER)
+                    .show(parentFragmentManager, JenisLayananDialogFragment.TAG)
             }
 
             edtUkuranBarang.setOnClickListener {
-                modalUkuranBarang.show(parentFragmentManager, UkuranBarangDialogFragment.TAG)
+                modalUkuranBarang.newInstance(TARIF_TYPE_PACKAGE_KILOMETER)
+                    .show(parentFragmentManager, UkuranBarangDialogFragment.TAG)
             }
 
             btnCekOngkir.setOnClickListener { checkOngkir() }
@@ -86,8 +97,6 @@ class TarifKilometerOngkirFragment : Fragment() {
 
     private fun checkOngkir() {
         with(binding) {
-            checkDistance()
-
             val asal = edtAsal.text.toString().trim()
             val tujuan = edtTujuan.text.toString().trim()
             val jenisLayanan = edtJenisLayanan.text.toString().trim()
@@ -125,7 +134,7 @@ class TarifKilometerOngkirFragment : Fragment() {
                         "jenisukuran" to jenisUkuran,
                         "cabangasal" to cabangAsal,
                         "cabangtujuan" to cabangTujuan,
-                        "jarak" to jarak,
+                        "jarak" to roundingDistance(jarak.toDouble()),
                         "type" to "kilometer"
                     )
 
@@ -158,6 +167,11 @@ class TarifKilometerOngkirFragment : Fragment() {
                                 result.data?.getStringExtra(PickPlaceLocationActivity.EXTRA_ALAMAT)
                                     .toString()
                             )
+                            idLocPengirim =
+                                result.data?.getStringExtra(PickPlaceLocationActivity.EXTRA_PLACE_ID)
+                                    .toString()
+
+                            checkDistance()
                         }
                         FORM_TUJUAN -> {
                             cabangTujuan =
@@ -176,6 +190,11 @@ class TarifKilometerOngkirFragment : Fragment() {
                                 result.data?.getStringExtra(PickPlaceLocationActivity.EXTRA_ALAMAT)
                                     .toString()
                             )
+                            idLocPenerima =
+                                result.data?.getStringExtra(PickPlaceLocationActivity.EXTRA_PLACE_ID)
+                                    .toString()
+
+                            checkDistance()
                         }
                     }
                 }
@@ -221,14 +240,14 @@ class TarifKilometerOngkirFragment : Fragment() {
     }
 
     private fun observeJenisLayanan() {
-        viewModel2.formJenisLayanan.observe(viewLifecycleOwner) { value ->
+        viewModelTarifKilometer.formJenisLayanan.observe(viewLifecycleOwner) { value ->
             jenisPengiriman = value.idlayanan.toString()
             binding.edtJenisLayanan.setText(value.layanan)
         }
     }
 
     private fun observeUkuranBarang() {
-        viewModel2.formUkuranBarang.observe(viewLifecycleOwner) { value ->
+        viewModelTarifKilometer.formUkuranBarang.observe(viewLifecycleOwner) { value ->
             jenisUkuran = value.idjenisukuran.toString()
             binding.edtUkuranBarang.setText(value.jenisukuran)
         }
@@ -236,12 +255,29 @@ class TarifKilometerOngkirFragment : Fragment() {
 
     private fun checkDistance() {
         if (latAsal.isNotEmpty() && longAsal.isNotEmpty() && latTujuan.isNotEmpty() && longTujuan.isNotEmpty()) {
-            jarak = distance(
-                latAsal.toDouble(),
-                longAsal.toDouble(),
-                latTujuan.toDouble(),
-                longTujuan.toDouble()
+            val params = hashMapOf(
+                "origin" to "place_id:$idLocPengirim",
+                "destination" to "place_id:$idLocPenerima",
+                "region" to "id",
+                "key" to MAPS_API_KEY
             )
+            // send to viewmodel and get response
+            observeDistance(params)
+        }
+    }
+
+    private fun observeDistance(params: HashMap<String, String>) {
+        viewModel.checkDistance(params).observe(viewLifecycleOwner) { response ->
+            jarak = if (response != null) {
+                if (response.status == "OK") {
+                    val distance = response.routes?.get(0)?.legs?.get(0)?.distance
+                    distance!!.parseKm()
+                } else {
+                    "0"
+                }
+            } else {
+                "0"
+            }
         }
     }
 
@@ -264,5 +300,9 @@ class TarifKilometerOngkirFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        viewModelTarifKilometer.apply {
+            removeFormJenisLayanan()
+            removeFormUkuranBarang()
+        }
     }
 }

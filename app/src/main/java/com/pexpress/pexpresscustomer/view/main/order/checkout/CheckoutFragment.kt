@@ -89,6 +89,8 @@ class CheckoutFragment : Fragment() {
     private fun setupView() {
         viewModelCheckout.asuransi()
         with(binding) {
+            tvTitleJenisPembayaran.text = getString(R.string.placeholder_paket, args.typePayment)
+
             modalVirtualAccount = VADialogFragment()
             modalEWallet = EWalletDialogFragment()
             modalQRIS = QRCodeDialogFragment()
@@ -106,6 +108,7 @@ class CheckoutFragment : Fragment() {
             cdMethodTransfer.setOnClickListener { menuPaymentClickListener(cdMethodTransfer) }
             cdMethodEwallet.setOnClickListener { menuPaymentClickListener(cdMethodEwallet) }
 //            cdMethodQris.setOnClickListener { menuPaymentClickListener(cdMethodQris) }
+
             checkboxAsuransiPengiriman.setOnCheckedChangeListener { _, state ->
                 tvTotalPay.text = formatRupiah(
                     if (state) {
@@ -267,6 +270,8 @@ class CheckoutFragment : Fragment() {
         with(binding) {
             viewModelCheckout.ewalletPayment.observe(viewLifecycleOwner) { result ->
                 if (result != null) {
+                    Log.d(TAG, "observeEWalletPayment: Dijalankan di observe")
+                    
                     resultEWallet = result
 
                     Glide.with(requireContext())
@@ -347,7 +352,9 @@ class CheckoutFragment : Fragment() {
 
     private fun moveToVAPayment(dataVA: VAPayment) {
         val toVAPayment =
-            CheckoutFragmentDirections.actionCheckoutFragmentToVaPaymentFragment(dataVA)
+            CheckoutFragmentDirections.actionCheckoutFragmentToVaPaymentFragment(dataVA).apply {
+                isFromOrder = true
+            }
         findNavController().navigate(toVAPayment)
     }
 
@@ -409,6 +416,17 @@ class CheckoutFragment : Fragment() {
         }
     }
 
+    private fun removeSelectedUser() {
+        with(binding) {
+            cdMethodCash.setBackgroundColor(defaultColorBackground)
+            cdMethodTransfer.setBackgroundColor(defaultColorBackground)
+            cdMethodEwallet.setBackgroundColor(defaultColorBackground)
+
+            layoutChooseEwallet.visibility = GONE
+            layoutChooseTransfer.visibility = GONE
+        }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) findNavController().navigateUp()
         return super.onOptionsItemSelected(item)
@@ -420,10 +438,12 @@ class CheckoutFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null
+        removeSelectedUser()
         viewModelCheckout.apply {
             removeVAPayment()
             removeEWalletPayment()
         }
+
+        _binding = null
     }
 }

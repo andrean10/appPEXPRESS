@@ -70,6 +70,7 @@ class PickPlaceLocationActivity : AppCompatActivity() {
         const val EXTRA_CABANG = "extra_cabang"
         const val EXTRA_LATITUDE = "extra_latitude"
         const val EXTRA_LONGITUDE = "extra_longitude"
+        const val EXTRA_PLACE_ID = "extra_place_id"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -203,11 +204,11 @@ class PickPlaceLocationActivity : AppCompatActivity() {
                     }
                 }
             }
-            checkDistrict(kecamatan, address, gKec)
+            checkDistrict(kecamatan, address, gKec, place.id)
         }
     }
 
-    private fun checkDistrict(kecamatan: String, address: String, gKec: String) {
+    private fun checkDistrict(kecamatan: String, address: String, gKec: String, placeId: String?) {
         val layanan = when (idTypePackage) {
             TYPE_PACKAGE_FIXRATE -> "fix_rate"
             TYPE_PACKAGE_KILOMETER -> "kilometer"
@@ -219,7 +220,7 @@ class PickPlaceLocationActivity : AppCompatActivity() {
                 if (response.success!!) {
                     val result = response.data?.get(0)
                     val idDistrict = result?.idDistrict ?: 0
-                    checkCabang(idDistrict, address, gKec)
+                    checkCabang(idDistrict, address, gKec, placeId)
                 } else {
                     showMessage(
                         this,
@@ -241,7 +242,7 @@ class PickPlaceLocationActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkCabang(idDistrict: Int, address: String, gKec: String) {
+    private fun checkCabang(idDistrict: Int, address: String, gKec: String, placeId: String?) {
         viewModel.checkCabang(idDistrict).observe(this) { response ->
             isLoadingClickDetail(false)
             if (response != null) {
@@ -249,7 +250,7 @@ class PickPlaceLocationActivity : AppCompatActivity() {
                     val result = response.data?.get(0)
                     result?.also {
                         if (it.isactive == 1) {
-                            setFormDataLocation(result.idCabang.toString(), address, gKec)
+                            setFormDataLocation(result.idCabang.toString(), address, gKec, placeId)
                             showMessage(
                                 this,
                                 getString(R.string.text_success),
@@ -282,13 +283,19 @@ class PickPlaceLocationActivity : AppCompatActivity() {
         }
     }
 
-    private fun setFormDataLocation(idCabang: String, address: String, gKec: String) {
+    private fun setFormDataLocation(
+        idCabang: String,
+        address: String,
+        gKec: String,
+        placeId: String?
+    ) {
         when (idForm) {
             FORM_ASAL -> {
                 if (idTypePackage == TYPE_PACKAGE_KILOMETER) {
                     val valueLatLng = hashMapOf(
                         "latpengirim" to pointMapAutocomplete?.latitude.toString(),
-                        "longpengirim" to pointMapAutocomplete?.longitude.toString()
+                        "longpengirim" to pointMapAutocomplete?.longitude.toString(),
+                        "placeId" to placeId.toString()
                     )
                     viewModel.setFormLatLongPengirim(valueLatLng)
                     observeResultbackAsal(idCabang, address, gKec)
@@ -307,7 +314,8 @@ class PickPlaceLocationActivity : AppCompatActivity() {
                 if (idTypePackage == TYPE_PACKAGE_KILOMETER) {
                     val valueLatLng = hashMapOf(
                         "latpenerima" to pointMapAutocomplete?.latitude.toString(),
-                        "longpenerima" to pointMapAutocomplete?.longitude.toString()
+                        "longpenerima" to pointMapAutocomplete?.longitude.toString(),
+                        "placeId" to placeId.toString()
                     )
                     viewModel.setFormLatLongPenerima(valueLatLng)
                     observeResultbackTujuan(idCabang, address, gKec)
@@ -335,6 +343,7 @@ class PickPlaceLocationActivity : AppCompatActivity() {
                     putExtra(EXTRA_GKEC, gKec)
                     putExtra(EXTRA_LATITUDE, value["latpengirim"])
                     putExtra(EXTRA_LONGITUDE, value["longpengirim"])
+                    putExtra(EXTRA_PLACE_ID, value["placeId"])
                 }
                 setResult(RESULT_OK, intent)
                 finish()
@@ -344,7 +353,6 @@ class PickPlaceLocationActivity : AppCompatActivity() {
 
     private fun observeResultbackTujuan(idCabang: String, address: String, gKec: String) {
         viewModel.formLatLongPenerima.observe(this) { value ->
-            Log.d(TAG, "observeResultbackTujuan: Value FormLatLongPenerima = $value")
             if (!value["latpenerima"].isNullOrEmpty()) {
                 val intent = Intent().apply {
                     putExtra(EXTRA_FORM, idForm)
@@ -353,6 +361,7 @@ class PickPlaceLocationActivity : AppCompatActivity() {
                     putExtra(EXTRA_GKEC, gKec)
                     putExtra(EXTRA_LATITUDE, value["latpenerima"])
                     putExtra(EXTRA_LONGITUDE, value["longpenerima"])
+                    putExtra(EXTRA_PLACE_ID, value["placeId"])
                 }
                 setResult(RESULT_OK, intent)
                 finish()

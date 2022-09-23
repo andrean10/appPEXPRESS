@@ -40,7 +40,7 @@ class CheckoutViewModel : ViewModel() {
     }
 
     fun removeVAPayment() {
-        _vaPayment.value = ResultVA()
+        _vaPayment.value = null
     }
 
     fun setEWalletPayment(value: ResultEWallet) {
@@ -48,7 +48,7 @@ class CheckoutViewModel : ViewModel() {
     }
 
     fun removeEWalletPayment() {
-        _ewalletPayment.value = ResultEWallet()
+        _ewalletPayment.value = null
     }
 
     fun checkoutAddAsuransi(params: HashMap<String, String>): LiveData<ResponseCheckoutUpdate?> {

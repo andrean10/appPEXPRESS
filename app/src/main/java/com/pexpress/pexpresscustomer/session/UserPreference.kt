@@ -13,10 +13,10 @@ internal class UserPreference(context: Context) {
     companion object {
         private const val PREFS_NAME = "user_pref"
         private const val KEY_USER_ID = "user_id"
+        private const val KEY_USER_DEVICE_ID = "device_id"
         private const val KEY_USER_FULLNAME = "user_fullname"
         private const val KEY_USER_EMAIL = "user_email"
         private const val KEY_USER_OTP = "user_otp"
-        private const val KEY_USER_PROFILE_IMAGE = "user_profile_image"
         private const val KEY_USER_CONTACT = "user_contact"
         private const val KEY_LAUCH_APP = "user_launch_app"
         private const val KEY_LOGIN = "user_login"
@@ -25,6 +25,7 @@ internal class UserPreference(context: Context) {
     fun setUser(values: User) {
         preferences.edit {
             putInt(KEY_USER_ID, values.id ?: 0)
+            putString(KEY_USER_DEVICE_ID, values.deviceId)
             putString(KEY_USER_FULLNAME, values.name)
             putString(KEY_USER_CONTACT, values.numberPhone)
             putString(KEY_USER_EMAIL, values.email)
@@ -45,6 +46,7 @@ internal class UserPreference(context: Context) {
     fun getUser(): User {
         return User(
             id = preferences.getInt(KEY_USER_ID, 0),
+            deviceId = preferences.getString(KEY_USER_DEVICE_ID, ""),
             name = preferences.getString(KEY_USER_FULLNAME, ""),
             numberPhone = preferences.getString(KEY_USER_CONTACT, ""),
             email = preferences.getString(KEY_USER_EMAIL, ""),
@@ -63,6 +65,7 @@ internal class UserPreference(context: Context) {
     fun removeUser() {
         preferences.edit {
             remove(KEY_USER_ID)
+            remove(KEY_USER_DEVICE_ID)
             remove(KEY_USER_FULLNAME)
             remove(KEY_USER_CONTACT)
             remove(KEY_USER_EMAIL)

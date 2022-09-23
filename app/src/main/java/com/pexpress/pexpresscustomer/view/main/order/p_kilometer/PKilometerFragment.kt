@@ -2,7 +2,6 @@ package com.pexpress.pexpresscustomer.view.main.order.p_kilometer
 
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -21,6 +20,7 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.pexpress.pexpresscustomer.BuildConfig.MAPS_API_KEY
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentPKilometerBinding
 import com.pexpress.pexpresscustomer.model.checkout.kilometer.ResultCheckoutKilometer
@@ -30,7 +30,6 @@ import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_PENERIMA
 import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_PENGIRIM
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_POST
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_VIEW
-import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_KILOMETER
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_KILOMETER_STRING
 import com.pexpress.pexpresscustomer.view.main.order.dialog.jenis_barang.JenisBarangDialogFragment
@@ -59,6 +58,8 @@ class PKilometerFragment : Fragment() {
     private var longPengirim = ""
     private var latPenerima = ""
     private var longPenerima = ""
+    private var idLocPenerima = ""
+    private var idLocPengirim = ""
     private var jarak = ""
     private var kecamatanPengirim = ""
     private var kecamatanPenerima = ""
@@ -68,10 +69,6 @@ class PKilometerFragment : Fragment() {
 
     private var isPengirim = false
     private var isClickLainnya = false
-
-    private var stateInfoPengirim = false
-    private var stateInfoPenerima = false
-    private var stateInfoPickup = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,36 +96,42 @@ class PKilometerFragment : Fragment() {
     private fun prepareViewKilometer() {
         with(binding) {
             cdInfoPengirim.setOnClickListener {
-                // cek visibilitas
-                isExpandInfo(
-                    !stateInfoPengirim,
-                    cdInfoPengirim,
-                    expandInfoPengirim,
-                    icDropdownPengirim
-                )
+                with(viewModel) {
+                    // cek visibilitas
+                    isExpandInfo(
+                        !stateInfoPengirim.value!!,
+                        cdInfoPengirim,
+                        expandInfoPengirim,
+                        icDropdownPengirim
+                    )
+                    // ubah set visibilitas
+                    setStateInfoPengirim(!stateInfoPengirim.value!!)
+                }
 
-                // ubah set visibilitas
-//                    setStateInfoPengirim(!stateInfoPengirim.value!!)
             }
 
             cdInfoPenerima.setOnClickListener {
-                isExpandInfo(
-                    !stateInfoPenerima,
-                    cdInfoPenerima,
-                    expandInfoPenerima,
-                    icDropdownPenerima
-                )
-//                    setStateInfoPenerima(!stateInfoPenerima.value!!)
+                with(viewModel) {
+                    isExpandInfo(
+                        !stateInfoPenerima.value!!,
+                        cdInfoPenerima,
+                        expandInfoPenerima,
+                        icDropdownPenerima
+                    )
+                    setStateInfoPenerima(!stateInfoPenerima.value!!)
+                }
             }
 
             cdInfoPickup.setOnClickListener {
-                isExpandInfo(
-                    !stateInfoPickup,
-                    cdInfoPickup,
-                    expandInfoPickup,
-                    icDropdownPickup
-                )
-//                    setStateInfoPickup(!stateInfoPickup.value!!)
+                with(viewModel) {
+                    isExpandInfo(
+                        !stateInfoPickup.value!!,
+                        cdInfoPickup,
+                        expandInfoPickup,
+                        icDropdownPickup
+                    )
+                    setStateInfoPickup(!stateInfoPickup.value!!)
+                }
             }
 
             btnCheckout.setOnClickListener { checkout() }
@@ -261,7 +264,7 @@ class PKilometerFragment : Fragment() {
                 "longpengirim" to longPengirim,
                 "latpenerima" to latPenerima,
                 "longpenerima" to longPenerima,
-                "jaraktempuh" to jarak
+                "jaraktempuh" to roundingDistance(jarak.toDouble())
             )
 
             // check all field value when user click button order
@@ -344,6 +347,7 @@ class PKilometerFragment : Fragment() {
 
     private fun observeLocationPengirim() {
         viewModel.formLatLongPengirim.observe(viewLifecycleOwner) { value ->
+            idLocPengirim = value["placeId"].toString()
             latPengirim = value["latpengirim"].toString()
             longPengirim = value["longpengirim"].toString()
             checkDistance() // cek jarak
@@ -363,6 +367,7 @@ class PKilometerFragment : Fragment() {
 
     private fun observeLocationPenerima() {
         viewModel.formLatLongPenerima.observe(viewLifecycleOwner) { value ->
+            idLocPenerima = value["placeId"].toString()
             latPenerima = value["latpenerima"].toString()
             longPenerima = value["longpenerima"].toString()
             checkDistance() // cek jarak
@@ -400,6 +405,7 @@ class PKilometerFragment : Fragment() {
                     "cabangtujuan" to cabangTujuan,
                     "jenispengiriman" to jenisLayanan,
                     "jenisukuran" to jenisUkuran,
+                    "jarak" to roundingDistance(jarak.toDouble()),
                     "type" to TYPE_PACKAGE_KILOMETER_STRING
                 )
 
@@ -469,28 +475,33 @@ class PKilometerFragment : Fragment() {
 
     private fun checkDistance() {
         if (latPengirim.isNotEmpty() && longPengirim.isNotEmpty() && latPenerima.isNotEmpty() && longPenerima.isNotEmpty()) {
-            jarak = distance(
-                latPengirim.toDouble(),
-                longPengirim.toDouble(),
-                latPenerima.toDouble(),
-                longPenerima.toDouble()
+            val params = hashMapOf(
+                "origin" to "place_id:$idLocPengirim",
+                "destination" to "place_id:$idLocPenerima",
+                "region" to "id",
+                "key" to MAPS_API_KEY
             )
-            binding.edtJarak.setText(getString(R.string.kilometer_jarak, jarak))
-
-//            val params = hashMapOf(
-//                "origin" to "$latPengirim,$longPengirim",
-//                "destination" to "$latPenerima,$longPenerima",
-//                "region" to "id",
-//                "key" to BuildConfig.MAPS_API_KEY
-//            )
-
             // send to viewmodel and get response
-//            observeDistance(params)
+            observeDistance(params)
         }
     }
 
     private fun observeDistance(params: HashMap<String, String>) {
-        viewModel.checkDistance(params)
+        viewModel.checkDistance(params).observe(viewLifecycleOwner) { response ->
+            with(binding) {
+                if (response != null) {
+                    if (response.status == "OK") {
+                        val distance = response.routes?.get(0)?.legs?.get(0)?.distance
+                        jarak = distance!!.parseKm()
+                        edtJarak.setText("$jarak Km")
+                    } else {
+                        edtJarak.setText("Jarak tidakk ditemukan")
+                    }
+                } else {
+                    edtJarak.setText("Jarak tidak ditemukan")
+                }
+            }
+        }
     }
 
     private fun isExpandInfo(
@@ -513,26 +524,23 @@ class PKilometerFragment : Fragment() {
         super.onResume()
         setVisibilityBottomHead(requireActivity(), false)
 
-        // cek visibilitas info pengirim
-//        viewModel.stateInfoPengirim.observe(viewLifecycleOwner) { state ->
-//            with(binding) {
-//                isExpandInfo(state, cdInfoPengirim, expandInfoPengirim, icDropdownPengirim)
-//            }
-//        }
+        viewModel.stateInfoPengirim.observe(viewLifecycleOwner) { state ->
+            with(binding) {
+                isExpandInfo(state, cdInfoPengirim, expandInfoPengirim, icDropdownPengirim)
+            }
+        }
 
-        // cek visibilitas info penerima
-//        viewModel.stateInfoPenerima.observe(viewLifecycleOwner) { state ->
-//            with(binding) {
-//                isExpandInfo(state, cdInfoPenerima, expandInfoPenerima, icDropdownPenerima)
-//            }
-//        }
+        viewModel.stateInfoPenerima.observe(viewLifecycleOwner) { state ->
+            with(binding) {
+                isExpandInfo(state, cdInfoPenerima, expandInfoPenerima, icDropdownPenerima)
+            }
+        }
 
-        // cek visibilitas info pengirim
-//        viewModel.stateInfoPickup.observe(viewLifecycleOwner) { state ->
-//            with(binding) {
-//                isExpandInfo(state, cdInfoPickup, expandInfoPickup, icDropdownPickup)
-//            }
-//        }
+        viewModel.stateInfoPickup.observe(viewLifecycleOwner) { state ->
+            with(binding) {
+                isExpandInfo(state, cdInfoPickup, expandInfoPickup, icDropdownPickup)
+            }
+        }
 
         observeJenisLayanan()
         observeUkuranBarang()
@@ -582,9 +590,8 @@ class PKilometerFragment : Fragment() {
     }
 
     private fun moveToCheckout(result: ResultCheckoutKilometer) {
-        Log.d(TAG, "moveToCheckout: Nomor Pemesanan = ${result.nomorpemesanan}")
         val toCheckout =
-            PKilometerFragmentDirections.actionPKilometerFragmentToCheckoutFragment()
+            PKilometerFragmentDirections.actionPKilometerFragmentToCheckoutFragment("Kilometer")
                 .apply {
                     noInvoice = result.nomorpemesanan.toString()
                     name = result.namapengirim.toString()
@@ -622,6 +629,9 @@ class PKilometerFragment : Fragment() {
             removeFormJenisLayanan()
             removeFormUkuranBarang()
             removeFormJenisBarang()
+            setStateInfoPengirim(false)
+            setStateInfoPenerima(false)
+            setStateInfoPickup(false)
         }
     }
 }

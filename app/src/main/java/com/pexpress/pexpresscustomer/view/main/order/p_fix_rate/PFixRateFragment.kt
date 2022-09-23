@@ -102,7 +102,7 @@ class PFixRateFragment : Fragment() {
                         expandInfoPengirim,
                         icDropdownPengirim
                     )
-//                    // ubah set visibilitas
+                    // ubah set visibilitas
                     setStateInfoPengirim(!stateInfoPengirim.value!!)
                 }
             }
@@ -557,7 +557,7 @@ class PFixRateFragment : Fragment() {
 
     private fun moveToCheckout(result: ResultCheckout, namaPengirim: String) {
         val toCheckout =
-            PFixRateFragmentDirections.actionPFixRateFragmentToCheckoutFragment()
+            PFixRateFragmentDirections.actionPFixRateFragmentToCheckoutFragment("Fix Rate")
                 .apply {
                     noInvoice = result.nomorpemesanan.toString()
                     name = namaPengirim

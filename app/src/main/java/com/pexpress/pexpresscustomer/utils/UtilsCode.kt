@@ -25,6 +25,10 @@ object UtilsCode {
     const val TYPE_PACKAGE_FIXRATE = 1
     const val TYPE_PACKAGE_KILOMETER = 2
 
+    const val CONSTANT_TARIF_TYPE_PACKAGE = "tarif_type_package"
+    const val TARIF_TYPE_PACKAGE_FIXRATE = 3
+    const val TARIF_TYPE_PACKAGE_KILOMETER = 4
+
     const val TYPE_PACKAGE_FIXRATE_STRING = "fix_rate"
     const val TYPE_PACKAGE_KILOMETER_STRING = "kilometer"
 
