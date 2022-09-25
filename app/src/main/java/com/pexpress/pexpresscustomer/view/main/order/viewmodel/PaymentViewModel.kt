@@ -1,5 +1,6 @@
 package com.pexpress.pexpresscustomer.view.main.order.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,11 +9,14 @@ import com.pexpress.pexpresscustomer.model.ResponseCreateVA
 import com.pexpress.pexpresscustomer.model.type_payments.ResponseCreateCash
 import com.pexpress.pexpresscustomer.model.type_payments.ResponseCreateEWallet
 import com.pexpress.pexpresscustomer.network.ApiConfig
+import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class PaymentViewModel : ViewModel() {
+
+    private var i = 0
 
     private var _createCash: MutableLiveData<ResponseCreateCash?>? = null
     private var _createVa: MutableLiveData<ResponseCreateVA?>? = null
@@ -102,6 +106,8 @@ class PaymentViewModel : ViewModel() {
     }
 
     private fun eWallet(authorization: String, params: HashMap<String, String>) {
+        i += 1
+        Log.d(TAG, "eWallet: Dijalankan $i")
         val client = ApiConfig.getApiService().createEWallet(authorization, params)
         client.enqueue(object : Callback<ResponseCreateEWallet> {
             override fun onResponse(

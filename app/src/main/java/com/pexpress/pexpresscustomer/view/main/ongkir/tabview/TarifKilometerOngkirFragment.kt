@@ -3,7 +3,6 @@ package com.pexpress.pexpresscustomer.view.main.ongkir.tabview
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +10,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.textfield.TextInputLayout
-import com.pexpress.pexpresscustomer.BuildConfig
 import com.pexpress.pexpresscustomer.BuildConfig.MAPS_API_KEY
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentTarifKilometerOngkirBinding
 import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_ASAL
 import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_TUJUAN
-import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TARIF_TYPE_PACKAGE_KILOMETER
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_KILOMETER
 import com.pexpress.pexpresscustomer.utils.parseKm

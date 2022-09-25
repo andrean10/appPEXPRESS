@@ -5,6 +5,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -108,12 +110,12 @@ class LoginFragment : Fragment() {
     private fun setButtonState(state: Boolean) {
         with(binding) {
             if (state) {
-                pbLoading.visibility = View.VISIBLE
-                tvLogin.visibility = View.GONE
+                pbLoading.visibility = VISIBLE
+                tvLogin.visibility = GONE
                 tiNumberPhone.error = ""
             } else {
-                pbLoading.visibility = View.GONE
-                tvLogin.visibility = View.VISIBLE
+                pbLoading.visibility = GONE
+                tvLogin.visibility = VISIBLE
             }
         }
     }

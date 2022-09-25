@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import com.pexpress.pexpresscustomer.model.checkout.ResponseCheckoutUpdate
 import com.pexpress.pexpresscustomer.model.checkout.kilometer.ResponseCheckoutKilometer
 import com.pexpress.pexpresscustomer.model.distance.ResponseDistance
 import com.pexpress.pexpresscustomer.model.kilometer.ongkir.ResponseCheckOngkirKilometer

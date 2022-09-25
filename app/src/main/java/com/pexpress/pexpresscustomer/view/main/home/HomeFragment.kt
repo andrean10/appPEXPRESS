@@ -53,27 +53,27 @@ class HomeFragment : Fragment() {
     }
 
     private fun getDataProfile() {
-        val numberPhone = userPreference.getUser().numberPhone.toString()
-        viewModel.getProfile(numberPhone)
-            .observe(viewLifecycleOwner) { response ->
-                if (response != null) {
-                    if (response.success!!) {
-                        val responseDetail = response.detail?.get(0)
-                        userPreference.setUser(
-                            User(
-                                id = responseDetail?.id,
-                                name = responseDetail?.fullname,
-                                numberPhone = responseDetail?.contact,
-                                email = responseDetail?.email.toString(),
-                                otp = responseDetail?.otp
-                            )
+        viewModel.profile.observe(viewLifecycleOwner) { response ->
+            if (response != null) {
+                if (response.success!!) {
+                    val responseDetail = response.detail?.get(0)
+                    userPreference.setUser(
+                        User(
+                            id = responseDetail?.id,
+                            name = responseDetail?.fullname,
+                            numberPhone = responseDetail?.contact,
+                            email = responseDetail?.email.toString(),
+                            otp = responseDetail?.otp
                         )
-                        checkCompletedProfileUser(userPreference.getUser().name)
-                    } else {
-                        moveToAuth()
-                    }
+                    )
+                    checkCompletedProfileUser(responseDetail?.fullname)
+                } else {
+                    moveToAuth()
                 }
+            } else {
+                disabledMenuOrder()
             }
+        }
     }
 
     private fun prepareSlider() {
@@ -118,6 +118,19 @@ class HomeFragment : Fragment() {
                     isEnabled = true
                     alpha = 1f
                 }
+            }
+        }
+    }
+
+    private fun disabledMenuOrder() {
+        with(binding) {
+            menuTarifFlat.apply {
+                isEnabled = false
+                alpha = 0.5f
+            }
+            menuTarifKilometer.apply {
+                isEnabled = false
+                alpha = 0.5f
             }
         }
     }
@@ -168,6 +181,7 @@ class HomeFragment : Fragment() {
     private fun moveToAuth() {
         userPreference.removeLogin()
         userPreference.removeUser()
+        userPreference.removeDeviceId()
         startActivity(Intent(requireContext(), AuthActivity::class.java))
         activity?.finish()
     }

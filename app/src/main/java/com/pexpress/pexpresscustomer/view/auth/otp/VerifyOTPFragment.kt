@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.common.internal.FallbackServiceBroker
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentVerifyOtpBinding
 import com.pexpress.pexpresscustomer.db.User
@@ -71,7 +70,8 @@ class VerifyOTPFragment : Fragment() {
         userPreference = UserPreference(requireContext())
         binding.tvOtpDesc.text = getString(R.string.otp_desc, numberPhone)
 
-        stringAndroidID = Settings.Secure.getString(requireActivity().contentResolver, Settings.Secure.ANDROID_ID)
+        stringAndroidID =
+            Settings.Secure.getString(requireActivity().contentResolver, Settings.Secure.ANDROID_ID)
     }
 
     private fun getOTPAgain() {
@@ -201,12 +201,8 @@ class VerifyOTPFragment : Fragment() {
                         // store number to userpreferences
                         userPreference.apply {
                             setLogin(UtilsApplications(isLoginValid = true))
-                            setUser(
-                                User(
-                                    numberPhone = numberPhone,
-                                    deviceId = stringAndroidID
-                                )
-                            )
+                            setUser(User(numberPhone = numberPhone))
+                            setDeviceId(stringAndroidID)
                         }
                         moveToMainActivity()
                     } else {

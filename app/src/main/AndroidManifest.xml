@@ -20,7 +20,8 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.REAL_GET_TASKS"
+    <uses-permission
+        android:name="android.permission.REAL_GET_TASKS"
         tools:ignore="ProtectedPermissions" />
 
     <application
@@ -74,8 +75,7 @@
             android:exported="true"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity">
-        </activity>
+            tools:ignore="LockedOrientationActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import com.pexpress.pexpresscustomer.model.checkout.ResponseCheckoutUpdate
 import com.pexpress.pexpresscustomer.model.checkout.fix_rate.ResponseCheckout
 import com.pexpress.pexpresscustomer.model.fix_rate.ongkir.ResponseCheckOngkirFixRate
 import com.pexpress.pexpresscustomer.model.order.ResultJenisBarang

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.pexpress.pexpresscustomer.model.order.ResultJenisLayanan
 import com.pexpress.pexpresscustomer.model.order.ResultJenisUkuran
 
-class TarifFixRateViewModel: ViewModel() {
+class TarifFixRateViewModel : ViewModel() {
 
     private val _formJenisLayanan = MutableLiveData<ResultJenisLayanan>()
     private val _formUkuranBarang = MutableLiveData<ResultJenisUkuran>()

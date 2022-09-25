@@ -1,7 +1,6 @@
 package com.pexpress.pexpresscustomer.view.main.order.dialog.ukuran_barang
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE

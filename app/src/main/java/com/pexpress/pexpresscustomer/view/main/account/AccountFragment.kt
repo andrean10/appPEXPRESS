@@ -75,8 +75,12 @@ class AccountFragment : Fragment() {
             isLoading(false)
             if (response != null) {
                 if (response.success) {
-                    userPreference.removeLogin()
-                    userPreference.removeUser()
+                    userPreference.apply {
+                        removeLogin()
+                        removeUser()
+                        removeDeviceId()
+                    }
+
                     startActivity(Intent(requireContext(), AuthActivity::class.java))
                     requireActivity().finish()
                 } else {

@@ -22,19 +22,18 @@ internal class UserPreference(context: Context) {
         private const val KEY_LOGIN = "user_login"
     }
 
+    fun setLaunchApp() {
+        preferences.edit { putBoolean(KEY_LAUCH_APP, false) }
+    }
+
     fun setUser(values: User) {
         preferences.edit {
             putInt(KEY_USER_ID, values.id ?: 0)
-            putString(KEY_USER_DEVICE_ID, values.deviceId)
             putString(KEY_USER_FULLNAME, values.name)
             putString(KEY_USER_CONTACT, values.numberPhone)
             putString(KEY_USER_EMAIL, values.email)
             putInt(KEY_USER_OTP, values.otp ?: 0)
         }
-    }
-
-    fun setLaunchApp() {
-        preferences.edit { putBoolean(KEY_LAUCH_APP, false) }
     }
 
     fun setLogin(values: UtilsApplications) {
@@ -43,10 +42,19 @@ internal class UserPreference(context: Context) {
         }
     }
 
+    fun setDeviceId(value: String) {
+        preferences.edit {
+            putString(KEY_USER_DEVICE_ID, value)
+        }
+    }
+
+    fun getLaunchApp() = UtilsApplications(
+        isLaunchFirstApp = preferences.getBoolean(KEY_LAUCH_APP, true)
+    )
+
     fun getUser(): User {
         return User(
             id = preferences.getInt(KEY_USER_ID, 0),
-            deviceId = preferences.getString(KEY_USER_DEVICE_ID, ""),
             name = preferences.getString(KEY_USER_FULLNAME, ""),
             numberPhone = preferences.getString(KEY_USER_CONTACT, ""),
             email = preferences.getString(KEY_USER_EMAIL, ""),
@@ -54,9 +62,7 @@ internal class UserPreference(context: Context) {
         )
     }
 
-    fun getLaunchApp() = UtilsApplications(
-        isLaunchFirstApp = preferences.getBoolean(KEY_LAUCH_APP, true)
-    )
+    fun getDeviceId() = preferences.getString(KEY_USER_DEVICE_ID, "")
 
     fun getLogin() = UtilsApplications(
         isLoginValid = preferences.getBoolean(KEY_LOGIN, false)
@@ -65,11 +71,16 @@ internal class UserPreference(context: Context) {
     fun removeUser() {
         preferences.edit {
             remove(KEY_USER_ID)
-            remove(KEY_USER_DEVICE_ID)
             remove(KEY_USER_FULLNAME)
             remove(KEY_USER_CONTACT)
             remove(KEY_USER_EMAIL)
             remove(KEY_USER_OTP)
+        }
+    }
+
+    fun removeDeviceId() {
+        preferences.edit {
+            remove(KEY_USER_DEVICE_ID)
         }
     }
 

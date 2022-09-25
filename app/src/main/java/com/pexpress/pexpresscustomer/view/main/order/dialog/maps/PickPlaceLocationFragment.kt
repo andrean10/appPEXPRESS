@@ -243,13 +243,18 @@ class PickPlaceLocationFragment : Fragment() {
     private fun checkCabang(idDistrict: Int, address: String, gKec: String, placeId: String?) {
         viewModel.checkCabang(idDistrict).observe(viewLifecycleOwner) { response ->
             isLoadingClickDetail(false)
-            Log.d(TAG, "checkCabang: $response")
             if (response != null) {
                 if (response.success!!) {
                     val result = response.data?.get(0)
                     result?.also {
                         if (it.isactive == 1) {
-                            setFormDataLocation(result.idCabang ?: 0, address, gKec, idDistrict, placeId)
+                            setFormDataLocation(
+                                result.idCabang ?: 0,
+                                address,
+                                gKec,
+                                idDistrict,
+                                placeId
+                            )
                             showMessage(
                                 requireActivity(),
                                 getString(R.string.text_success),

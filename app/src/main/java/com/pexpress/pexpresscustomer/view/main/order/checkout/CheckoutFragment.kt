@@ -270,8 +270,6 @@ class CheckoutFragment : Fragment() {
         with(binding) {
             viewModelCheckout.ewalletPayment.observe(viewLifecycleOwner) { result ->
                 if (result != null) {
-                    Log.d(TAG, "observeEWalletPayment: Dijalankan di observe")
-                    
                     resultEWallet = result
 
                     Glide.with(requireContext())

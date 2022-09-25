@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.TextInputLayout
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentTarifFixRateOngkirBinding
-import com.pexpress.pexpresscustomer.utils.UtilsCode
 import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_ASAL
 import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_TUJUAN
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TARIF_TYPE_PACKAGE_FIXRATE
@@ -25,8 +24,6 @@ import com.pexpress.pexpresscustomer.view.main.ongkir.viewmodel.OngkirViewModel
 import com.pexpress.pexpresscustomer.view.main.ongkir.viewmodel.TarifFixRateViewModel
 import com.pexpress.pexpresscustomer.view.main.order.dialog.jenis_layanan.JenisLayananDialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.dialog.ukuran_barang.UkuranBarangDialogFragment
-import com.pexpress.pexpresscustomer.view.main.order.viewmodel.OrderPaketViewModel
-import com.pexpress.pexpresscustomer.view.main.order.viewmodel.PFixRateViewModel
 import www.sanju.motiontoast.MotionToast
 
 class TarifFixRateOngkirFragment : Fragment() {

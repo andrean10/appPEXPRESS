@@ -46,4 +46,4 @@ data class ResultProfile(
     @field:SerializedName("device_id")
     val deviceId: String? = null,
 
-) : Parcelable
+    ) : Parcelable

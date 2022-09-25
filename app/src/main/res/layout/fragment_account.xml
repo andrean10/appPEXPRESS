@@ -41,8 +41,8 @@
                         android:id="@+id/dummy_edit_profile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_manage_account"
                         android:contentDescription="@string/desc_ubah_profile"
+                        android:src="@drawable/ic_manage_account"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -66,8 +66,8 @@
                         android:id="@+id/dummy_arrow_right"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_arrow_right"
                         android:contentDescription="@string/desc_right"
+                        android:src="@drawable/ic_arrow_right"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -98,8 +98,8 @@
                         android:id="@+id/dummy_sign_out"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_sign_out"
                         android:contentDescription="@string/desc_logout"
+                        android:src="@drawable/ic_sign_out"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -123,8 +123,8 @@
                         android:id="@+id/dummy_arrow_right3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_arrow_right"
                         android:contentDescription="@string/desc_right"
+                        android:src="@drawable/ic_arrow_right"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

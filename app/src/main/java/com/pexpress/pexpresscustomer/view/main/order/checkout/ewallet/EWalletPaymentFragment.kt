@@ -67,8 +67,6 @@ class EWalletPaymentFragment : Fragment() {
         dataEWallet = args.dataEwallet
         isOrder = args.isFromOrder
 
-        Log.d(TAG, "onViewCreated: $isOrder")
-
         setupView()
 
         with(binding) {
@@ -142,6 +140,8 @@ class EWalletPaymentFragment : Fragment() {
     }
 
     private fun observeCreateEWallet(params: HashMap<String, String>) {
+        var i = 1
+        Log.d(TAG, "observeCreateEWallet: Dijalankan $i")
         val authorization = getAuthToken(BuildConfig.XENDIT_KEY)
         viewModel.createEWallet(authorization, params).observe(viewLifecycleOwner) { response ->
             if (response != null) {
@@ -188,6 +188,7 @@ class EWalletPaymentFragment : Fragment() {
                 )
             }
         }
+        i += 1
     }
 
     private fun moveToCheckOrder() {

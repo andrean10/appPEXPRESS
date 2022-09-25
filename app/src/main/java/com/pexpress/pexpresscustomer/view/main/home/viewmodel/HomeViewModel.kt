@@ -14,18 +14,20 @@ import retrofit2.Response
 class HomeViewModel : ViewModel() {
 
     private var _banner: MutableLiveData<ResponseBanner?> = MutableLiveData()
-    private var _profile: MutableLiveData<ResponseProfile?>? = null
+
+    //    private var _profile: MutableLiveData<ResponseProfile?>? = null
+    private var _profile: MutableLiveData<ResponseProfile?> = MutableLiveData()
 
     fun getBanner(): LiveData<ResponseBanner?> {
         banner()
         return _banner
     }
 
-    fun getProfile(contact: String): LiveData<ResponseProfile?> {
-        _profile = MutableLiveData()
-        myProfile(contact)
-        return _profile as MutableLiveData<ResponseProfile?>
-    }
+//    fun getProfile(contact: String): LiveData<ResponseProfile?> {
+//        _profile = MutableLiveData()
+//        myProfile(contact)
+//        return _profile as MutableLiveData<ResponseProfile?>
+//    }
 
     private fun banner() {
         val client = ApiConfig.getApiService().banner()
@@ -52,7 +54,7 @@ class HomeViewModel : ViewModel() {
         })
     }
 
-    private fun myProfile(contact: String) {
+    fun myProfile(contact: String) {
         val client = ApiConfig.getApiService().profile(contact)
         client.enqueue(object : Callback<ResponseProfile> {
             override fun onResponse(
@@ -62,18 +64,45 @@ class HomeViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val result = response.body()
                     result.also {
-                        _profile!!.postValue(it)
+                        _profile.postValue(it)
                     }
                 } else {
                     val error =
                         Gson().fromJson(response.errorBody()?.string(), ResponseProfile::class.java)
-                    _profile!!.postValue(error)
+                    _profile.postValue(error)
                 }
             }
 
             override fun onFailure(call: Call<ResponseProfile>, t: Throwable) {
-                _profile!!.postValue(null)
+                _profile.postValue(null)
             }
         })
     }
+
+//    private fun myProfile(contact: String) {
+//        val client = ApiConfig.getApiService().profile(contact)
+//        client.enqueue(object : Callback<ResponseProfile> {
+//            override fun onResponse(
+//                call: Call<ResponseProfile>,
+//                response: Response<ResponseProfile>
+//            ) {
+//                if (response.isSuccessful) {
+//                    val result = response.body()
+//                    result.also {
+//                        _profile!!.postValue(it)
+//                    }
+//                } else {
+//                    val error =
+//                        Gson().fromJson(response.errorBody()?.string(), ResponseProfile::class.java)
+//                    _profile!!.postValue(error)
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<ResponseProfile>, t: Throwable) {
+//                _profile!!.postValue(null)
+//            }
+//        })
+//    }
+
+    val profile: LiveData<ResponseProfile?> = _profile
 }

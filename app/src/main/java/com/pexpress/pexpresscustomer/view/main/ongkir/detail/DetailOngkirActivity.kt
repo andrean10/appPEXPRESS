@@ -8,7 +8,6 @@ import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.ActivityDetailOngkirBinding
 import com.pexpress.pexpresscustomer.model.fix_rate.ongkir.ResultCheckOngkirFixRate
 import com.pexpress.pexpresscustomer.model.kilometer.ongkir.ResultCheckOngkirKilometer
-import com.pexpress.pexpresscustomer.utils.UtilsCode
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_FIXRATE
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_KILOMETER
 import com.pexpress.pexpresscustomer.utils.formatRupiah
