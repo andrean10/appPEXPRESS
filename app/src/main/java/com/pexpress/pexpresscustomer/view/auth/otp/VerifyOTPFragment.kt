@@ -179,6 +179,36 @@ class VerifyOTPFragment : Fragment() {
         }
     }
 
+    private fun observeOTP(params: HashMap<String, String>) {
+        viewModel.otp(params).observe(viewLifecycleOwner) { response ->
+            if (response != null) {
+                if (response.success!!) {
+                    // store number to userpreferences
+                    userPreference.apply {
+                        setLogin(UtilsApplications(isLoginValid = true))
+                        setUser(User(numberPhone = numberPhone))
+                        setDeviceId(stringAndroidID)
+                    }
+                    moveToMainActivity()
+                } else {
+                    showMessage(
+                        requireActivity(),
+                        getString(R.string.failed_title),
+                        response.message.toString(),
+                        MotionToast.TOAST_ERROR
+                    )
+                }
+            } else {
+                showMessage(
+                    requireActivity(),
+                    getString(R.string.failed_title),
+                    getString(R.string.failed_description),
+                    MotionToast.TOAST_ERROR
+                )
+            }
+        }
+    }
+
     private fun moveToMain() {
         // check verify otp when succes move to main
         with(binding) {
@@ -195,33 +225,7 @@ class VerifyOTPFragment : Fragment() {
                 "device_id" to stringAndroidID
             )
 
-            viewModel.otp(params).observe(viewLifecycleOwner) { response ->
-                if (response != null) {
-                    if (response.success!!) {
-                        // store number to userpreferences
-                        userPreference.apply {
-                            setLogin(UtilsApplications(isLoginValid = true))
-                            setUser(User(numberPhone = numberPhone))
-                            setDeviceId(stringAndroidID)
-                        }
-                        moveToMainActivity()
-                    } else {
-                        showMessage(
-                            requireActivity(),
-                            getString(R.string.failed_title),
-                            response.message.toString(),
-                            MotionToast.TOAST_ERROR
-                        )
-                    }
-                } else {
-                    showMessage(
-                        requireActivity(),
-                        getString(R.string.failed_title),
-                        getString(R.string.failed_description),
-                        MotionToast.TOAST_ERROR
-                    )
-                }
-            }
+            observeOTP(params)
         }
     }
 
