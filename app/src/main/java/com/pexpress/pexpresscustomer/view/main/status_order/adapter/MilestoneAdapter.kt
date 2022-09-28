@@ -2,6 +2,8 @@ package com.pexpress.pexpresscustomer.view.main.status_order.adapter
 
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pexpress.pexpresscustomer.R
@@ -34,14 +36,14 @@ class MilestoneAdapter : RecyclerView.Adapter<MilestoneAdapter.MilestoneViewHold
     }
 
     override fun onBindViewHolder(viewHolder: MilestoneViewHolder, position: Int) {
-        viewHolder.bind(listMilestone[position])
+        viewHolder.bind(listMilestone[position], position)
     }
 
     override fun getItemCount() = listMilestone.size
 
     inner class MilestoneViewHolder(private val binding: ItemsMilestoneBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(milestone: ResultMilestone) {
+        fun bind(milestone: ResultMilestone, position: Int) {
             with(binding) {
                 val formatDate = FormatDate()
                 val tanggal = formatDate.formatedDate(
@@ -91,7 +93,7 @@ class MilestoneAdapter : RecyclerView.Adapter<MilestoneAdapter.MilestoneViewHold
                 }
 
                 // lines milestone condition
-                if (milestone.statuspengiriman == STATUS_PACKAGE_WAITING_FOR_PICKUP) {
+                if (position == (itemCount - 1)) {
                     linesMilestoneVisibility(linesMilestone, false)
                 } else {
                     linesMilestoneVisibility(linesMilestone, true)
@@ -101,11 +103,11 @@ class MilestoneAdapter : RecyclerView.Adapter<MilestoneAdapter.MilestoneViewHold
     }
 
     private fun viewVisible(view: View) {
-        view.visibility = View.VISIBLE
+        view.visibility = VISIBLE
     }
 
     private fun linesMilestoneVisibility(view: View, state: Boolean) {
-        view.visibility = if (state) View.VISIBLE else View.INVISIBLE
+        view.visibility = if (state) VISIBLE else INVISIBLE
     }
 
     fun setOnItemClickCallBack(onItemClickCallBack: OnItemClickCallBack) {

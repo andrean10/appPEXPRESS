@@ -8,6 +8,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -68,6 +69,9 @@ class CheckoutFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            // nonaktif
+        }
     }
 
     override fun onCreateView(
@@ -350,14 +354,14 @@ class CheckoutFragment : Fragment() {
 
     private fun moveToVAPayment(dataVA: VAPayment) {
         val toVAPayment =
-            CheckoutFragmentDirections.actionCheckoutFragmentToVaPaymentFragment(dataVA).apply {
+            CheckoutFragmentDirections.actionCheckoutFragmentToVaPaymentFragment().apply {
+                dataVa = dataVA
                 isFromOrder = true
             }
         findNavController().navigate(toVAPayment)
     }
 
     private fun moveToEWalletPayment(dataEWallet: EWalletPayment) {
-        Log.d(TAG, "moveToEWalletPayment: ${dataEWallet.noInvoice}")
         val toEWalletPayment =
             CheckoutFragmentDirections.actionCheckoutFragmentToEWalletPaymentFragment(dataEWallet)
                 .apply {
@@ -425,17 +429,13 @@ class CheckoutFragment : Fragment() {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) findNavController().navigateUp()
-        return super.onOptionsItemSelected(item)
-    }
-
     private fun setToolbar() {
         (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
     }
 
     override fun onDestroy() {
         super.onDestroy()
+
         removeSelectedUser()
         viewModelCheckout.apply {
             removeVAPayment()

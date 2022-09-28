@@ -15,8 +15,8 @@ android {
         applicationId "com.pexpress.pexpresscustomer"
         minSdk 21
         targetSdk 31
-        versionCode 3
-        versionName "1.0.3"
+        versionCode 6
+        versionName "1.1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -30,8 +30,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

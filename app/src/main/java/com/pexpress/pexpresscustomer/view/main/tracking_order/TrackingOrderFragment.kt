@@ -164,7 +164,7 @@ class TrackingOrderFragment : Fragment() {
 
     private fun moveToBuktiPengiriman(fotoPenerima: String) {
         val toProofDelivery =
-            MilestoneFragmentDirections.actionMilestoneFragmentToProofDeliveryFragment(fotoPenerima)
+            TrackingOrderFragmentDirections.actionNavigationTrackingToProofDeliveryFragment(fotoPenerima)
         findNavController().navigate(toProofDelivery)
     }
 

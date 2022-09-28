@@ -1,5 +1,6 @@
 package com.pexpress.pexpresscustomer.network
 
+import com.pexpress.pexpresscustomer.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -18,8 +19,13 @@ class ApiConfig {
         private const val ENDPOINTDIRECTIONS = "https://maps.googleapis.com/maps/api/"
 
         private fun client(): OkHttpClient {
-            val logging = HttpLoggingInterceptor()
-                .setLevel(HttpLoggingInterceptor.Level.BODY)
+            val httpLoggingInterceptor = HttpLoggingInterceptor()
+            val logging = if (BuildConfig.DEBUG) {
+                httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+            } else {
+                httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE)
+            }
+
             return OkHttpClient.Builder()
                 .addInterceptor(logging)
                 .build()

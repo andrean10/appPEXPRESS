@@ -1,6 +1,7 @@
 package com.pexpress.pexpresscustomer.view.main.order.checkout.cash
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -14,6 +15,7 @@ import com.pexpress.pexpresscustomer.BuildConfig
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentCashPaymentBinding
 import com.pexpress.pexpresscustomer.db.payments.CashPayment
+import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 import com.pexpress.pexpresscustomer.utils.formatRegexRupiah
 import com.pexpress.pexpresscustomer.utils.getAuthToken
 import com.pexpress.pexpresscustomer.utils.setVisibilityBottomHead
@@ -34,13 +36,6 @@ class CashPaymentFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        requireActivity().onBackPressedDispatcher.addCallback(this) {
-            if (isOrder) {
-                findNavController().navigate(R.id.action_cashPaymentFragment_to_navigation_home)
-            } else {
-                findNavController().navigateUp()
-            }
-        }
     }
 
     override fun onCreateView(
@@ -58,6 +53,8 @@ class CashPaymentFragment : Fragment() {
         val args = CashPaymentFragmentArgs.fromBundle(arguments as Bundle)
         dataCash = args.dataCash
         isOrder = args.isFromOrder
+
+        Log.d(TAG, "onViewCreated: $isOrder")
 
         setupView()
 
@@ -97,13 +94,7 @@ class CashPaymentFragment : Fragment() {
         viewModel.createCash(authorization, params).observe(viewLifecycleOwner) { response ->
             if (response != null) {
                 if (response.success!!) {
-                    val toCheckOrder =
-                        CashPaymentFragmentDirections.actionCashPaymentFragmentToCheckOrderFragment()
-                            .apply {
-                                noInvoice = dataCash.noInvoice
-                                isCashPayment = true
-                            }
-                    findNavController().navigate(toCheckOrder)
+                    moveToCheckOrder()
                 } else {
                     showMessage(
                         requireActivity(),
@@ -128,6 +119,7 @@ class CashPaymentFragment : Fragment() {
             CashPaymentFragmentDirections.actionCashPaymentFragmentToCheckOrderFragment()
                 .apply {
                     noInvoice = dataCash.noInvoice
+                    isCashPayment = true
                 }
         findNavController().navigate(toCheckOrder)
     }
@@ -138,11 +130,12 @@ class CashPaymentFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            if (isOrder) {
-                findNavController().navigate(R.id.action_cashPaymentFragment_to_navigation_home)
-            } else {
-                findNavController().navigateUp()
-            }
+            findNavController().navigateUp()
+//            if (isOrder) {
+//                findNavController().navigate(R.id.action_cashPaymentFragment_to_navigation_home)
+//            } else {
+//                findNavController().navigateUp()
+//            }
         }
         return super.onOptionsItemSelected(item)
     }

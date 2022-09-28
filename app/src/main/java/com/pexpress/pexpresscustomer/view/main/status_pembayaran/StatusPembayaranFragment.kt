@@ -3,7 +3,6 @@ package com.pexpress.pexpresscustomer.view.main.status_pembayaran
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +19,6 @@ import com.pexpress.pexpresscustomer.db.payments.EWalletPayment
 import com.pexpress.pexpresscustomer.db.payments.VAPayment
 import com.pexpress.pexpresscustomer.model.payment.ResultStatusPembayaran
 import com.pexpress.pexpresscustomer.session.UserPreference
-import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 import com.pexpress.pexpresscustomer.utils.formatRupiah
 import com.pexpress.pexpresscustomer.utils.showMessage
 import com.pexpress.pexpresscustomer.view.main.status_pembayaran.adapter.StatusPembayaranAdapter
@@ -57,10 +55,8 @@ class StatusPembayaranFragment : Fragment() {
 
     private val mRunnable = object : Runnable {
         override fun run() {
-            Log.d(TAG, "run: in runnable")
             observeStatusPembayaran()
             mHandler.postDelayed(this, DEFAULT_TIMER_REALTIME)
-            Log.d(TAG, "run: $DEFAULT_TIMER_REALTIME")
         }
     }
 
@@ -162,9 +158,10 @@ class StatusPembayaranFragment : Fragment() {
                     resultStatusPembayaran.expired
                 )
                 toPembayaran =
-                    StatusPembayaranFragmentDirections.actionNavigationStatusPembayaranToVaPaymentFragment(
-                        dataVA
-                    )
+                    StatusPembayaranFragmentDirections.actionNavigationStatusPembayaranToVaPaymentFragment()
+                        .apply {
+                            dataVa = dataVA
+                        }
             }
             "Pembayaran Ewallet" -> {
                 val dataEWallet = EWalletPayment(
@@ -200,7 +197,6 @@ class StatusPembayaranFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         mHandler.removeCallbacks(mRunnable)
-        Log.d(TAG, "onPause: ")
     }
 
     override fun onDestroyView() {

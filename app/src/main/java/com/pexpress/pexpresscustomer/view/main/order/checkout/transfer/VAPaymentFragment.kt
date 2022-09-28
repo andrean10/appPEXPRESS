@@ -57,7 +57,7 @@ class VAPaymentFragment : Fragment() {
         setToolbar()
 
         val args = VAPaymentFragmentArgs.fromBundle(arguments as Bundle)
-        dataVA = args.dataVa
+        dataVA = args.dataVa!!
         isOrder = args.isFromOrder
 
         prepareDataPayout()

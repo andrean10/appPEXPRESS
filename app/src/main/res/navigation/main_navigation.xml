@@ -93,6 +93,11 @@
         android:name="com.pexpress.pexpresscustomer.view.main.order.checkout.transfer.VAPaymentFragment"
         android:label="fragment_va_payment"
         tools:layout="@layout/fragment_va_payment">
+        <argument
+            android:name="data_va"
+            app:argType="com.pexpress.pexpresscustomer.db.payments.VAPayment"
+            app:nullable="true"
+            android:defaultValue="@null" />
         <action
             android:id="@+id/action_payoutFragment_to_checkOrderFragment"
             app:destination="@id/checkOrderFragment"
@@ -100,9 +105,6 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
-        <argument
-            android:name="data_va"
-            app:argType="com.pexpress.pexpresscustomer.db.payments.VAPayment" />
         <action
             android:id="@+id/action_vaPaymentFragment_to_navigation_home"
             app:destination="@id/navigation_home"
@@ -282,6 +284,9 @@
         <action
             android:id="@+id/action_navigation_tracking_to_scannerQRFragment"
             app:destination="@id/scannerQRFragment" />
+        <action
+            android:id="@+id/action_navigation_tracking_to_proofDeliveryFragment"
+            app:destination="@id/proofDeliveryFragment2" />
     </fragment>
     <fragment
         android:id="@+id/scannerQRFragment"
@@ -295,6 +300,15 @@
         tools:layout="@layout/fragment_e_wallet_web_view">
         <argument
             android:name="url"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/proofDeliveryFragment2"
+        android:name="com.pexpress.pexpresscustomer.view.main.status_order.detail.view.proofdelivery.ProofDeliveryFragment"
+        android:label="fragment_proof_delivery"
+        tools:layout="@layout/fragment_proof_delivery" >
+        <argument
+            android:name="img"
             app:argType="string" />
     </fragment>
 </navigation>

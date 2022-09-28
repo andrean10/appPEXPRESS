@@ -11,4 +11,4 @@ data class VAPayment(
     val name: String,
     var totalPayment: String,
     var expiredTime: String? = null,
-) : Parcelable
+): Parcelable

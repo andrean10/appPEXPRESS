@@ -16,7 +16,6 @@ import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.appbar.MaterialToolbar
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.model.distance.Distance
-import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 import www.sanju.motiontoast.MotionToast
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -264,7 +263,6 @@ fun Distance.parseKm(): String {
             contains("m") -> {
                 val km = value.toDouble() / 1000
                 val formatKm = String.format(Locale.US, "%.2f", km)
-                Log.d(TAG, "parseKm: $formatKm")
                 newValue = formatKm
             }
         }

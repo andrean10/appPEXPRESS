@@ -2,7 +2,6 @@ package com.pexpress.pexpresscustomer.view.main.order.p_fix_rate
 
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -30,7 +29,6 @@ import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_PENERIMA
 import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_PENGIRIM
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_POST
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_VIEW
-import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_FIXRATE
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_FIXRATE_STRING
 import com.pexpress.pexpresscustomer.view.main.order.dialog.jenis_barang.JenisBarangDialogFragment
@@ -311,12 +309,6 @@ class PFixRateFragment : Fragment() {
                                 showMessageFieldRequired()
                             } else {
                                 observeCheckout(params)
-                                showMessage(
-                                    requireActivity(),
-                                    "Berhasil",
-                                    "Checkout berhasil",
-                                    MotionToast.TOAST_SUCCESS
-                                )
                             }
                         }
                         isClickLainnya -> {
@@ -324,12 +316,6 @@ class PFixRateFragment : Fragment() {
                                 showMessageFieldRequired()
                             } else {
                                 observeCheckout(params)
-                                showMessage(
-                                    requireActivity(),
-                                    "Berhasil",
-                                    "Checkout berhasil",
-                                    MotionToast.TOAST_SUCCESS
-                                )
                             }
                         }
                     }
@@ -340,7 +326,6 @@ class PFixRateFragment : Fragment() {
 
     private fun observeFormAsalPengirim() {
         viewModel.formAsalPengirim.observe(viewLifecycleOwner) { value ->
-            Log.d(TAG, "observeFormAsalPengirim: $value")
             cabangAsal = value["id_cabang_asal"].toString()
             val asalPengirim = value["alamatpengirim"].toString()
             gKecPengirim = value["gkecpengirim"].toString()
@@ -353,7 +338,6 @@ class PFixRateFragment : Fragment() {
 
     private fun observeLocationPengirim() {
         viewModel.formLatLongPengirim.observe(viewLifecycleOwner) { value ->
-            Log.d(TAG, "observeLocationPengirim: $value")
             latPengirim = value["latpengirim"].toString()
             longPengirim = value["longpengirim"].toString()
         }
@@ -361,7 +345,6 @@ class PFixRateFragment : Fragment() {
 
     private fun observeFormAsalPenerima() {
         viewModel.formAsalPenerima.observe(viewLifecycleOwner) { value ->
-            Log.d(TAG, "observeFormAsalPenerima: $value")
             cabangTujuan = value["id_cabang_tujuan"].toString()
             val asalPenerima = value["alamatpenerima"].toString()
             gKecPenerima = value["gkecpenerima"].toString()
@@ -374,7 +357,6 @@ class PFixRateFragment : Fragment() {
 
     private fun observeLocationPenerima() {
         viewModel.formLatLongPenerima.observe(viewLifecycleOwner) { value ->
-            Log.d(TAG, "observeLocationPenerima: $value")
             latPenerima = value["latpenerima"].toString()
             longPenerima = value["longpenerima"].toString()
         }
@@ -452,6 +434,13 @@ class PFixRateFragment : Fragment() {
                     result?.also {
                         moveToCheckout(it, params["namapengirim"].toString())
                     }
+
+                    showMessage(
+                        requireActivity(),
+                        "Berhasil",
+                        "Checkout berhasil",
+                        MotionToast.TOAST_SUCCESS
+                    )
                 } else {
                     showMessage(
                         requireActivity(),

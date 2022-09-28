@@ -143,14 +143,25 @@
         <entry key="app/src/main/res/font/poppins_medium.xml" value="0.5583333333333333" />
         <entry key="app/src/main/res/font/poppins_regular.xml" value="0.5583333333333333" />
         <entry key="app/src/main/res/font/poppins_semibold.xml" value="0.5583333333333333" />
+        <entry key="app/src/main/res/layout/activity_auth.xml" value="0.5403079710144928" />
         <entry key="app/src/main/res/layout/activity_detail_ongkir.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_detail_status_order.xml" value="0.4561234329797493" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.24635416666666668" />
+        <entry key="app/src/main/res/layout/activity_on_boarding.xml" value="0.5403079710144928" />
+        <entry key="app/src/main/res/layout/activity_pick_place_location.xml" value="0.5403079710144928" />
         <entry key="app/src/main/res/layout/fragment_account.xml" value="0.2817028985507246" />
         <entry key="app/src/main/res/layout/fragment_cash_payment.xml" value="0.2801418439716312" />
-        <entry key="app/src/main/res/layout/fragment_checkout.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_checkout.xml" value="0.55" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2801418439716312" />
+        <entry key="app/src/main/res/layout/fragment_milestone.xml" value="0.5760416666666667" />
         <entry key="app/src/main/res/layout/fragment_p_kilometer.xml" value="0.28020833333333334" />
+        <entry key="app/src/main/res/layout/fragment_pick_place_location.xml" value="0.17395833333333333" />
+        <entry key="app/src/main/res/layout/fragment_proof_delivery.xml" value="0.2393617021276596" />
         <entry key="app/src/main/res/layout/fragment_status_pembayaran.xml" value="0.38333333333333336" />
+        <entry key="app/src/main/res/layout/fragment_tracking_order.xml" value="0.2393617021276596" />
         <entry key="app/src/main/res/layout/fragment_va_payment.xml" value="0.2801418439716312" />
+        <entry key="app/src/main/res/layout/fragment_verify_otp.xml" value="0.5760416666666667" />
+        <entry key="app/src/main/res/layout/items_milestone.xml" value="0.5" />
       </map>
     </option>
   </component>

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -21,7 +20,6 @@ import com.pexpress.pexpresscustomer.databinding.FragmentEWalletPaymentBinding
 import com.pexpress.pexpresscustomer.db.payments.EWalletPayment
 import com.pexpress.pexpresscustomer.network.ApiConfig
 import com.pexpress.pexpresscustomer.utils.*
-import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 import com.pexpress.pexpresscustomer.view.main.order.viewmodel.PaymentViewModel
 import www.sanju.motiontoast.MotionToast
 
@@ -140,8 +138,6 @@ class EWalletPaymentFragment : Fragment() {
     }
 
     private fun observeCreateEWallet(params: HashMap<String, String>) {
-        var i = 1
-        Log.d(TAG, "observeCreateEWallet: Dijalankan $i")
         val authorization = getAuthToken(BuildConfig.XENDIT_KEY)
         viewModel.createEWallet(authorization, params).observe(viewLifecycleOwner) { response ->
             if (response != null) {
@@ -188,7 +184,6 @@ class EWalletPaymentFragment : Fragment() {
                 )
             }
         }
-        i += 1
     }
 
     private fun moveToCheckOrder() {

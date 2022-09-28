@@ -47,6 +47,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        navController = findNavController(R.id.nav_host_fragment_activity_main)
+
         init()
         setupView()
     }
@@ -55,7 +57,6 @@ class MainActivity : AppCompatActivity() {
 //        inAppUpdate = InAppUpdate(this)
         userPreference = UserPreference(this)
         mHandler = Handler(Looper.getMainLooper())
-        navController = findNavController(R.id.nav_host_fragment_activity_main)
     }
 
     private fun checkAuthentication() {
