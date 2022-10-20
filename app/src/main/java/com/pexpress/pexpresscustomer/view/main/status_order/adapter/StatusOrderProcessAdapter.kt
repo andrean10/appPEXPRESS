@@ -6,11 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.ItemsHistoryBinding
-import com.pexpress.pexpresscustomer.model.ResultStatusOrder
-import com.pexpress.pexpresscustomer.view.main.status_order.tabview.StatusOrderFragment
+import com.pexpress.pexpresscustomer.model.status_order.ResultStatusOrder
+import com.pexpress.pexpresscustomer.view.main.status_order.tabview.StatusOrderCancelFragment
 
-class StatusOrderAdapter(private val status: Int) :
-    RecyclerView.Adapter<StatusOrderAdapter.HistoryOrderViewHolder>() {
+class StatusOrderProcessAdapter() : RecyclerView.Adapter<StatusOrderProcessAdapter.HistoryOrderViewHolder>() {
 
     private var onItemClickCallBack: OnItemClickCallBack? = null
     private val listStatusOrder = arrayListOf<ResultStatusOrder>()
@@ -39,14 +38,7 @@ class StatusOrderAdapter(private val status: Int) :
         fun bind(statusOrder: ResultStatusOrder) {
             with(binding) {
                 Glide.with(itemView.context)
-                    .load(
-                        when (status) {
-                            StatusOrderFragment.STATUS_PROCESS -> R.drawable.ic_parcel_ontheway
-                            StatusOrderFragment.STATUS_FINISH -> R.drawable.ic_parcel_accept
-                            StatusOrderFragment.STATUS_CANCEL -> R.drawable.ic_parcel_return
-                            else -> R.color.black
-                        }
-                    )
+                    .load(R.drawable.ic_parcel_ontheway)
                     .into(imgStatusOrder)
 
                 tvResiOrder.text = statusOrder.nomorpemesanan

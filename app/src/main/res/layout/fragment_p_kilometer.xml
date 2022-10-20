@@ -71,8 +71,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/placeholder_info_pengirim"
                         android:layout_marginTop="@dimen/dimen_12"
-                        android:visibility="gone"
-                        tools:visibility="visible">
+                        android:visibility="gone">
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/ti_asal_pengirim"
@@ -246,8 +245,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/placeholder_info_penerima"
                         android:layout_marginTop="@dimen/dimen_12"
-                        android:visibility="gone"
-                        tools:visibility="visible">
+                        android:visibility="gone">
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/ti_asal_penerima"
@@ -447,6 +445,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen_16"
                             android:hint="@string/checkout_jenis_layanan_pickup"
+                            app:endIconDrawable="@drawable/ic_arrow_down"
+                            app:endIconMode="custom"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/ti_jarak">
@@ -469,6 +469,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen_16"
                             android:hint="@string/checkout_ukuran_barang_pickup"
+                            app:endIconDrawable="@drawable/ic_arrow_down"
+                            app:endIconMode="custom"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/ti_jenis_layanan_pickup">
@@ -477,6 +479,7 @@
                                 android:id="@+id/edt_ukuran_barang_pickup"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:focusableInTouchMode="false"
                                 android:imeOptions="actionNext"
                                 android:inputType="none"
                                 android:maxLines="1"
@@ -514,6 +517,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen_16"
                             android:hint="@string/checkout_jenis_barang_pickup"
+                            app:endIconDrawable="@drawable/ic_arrow_down"
+                            app:endIconMode="custom"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/ti_tanggal_pickup">
@@ -522,10 +527,10 @@
                                 android:id="@+id/edt_jenis_barang_pickup"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:focusableInTouchMode="false"
                                 android:imeOptions="actionNext"
                                 android:inputType="none"
                                 android:maxLines="1"
-                                tools:enabled="false"
                                 tools:text="Makanan Kering" />
                         </com.google.android.material.textfield.TextInputLayout>
 

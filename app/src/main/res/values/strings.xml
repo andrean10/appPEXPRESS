@@ -132,7 +132,7 @@
     <string name="checkout_tanggal_pickup">Tanggal Pickup</string>
 
     <string name="dimension_all_size">Panjang: %s %s\nLebar: %s %s\nTinggi: %s %s</string>
-    <string name="dimension_weight_size">%s (%s Kg)</string>
+    <string name="dimension_weight_size">%s (%s)</string>
     <string name="dimension_weight_size_2">%s Kg</string>
     <string name="checkout_toolbar">Checkout</string>
     <string name="checkout_metode_pembayaran">Metode Pembayaran</string>
@@ -254,6 +254,7 @@
     <string name="empty_tracking_order">Opps… Data Pengiriman Tidak Ditemukan</string>
     <string name="empty_items_dialog">Data tidak ditemukan</string>
     <string name="tracking_asal_pengirim">%s, %s</string>
+    <string name="detail_history_status_pengiriman">%s %s</string>
     <string name="milestone_status_pengiriman">%s %s</string>
     <string name="milestone_detail_status_pengiriman">%s [Kurir: %s]</string>
     <string name="home_lengkapi">Lengkapi</string>
@@ -279,5 +280,8 @@
     <string name="desc_logout">Icon Logout</string>
     <string name="desc_right">Icon Arrow Right</string>
     <string name="desc_logo_bank">Logo Bank</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

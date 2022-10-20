@@ -15,6 +15,7 @@ class ApiConfig {
         const val URL_IMG_BANNER = "$URL/filebanner/"
         const val URL_LOGO_VA = "$URL/filebank/"
         const val URL_LOGO_EWALLET = "$URL/fileewallet/"
+        const val URL_IMG_PENYERAHAN_DELIVERY = "$URL/uploads/foto_penyerahan_delivery/"
         private const val ENDPOINT = "$URL/api/"
         private const val ENDPOINTDIRECTIONS = "https://maps.googleapis.com/maps/api/"
 

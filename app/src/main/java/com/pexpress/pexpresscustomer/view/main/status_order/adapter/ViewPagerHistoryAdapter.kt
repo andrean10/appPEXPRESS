@@ -2,7 +2,9 @@ package com.pexpress.pexpresscustomer.view.main.status_order.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.pexpress.pexpresscustomer.view.main.status_order.tabview.StatusOrderFragment
+import com.pexpress.pexpresscustomer.view.main.status_order.tabview.StatusOrderCancelFragment
+import com.pexpress.pexpresscustomer.view.main.status_order.tabview.StatusOrderFinishFragment
+import com.pexpress.pexpresscustomer.view.main.status_order.tabview.StatusOrderProcessFragment
 
 class ViewPagerHistoryAdapter(fa: Fragment) : FragmentStateAdapter(fa) {
 
@@ -10,10 +12,10 @@ class ViewPagerHistoryAdapter(fa: Fragment) : FragmentStateAdapter(fa) {
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> StatusOrderFragment(StatusOrderFragment.STATUS_PROCESS)
-            1 -> StatusOrderFragment(StatusOrderFragment.STATUS_FINISH)
-            2 -> StatusOrderFragment(StatusOrderFragment.STATUS_CANCEL)
-            else -> StatusOrderFragment(StatusOrderFragment.STATUS_PROCESS)
+            0 -> StatusOrderProcessFragment()
+            1 -> StatusOrderFinishFragment()
+            2 -> StatusOrderCancelFragment()
+            else -> StatusOrderProcessFragment()
         }
     }
 }

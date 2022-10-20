@@ -64,7 +64,7 @@ class MilestoneAdapter : RecyclerView.Adapter<MilestoneAdapter.MilestoneViewHold
                     tvStatus.text = itemView.context.getString(
                         R.string.milestone_status_pengiriman,
                         milestone.namastatuspengiriman,
-                        milestone.diserahkanoleh
+                        milestone.diserahkanolehdelivery
                     )
 
                     if (!milestone.fotomenyerahkan.isNullOrEmpty()) {
@@ -89,7 +89,7 @@ class MilestoneAdapter : RecyclerView.Adapter<MilestoneAdapter.MilestoneViewHold
                 }
 
                 tvFotoPenerimaPengiriman.setOnClickListener {
-                    onItemClickCallBack?.onItemClicked(milestone.fotomenyerahkan.toString())
+                    onItemClickCallBack?.onItemClicked(milestone.fotomenyerahkandelivery.toString())
                 }
 
                 // lines milestone condition

@@ -2,6 +2,7 @@ package com.pexpress.pexpresscustomer.view.main.order.p_fix_rate
 
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -29,6 +30,7 @@ import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_PENERIMA
 import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_PENGIRIM
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_POST
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_VIEW
+import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_FIXRATE
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_FIXRATE_STRING
 import com.pexpress.pexpresscustomer.view.main.order.dialog.jenis_barang.JenisBarangDialogFragment
@@ -576,6 +578,9 @@ class PFixRateFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+
+        Log.d(TAG, "onDestroy: Dipanggil")
+
         viewModel.apply {
             removeFormAsalPengirim()
             removeFormAsalPenerima()

@@ -54,8 +54,6 @@ class CashPaymentFragment : Fragment() {
         dataCash = args.dataCash
         isOrder = args.isFromOrder
 
-        Log.d(TAG, "onViewCreated: $isOrder")
-
         setupView()
 
         with(binding.btnConfirm) {

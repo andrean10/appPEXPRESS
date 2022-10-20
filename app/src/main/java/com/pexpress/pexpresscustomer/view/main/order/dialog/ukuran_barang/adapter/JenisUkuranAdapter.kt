@@ -36,10 +36,10 @@ class JenisUkuranAdapter : RecyclerView.Adapter<JenisUkuranAdapter.ItemSizeViewH
         fun bind(result: ResultJenisUkuran) {
             with(binding) {
                 tvNameItemSize.text = result.jenisukuran
-                tvWeightMax.text = itemView.context.getString(
-                    dimension_weight_size_2,
-                    result.maksimalberat
-                )
+//                tvWeightMax.text = itemView.context.getString(
+//                    dimension_weight_size_2,
+//                    result.maksimalberat
+//                )
             }
 
             itemView.setOnClickListener { onItemClickCallBack?.onItemClicked(result) }

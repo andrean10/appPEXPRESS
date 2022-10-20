@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import com.pexpress.pexpresscustomer.model.ResponseStatusOrder
 import com.pexpress.pexpresscustomer.model.resi.milestone.ResponseMilestone
+import com.pexpress.pexpresscustomer.model.status_order.ResponseStatusOrder
 import com.pexpress.pexpresscustomer.network.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
@@ -14,12 +14,13 @@ import retrofit2.Response
 
 class HistoryViewModel : ViewModel() {
 
-    private val _statusOrder = MutableLiveData<ResponseStatusOrder?>()
+    private var _statusOrder: MutableLiveData<ResponseStatusOrder?>? = null
     private val _milestone = MutableLiveData<ResponseMilestone?>()
 
     private val TAG = HistoryViewModel::class.simpleName
 
-    fun statusOrder(params: HashMap<String, String>) {
+    fun statusOrder(params: HashMap<String, String>): LiveData<ResponseStatusOrder?> {
+        _statusOrder = MutableLiveData()
         val client = ApiConfig.getApiService().statusOrder(params)
         client.enqueue(object : Callback<ResponseStatusOrder> {
             override fun onResponse(
@@ -29,7 +30,7 @@ class HistoryViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val result = response.body()
                     result.also {
-                        _statusOrder.postValue(it)
+                        _statusOrder!!.postValue(it)
                     }
                 } else {
                     val error =
@@ -37,16 +38,17 @@ class HistoryViewModel : ViewModel() {
                             response.errorBody()?.string(),
                             ResponseStatusOrder::class.java
                         )
-                    _statusOrder.postValue(error)
+                    _statusOrder!!.postValue(error)
                 }
             }
 
             override fun onFailure(call: Call<ResponseStatusOrder>, t: Throwable) {
-                _statusOrder.postValue(null)
-                t.printStackTrace()
+                _statusOrder!!.postValue(null)
                 Log.d(TAG, "onFailure: ${t.printStackTrace()}")
             }
         })
+
+        return _statusOrder as MutableLiveData<ResponseStatusOrder?>
     }
 
     fun milestone(id: Int) {
@@ -77,6 +79,5 @@ class HistoryViewModel : ViewModel() {
         })
     }
 
-    val statusOrder: LiveData<ResponseStatusOrder?> = _statusOrder
     val milestone: LiveData<ResponseMilestone?> = _milestone
 }

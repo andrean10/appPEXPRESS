@@ -18,24 +18,23 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="@dimen/dimen_24"
         android:ellipsize="end"
         android:maxLines="2"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/tv_weight_max"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Small" />
 
-    <TextView
-        android:id="@+id/tv_weight_max"
-        style="@style/PrimaryTextStyle.Medium"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_name_item_size"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_name_item_size"
-        tools:text="5 Kg" />
+<!--    <TextView-->
+<!--        android:id="@+id/tv_weight_max"-->
+<!--        style="@style/PrimaryTextStyle.Medium"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/tv_name_item_size"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/tv_name_item_size"-->
+<!--        tools:text="5 Kg" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,7 @@
 package com.pexpress.pexpresscustomer.network
 
 import com.pexpress.pexpresscustomer.model.ResponseCreateVA
-import com.pexpress.pexpresscustomer.model.ResponseStatusOrder
+import com.pexpress.pexpresscustomer.model.status_order.ResponseStatusOrder
 import com.pexpress.pexpresscustomer.model.auth.ResponseLogin
 import com.pexpress.pexpresscustomer.model.auth.ResponseOTP
 import com.pexpress.pexpresscustomer.model.auth.ResponseRegister

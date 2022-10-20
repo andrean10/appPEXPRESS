@@ -11,7 +11,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentDetailStatusOrderBinding
-import com.pexpress.pexpresscustomer.model.ResultStatusOrder
+import com.pexpress.pexpresscustomer.model.status_order.ResultStatusOrder
+import com.pexpress.pexpresscustomer.utils.FormatDate
+import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_POST
+import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_VIEW
 import com.pexpress.pexpresscustomer.utils.formatRupiah
 import com.pexpress.pexpresscustomer.view.main.order.viewmodel.OrderPaketViewModel
 import com.pexpress.pexpresscustomer.view.main.status_order.detail.DetailStatusOrderActivity.Companion.EXTRA_DATA
@@ -74,17 +77,29 @@ class DetailStatusOrderFragment : Fragment() {
     private fun setupView() {
         with(binding) {
             dataStatusOrder?.also {
+                val tanggalPickup = FormatDate().formatedDate(
+                    it.tanggalpickup,
+                    PATTERN_DATE_POST,
+                    PATTERN_DATE_VIEW
+                )
+
                 tvStatusOrder.text = it.namastatuspengiriman.toString()
                 tvNomorPemesanan.text = it.nomorpemesanan.toString()
                 tvPengirim.text = it.namapengirim.toString()
                 tvPenerima.text = it.namapenerima.toString()
+                tvTanggalPickup.text = tanggalPickup
                 tvTelponPengirim.text = it.teleponpengirim.toString()
                 tvTelponPenerima.text = it.teleponpenerima.toString()
                 tvInformasiAsalPengirim.text = it.gkecamatanpengirim.toString()
                 tvInformasiTujuanPenerima.text = it.gkecamatanpenerima.toString()
                 tvPatokanAlamatPengirim.text = it.alamatpengirim
                 tvPatokanAlamatPenerima.text = it.alamatpenerima
-                tvPembayaran.text = it.jenispembayaran.toString()
+                tvPembayaran.text = "${it.jenispembayaran?.replace("Pembayaran ", "")} " +
+                        if (it.type != "Tunai") {
+                            "(${it.bank?.replace("ID_", "")})"
+                        } else {
+                            ""
+                        }
                 tvBerat.text = getString(R.string.dimension_weight_size_2, it.berat)
                 tvOngkir.text = formatRupiah(it.biaya?.toDouble() ?: 0.0)
             }

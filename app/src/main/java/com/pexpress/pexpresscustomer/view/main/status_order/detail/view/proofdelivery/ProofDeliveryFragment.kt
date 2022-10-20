@@ -1,6 +1,7 @@
 package com.pexpress.pexpresscustomer.view.main.status_order.detail.view.proofdelivery
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentProofDeliveryBinding
 import com.pexpress.pexpresscustomer.network.ApiConfig
+import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 
 class ProofDeliveryFragment : Fragment() {
 
@@ -43,7 +45,7 @@ class ProofDeliveryFragment : Fragment() {
     private fun setupView(img: String) {
         Glide.with(requireActivity())
             .asBitmap()
-            .load(ApiConfig.URL + img)
+            .load(ApiConfig.URL_IMG_PENYERAHAN_DELIVERY + img)
             .placeholder(R.color.black)
             .error(R.drawable.image_error)
             .into(binding.imgProofOfDelivery)

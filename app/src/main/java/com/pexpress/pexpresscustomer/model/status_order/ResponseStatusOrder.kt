@@ -1,4 +1,4 @@
-package com.pexpress.pexpresscustomer.model
+package com.pexpress.pexpresscustomer.model.status_order
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

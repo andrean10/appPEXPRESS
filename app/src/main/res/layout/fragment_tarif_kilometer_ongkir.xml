@@ -70,6 +70,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_16"
                 android:hint="@string/cek_ongkir_jenis_layanan"
+                app:endIconDrawable="@drawable/ic_arrow_down"
+                app:endIconMode="custom"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ti_tujuan">
@@ -92,6 +94,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_16"
                 android:hint="@string/cek_ongkir_ukuran_barang"
+                app:endIconDrawable="@drawable/ic_arrow_down"
+                app:endIconMode="custom"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ti_jenis_layanan">
@@ -101,6 +105,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
+                    android:focusableInTouchMode="false"
                     android:inputType="none"
                     android:maxLines="1"
                     tools:text="Small" />
