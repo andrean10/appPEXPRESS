@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
+import com.pexpress.pexpresscustomer.model.checkout.ResponseEditCheckout
 import com.pexpress.pexpresscustomer.model.checkout.fix_rate.ResponseCheckout
 import com.pexpress.pexpresscustomer.model.fix_rate.ongkir.ResponseCheckOngkirFixRate
 import com.pexpress.pexpresscustomer.model.order.ResultJenisBarang
@@ -58,6 +59,7 @@ class PFixRateViewModel : ViewModel() {
             "longpenerima" to ""
         )
     }
+
     private val _formJenisLayanan = MutableLiveData<ResultJenisLayanan>()
     private val _formUkuranBarang = MutableLiveData<ResultJenisUkuran>()
     private val _formJenisBarang = MutableLiveData<ResultJenisBarang>()
@@ -65,6 +67,21 @@ class PFixRateViewModel : ViewModel() {
     private var _checkSubTotal = MutableLiveData<Boolean>()
     private var _cekOngkirFixRate: MutableLiveData<ResponseCheckOngkirFixRate?>? = null
     private var _checkout: MutableLiveData<ResponseCheckout?>? = null
+    private var _editCheckout: MutableLiveData<ResponseEditCheckout?>? = null
+
+    private val _stateChangePaket = MutableLiveData<HashMap<String, Any>>().apply {
+        value = hashMapOf(
+            "id" to 0,
+            "state" to false
+        )
+    }
+
+    fun changeOrderPaket(id: Int, state: Boolean) {
+        _stateChangePaket.value = hashMapOf(
+            "id" to id,
+            "state" to state
+        )
+    }
 
     fun setStateInfoPengirim(state: Boolean) {
         _stateInfoPengirim.value = state
@@ -221,6 +238,36 @@ class PFixRateViewModel : ViewModel() {
         return _checkout as MutableLiveData<ResponseCheckout?>
     }
 
+    fun editCheckout(id: Int, params: HashMap<String, String>): LiveData<ResponseEditCheckout?> {
+        _editCheckout = MutableLiveData()
+        val client = ApiConfig.getApiService().editCheckout(id, params)
+        client.enqueue(object : Callback<ResponseEditCheckout> {
+            override fun onResponse(
+                call: Call<ResponseEditCheckout>,
+                response: Response<ResponseEditCheckout>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    result.also {
+                        _editCheckout!!.postValue(it)
+                    }
+                } else {
+                    val error =
+                        Gson().fromJson(
+                            response.errorBody()?.string(),
+                            ResponseEditCheckout::class.java
+                        )
+                    _editCheckout!!.postValue(error)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseEditCheckout>, t: Throwable) {
+                _editCheckout!!.postValue(null)
+            }
+        })
+        return _editCheckout as MutableLiveData<ResponseEditCheckout?>
+    }
+
     val stateInfoPengirim: LiveData<Boolean> = _stateInfoPengirim
     val stateInfoPenerima: LiveData<Boolean> = _stateInfoPenerima
     val stateInfoPickup: LiveData<Boolean> = _stateInfoPickup
@@ -235,4 +282,6 @@ class PFixRateViewModel : ViewModel() {
     val formJenisBarang: LiveData<ResultJenisBarang> = _formJenisBarang
 
     val checkSubtotal: LiveData<Boolean> = _checkSubTotal
+
+    val changeOrderPaket: LiveData<HashMap<String, Any>> = _stateChangePaket
 }

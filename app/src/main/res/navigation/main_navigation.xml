@@ -85,8 +85,15 @@
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left" />
         <argument
-            android:name="type_payment"
+            android:name="type"
             app:argType="string" />
+        <argument android:name="title_package"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/vaPaymentFragment"

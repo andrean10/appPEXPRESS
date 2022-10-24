@@ -24,7 +24,6 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.pexpress.pexpresscustomer.BuildConfig.MAPS_API_KEY
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentPKilometerBinding
-import com.pexpress.pexpresscustomer.model.checkout.kilometer.ResultCheckoutKilometer
 import com.pexpress.pexpresscustomer.session.UserPreference
 import com.pexpress.pexpresscustomer.utils.*
 import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_PENERIMA
@@ -317,14 +316,36 @@ class PKilometerFragment : Fragment() {
                             if (jenisBarang.isEmpty()) {
                                 showMessageFieldRequired()
                             } else {
-                                observeCheckout(params)
+                                Log.d(TAG, "checkout: $params")
+                                viewModel.changeOrderPaket.observe(viewLifecycleOwner) { value ->
+                                    val id = value["id"] as Int
+                                    val state = value["state"] as Boolean
+
+                                    Log.d(TAG, "checkout: $value")
+
+                                    if (state) {
+                                        observeEditCheckout(id, params)
+                                    } else {
+                                        observeCheckout(params)
+                                    }
+                                }
                             }
                         }
                         isClickLainnya -> {
                             if (jenisBarangLainnya.isEmpty()) {
                                 showMessageFieldRequired()
                             } else {
-                                observeCheckout(params)
+                                Log.d(TAG, "checkout: $params")
+                                viewModel.changeOrderPaket.observe(viewLifecycleOwner) { value ->
+                                    val id = value["id"] as Int
+                                    val state = value["state"] as Boolean
+
+                                    if (state) {
+                                        observeEditCheckout(id, params)
+                                    } else {
+                                        observeCheckout(params)
+                                    }
+                                }
                             }
                         }
                     }
@@ -446,7 +467,11 @@ class PKilometerFragment : Fragment() {
                 if (response.success!!) {
                     val result = response.data?.get(0)
                     result?.also {
-                        moveToCheckout(it)
+                        moveToCheckout(
+                            it.namapengirim.toString(),
+                            it.nomorpemesanan.toString(),
+                            it.biaya.toString()
+                        )
                     }
 
                     showMessage(
@@ -461,6 +486,44 @@ class PKilometerFragment : Fragment() {
                         getString(R.string.failed_title),
                         response.message.toString(),
                         MotionToast.TOAST_WARNING
+                    )
+                }
+            } else {
+                showMessage(
+                    requireActivity(),
+                    getString(R.string.failed_title),
+                    getString(R.string.failed_description),
+                    MotionToast.TOAST_ERROR
+                )
+            }
+        }
+    }
+
+    private fun observeEditCheckout(id: Int, params: HashMap<String, String>) {
+        viewModel.editCheckout(id, params).observe(viewLifecycleOwner) { response ->
+            if (response != null) {
+                if (response.success!!) {
+                    val result = response.data
+                    result?.also {
+                        moveToCheckout(
+                            params["namapengirim"].toString(),
+                            it.nomorpemesanan.toString(),
+                            it.biaya.toString()
+                        )
+                    }
+
+                    showMessage(
+                        requireActivity(),
+                        "Berhasil",
+                        "Checkout berhasil",
+                        MotionToast.TOAST_SUCCESS
+                    )
+                } else {
+                    showMessage(
+                        requireActivity(),
+                        getString(R.string.failed_title),
+                        response.message.toString(),
+                        MotionToast.TOAST_ERROR
                     )
                 }
             } else {
@@ -590,13 +653,20 @@ class PKilometerFragment : Fragment() {
         findNavController().navigate(toPickLocation)
     }
 
-    private fun moveToCheckout(result: ResultCheckoutKilometer) {
+    private fun moveToCheckout(
+        namaPengirim: String,
+        nomorPemesanan: String,
+        totalPembayaran: String
+    ) {
         val toCheckout =
-            PKilometerFragmentDirections.actionPKilometerFragmentToCheckoutFragment("Kilometer")
+            PKilometerFragmentDirections.actionPKilometerFragmentToCheckoutFragment(
+                TYPE_PACKAGE_KILOMETER_STRING
+            )
                 .apply {
-                    noInvoice = result.nomorpemesanan.toString()
-                    name = result.namapengirim.toString()
-                    totalPayment = result.biaya.toString()
+                    titlePackage = "Kilometer"
+                    noInvoice = nomorPemesanan
+                    name = namaPengirim
+                    totalPayment = totalPembayaran
                 }
         findNavController().navigate(toCheckout)
     }
@@ -624,7 +694,8 @@ class PKilometerFragment : Fragment() {
         _binding = null
 
         Log.d(
-            TAG, "onDestroy: Dipanggil")
+            TAG, "onDestroy: Dipanggil"
+        )
 
         viewModel.apply {
             removeFormAsalPengirim()

@@ -23,7 +23,6 @@ import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentPFixRateBinding
-import com.pexpress.pexpresscustomer.model.checkout.fix_rate.ResultCheckout
 import com.pexpress.pexpresscustomer.session.UserPreference
 import com.pexpress.pexpresscustomer.utils.*
 import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_PENERIMA
@@ -265,7 +264,6 @@ class PFixRateFragment : Fragment() {
                 "latpenerima" to latPenerima,
                 "longpenerima" to longPenerima
             )
-
             // check all field value when user click button order
             when {
                 patokanAlamatPengirim.isEmpty() -> {
@@ -310,14 +308,37 @@ class PFixRateFragment : Fragment() {
                             if (jenisBarang.isEmpty()) {
                                 showMessageFieldRequired()
                             } else {
-                                observeCheckout(params)
+                                Log.d(TAG, "checkout: $params")
+                                viewModel.changeOrderPaket.observe(viewLifecycleOwner) { value ->
+                                    val id = value["id"] as Int
+                                    val state = value["state"] as Boolean
+
+                                    Log.d(TAG, "checkout: $value")
+
+                                    if (state) {
+                                        observeEditCheckout(id, params)
+                                    } else {
+                                        observeCheckout(params)
+                                    }
+                                }
                             }
                         }
                         isClickLainnya -> {
                             if (jenisBarangLainnya.isEmpty()) {
                                 showMessageFieldRequired()
                             } else {
-                                observeCheckout(params)
+                                Log.d(TAG, "checkout: $params")
+
+                                viewModel.changeOrderPaket.observe(viewLifecycleOwner) { value ->
+                                    val id = value["id"] as Int
+                                    val state = value["state"] as Boolean
+
+                                    if (state) {
+                                        observeEditCheckout(id, params)
+                                    } else {
+                                        observeCheckout(params)
+                                    }
+                                }
                             }
                         }
                     }
@@ -434,7 +455,52 @@ class PFixRateFragment : Fragment() {
                 if (response.success!!) {
                     val result = response.data?.get(0)
                     result?.also {
-                        moveToCheckout(it, params["namapengirim"].toString())
+                        moveToCheckout(
+                            it.id ?: 0,
+                            params["namapengirim"].toString(),
+                            it.nomorpemesanan.toString(),
+                            it.biaya.toString()
+                        )
+                    }
+
+                    showMessage(
+                        requireActivity(),
+                        "Berhasil",
+                        "Checkout berhasil",
+                        MotionToast.TOAST_SUCCESS
+                    )
+                } else {
+                    showMessage(
+                        requireActivity(),
+                        getString(R.string.failed_title),
+                        response.message.toString(),
+                        MotionToast.TOAST_ERROR
+                    )
+                }
+            } else {
+                showMessage(
+                    requireActivity(),
+                    getString(R.string.failed_title),
+                    getString(R.string.failed_description),
+                    MotionToast.TOAST_ERROR
+                )
+            }
+        }
+    }
+
+    private fun observeEditCheckout(id: Int, params: HashMap<String, String>) {
+        Log.d(TAG, "observeEditCheckout: $params")
+        viewModel.editCheckout(id, params).observe(viewLifecycleOwner) { response ->
+            if (response != null) {
+                if (response.success!!) {
+                    val result = response.data
+                    result?.also {
+                        moveToCheckout(
+                            it.id ?: 0,
+                            params["namapengirim"].toString(),
+                            it.nomorpemesanan.toString(),
+                            it.biaya.toString()
+                        )
                     }
 
                     showMessage(
@@ -546,13 +612,22 @@ class PFixRateFragment : Fragment() {
         findNavController().navigate(toPickLocation)
     }
 
-    private fun moveToCheckout(result: ResultCheckout, namaPengirim: String) {
+    private fun moveToCheckout(
+        id: Int,
+        namaPengirim: String,
+        nomorPemesanan: String,
+        totalPembayaran: String
+    ) {
         val toCheckout =
-            PFixRateFragmentDirections.actionPFixRateFragmentToCheckoutFragment("Fix Rate")
+            PFixRateFragmentDirections.actionPFixRateFragmentToCheckoutFragment(
+                TYPE_PACKAGE_FIXRATE_STRING
+            )
                 .apply {
-                    noInvoice = result.nomorpemesanan.toString()
+                    this.id = id
+                    titlePackage = "Fix Rate"
+                    noInvoice = nomorPemesanan
                     name = namaPengirim
-                    totalPayment = result.biaya.toString()
+                    totalPayment = totalPembayaran
                 }
         findNavController().navigate(toCheckout)
     }

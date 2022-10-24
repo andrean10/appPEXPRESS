@@ -30,6 +30,8 @@ import com.pexpress.pexpresscustomer.utils.UtilsCode.CASH_PAYMENT_CODE
 import com.pexpress.pexpresscustomer.utils.UtilsCode.EWALLET_PAYMENT_CODE
 import com.pexpress.pexpresscustomer.utils.UtilsCode.QRIS_PAYMENT_CODE
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
+import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_FIXRATE_STRING
+import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_KILOMETER_STRING
 import com.pexpress.pexpresscustomer.utils.UtilsCode.VA_PAYMENT_CODE
 import com.pexpress.pexpresscustomer.utils.formatRegexRupiah
 import com.pexpress.pexpresscustomer.utils.formatRupiah
@@ -39,6 +41,8 @@ import com.pexpress.pexpresscustomer.view.main.order.dialog.e_wallet.EWalletDial
 import com.pexpress.pexpresscustomer.view.main.order.dialog.qrcode.QRCodeDialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.dialog.va.VADialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.viewmodel.CheckoutViewModel
+import com.pexpress.pexpresscustomer.view.main.order.viewmodel.PFixRateViewModel
+import com.pexpress.pexpresscustomer.view.main.order.viewmodel.PKilometerViewModel
 import com.pexpress.pexpresscustomer.view.main.order.viewmodel.PaymentViewModel
 import www.sanju.motiontoast.MotionToast
 
@@ -47,6 +51,8 @@ class CheckoutFragment : Fragment() {
 
     private var _binding: FragmentCheckoutBinding? = null
     private val binding get() = _binding!!
+    private val viewModelPFixRate by activityViewModels<PFixRateViewModel>()
+    private val viewModelPKilometer by activityViewModels<PKilometerViewModel>()
     private val viewModelCheckout by activityViewModels<CheckoutViewModel>()
     private val viewModelPayment by viewModels<PaymentViewModel>()
 
@@ -70,7 +76,15 @@ class CheckoutFragment : Fragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         requireActivity().onBackPressedDispatcher.addCallback(this) {
-            // nonaktif
+            when (args.type) {
+                TYPE_PACKAGE_FIXRATE_STRING -> {
+                    viewModelPFixRate.changeOrderPaket(args.id, true)
+                }
+                TYPE_PACKAGE_KILOMETER_STRING -> {
+                    viewModelPKilometer.changeOrderPaket(args.id, true)
+                }
+            }
+            findNavController().navigateUp()
         }
     }
 
@@ -93,7 +107,7 @@ class CheckoutFragment : Fragment() {
     private fun setupView() {
         viewModelCheckout.asuransi()
         with(binding) {
-            tvTitleJenisPembayaran.text = getString(R.string.placeholder_paket, args.typePayment)
+            tvTitleJenisPembayaran.text = getString(R.string.placeholder_paket, args.titlePackage)
 
             modalVirtualAccount = VADialogFragment()
             modalEWallet = EWalletDialogFragment()
@@ -433,9 +447,22 @@ class CheckoutFragment : Fragment() {
         (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            when (args.type) {
+                TYPE_PACKAGE_FIXRATE_STRING -> {
+                    viewModelPFixRate.changeOrderPaket(args.id, true)
+                }
+                TYPE_PACKAGE_KILOMETER_STRING -> {
+                    viewModelPKilometer.changeOrderPaket(args.id, true)
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-
         removeSelectedUser()
         viewModelCheckout.apply {
             removeVAPayment()

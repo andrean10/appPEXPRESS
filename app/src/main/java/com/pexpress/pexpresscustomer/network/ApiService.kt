@@ -1,13 +1,13 @@
 package com.pexpress.pexpresscustomer.network
 
 import com.pexpress.pexpresscustomer.model.ResponseCreateVA
-import com.pexpress.pexpresscustomer.model.status_order.ResponseStatusOrder
 import com.pexpress.pexpresscustomer.model.auth.ResponseLogin
 import com.pexpress.pexpresscustomer.model.auth.ResponseOTP
 import com.pexpress.pexpresscustomer.model.auth.ResponseRegister
 import com.pexpress.pexpresscustomer.model.auth.session.ResponseSession
 import com.pexpress.pexpresscustomer.model.checkout.ResponseCheckPembayaran
 import com.pexpress.pexpresscustomer.model.checkout.ResponseCheckoutUpdate
+import com.pexpress.pexpresscustomer.model.checkout.ResponseEditCheckout
 import com.pexpress.pexpresscustomer.model.checkout.asuransi.ResponseAsuransi
 import com.pexpress.pexpresscustomer.model.checkout.fix_rate.ResponseCheckout
 import com.pexpress.pexpresscustomer.model.checkout.kilometer.ResponseCheckoutKilometer
@@ -22,6 +22,7 @@ import com.pexpress.pexpresscustomer.model.profile.ResponseManageProfile
 import com.pexpress.pexpresscustomer.model.profile.ResponseProfile
 import com.pexpress.pexpresscustomer.model.resi.ResponseResi
 import com.pexpress.pexpresscustomer.model.resi.milestone.ResponseMilestone
+import com.pexpress.pexpresscustomer.model.status_order.ResponseStatusOrder
 import com.pexpress.pexpresscustomer.model.tracking.ResponseTracking
 import com.pexpress.pexpresscustomer.model.type_payments.ResponseCreateCash
 import com.pexpress.pexpresscustomer.model.type_payments.ResponseCreateEWallet
@@ -94,6 +95,13 @@ interface ApiService {
     @FormUrlEncoded
     @POST("checkout")
     fun checkout(@FieldMap params: HashMap<String, String>): Call<ResponseCheckout>
+
+    @FormUrlEncoded
+    @POST("update-pengiriman/{id}")
+    fun editCheckout(
+        @Path("id") id: Int,
+        @FieldMap params: HashMap<String, String>
+    ): Call<ResponseEditCheckout>
 
     // Update Asuransi
     @FormUrlEncoded
