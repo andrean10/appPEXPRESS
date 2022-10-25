@@ -457,6 +457,7 @@ class CheckoutFragment : Fragment() {
                     viewModelPKilometer.changeOrderPaket(args.id, true)
                 }
             }
+            findNavController().navigateUp()
         }
         return super.onOptionsItemSelected(item)
     }
