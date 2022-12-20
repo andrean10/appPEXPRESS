@@ -16,9 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentTrackingOrderBinding
 import com.pexpress.pexpresscustomer.model.tracking.ResultTracking
-import com.pexpress.pexpresscustomer.utils.*
+import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_DELIVERY
+import com.pexpress.pexpresscustomer.utils.capitalizeEachWords
+import com.pexpress.pexpresscustomer.utils.closeKeyboard
+import com.pexpress.pexpresscustomer.utils.formatRupiah
+import com.pexpress.pexpresscustomer.utils.showMessage
 import com.pexpress.pexpresscustomer.view.main.status_order.adapter.MilestoneAdapter
-import com.pexpress.pexpresscustomer.view.main.status_order.detail.view.MilestoneFragmentDirections
 import com.pexpress.pexpresscustomer.view.main.tracking_order.scanner_qr_code.ScannerQRFragment
 import com.pexpress.pexpresscustomer.view.main.tracking_order.viewmodel.TrackingOrderViewModel
 import www.sanju.motiontoast.MotionToast
@@ -92,7 +95,7 @@ class TrackingOrderFragment : Fragment() {
             tvTanggalOrder.text = resultTracking.tanggalpickup
             tvNoResi.text = resultTracking.nomortracking
             tvStatus.text =
-                if (resultTracking.statuspengiriman == UtilsCode.STATUS_PACKAGE_DELIVERED) {
+                if (resultTracking.statuspengiriman == MILESTONE_DELIVERY.toInt()) {
                     "${resultTracking.namastatuspengiriman} ${resultTracking.millestone?.get(0)?.diserahkanoleh}"
                 } else {
                     resultTracking.namastatuspengiriman
@@ -164,7 +167,9 @@ class TrackingOrderFragment : Fragment() {
 
     private fun moveToBuktiPengiriman(fotoPenerima: String) {
         val toProofDelivery =
-            TrackingOrderFragmentDirections.actionNavigationTrackingToProofDeliveryFragment(fotoPenerima)
+            TrackingOrderFragmentDirections.actionNavigationTrackingToProofDeliveryFragment(
+                fotoPenerima
+            )
         findNavController().navigate(toProofDelivery)
     }
 

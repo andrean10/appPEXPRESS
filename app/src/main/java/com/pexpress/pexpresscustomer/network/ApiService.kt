@@ -7,10 +7,11 @@ import com.pexpress.pexpresscustomer.model.auth.ResponseRegister
 import com.pexpress.pexpresscustomer.model.auth.session.ResponseSession
 import com.pexpress.pexpresscustomer.model.checkout.ResponseCheckPembayaran
 import com.pexpress.pexpresscustomer.model.checkout.ResponseCheckoutUpdate
-import com.pexpress.pexpresscustomer.model.checkout.ResponseEditCheckout
 import com.pexpress.pexpresscustomer.model.checkout.asuransi.ResponseAsuransi
 import com.pexpress.pexpresscustomer.model.checkout.fix_rate.ResponseCheckout
+import com.pexpress.pexpresscustomer.model.checkout.fix_rate.ResponseEditCheckoutFixRate
 import com.pexpress.pexpresscustomer.model.checkout.kilometer.ResponseCheckoutKilometer
+import com.pexpress.pexpresscustomer.model.checkout.kilometer.ResponseEditCheckoutKilometer
 import com.pexpress.pexpresscustomer.model.distance.ResponseDistance
 import com.pexpress.pexpresscustomer.model.fix_rate.ongkir.ResponseCheckOngkirFixRate
 import com.pexpress.pexpresscustomer.model.kilometer.ongkir.ResponseCheckOngkirKilometer
@@ -98,10 +99,17 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("update-pengiriman/{id}")
-    fun editCheckout(
+    fun editCheckoutFixRate(
         @Path("id") id: Int,
         @FieldMap params: HashMap<String, String>
-    ): Call<ResponseEditCheckout>
+    ): Call<ResponseEditCheckoutFixRate>
+
+    @FormUrlEncoded
+    @POST("update-pengiriman-kilometer/{id}")
+    fun editCheckoutKilometer(
+        @Path("id") id: Int,
+        @FieldMap params: HashMap<String, String>
+    ): Call<ResponseEditCheckoutKilometer>
 
     // Update Asuransi
     @FormUrlEncoded

@@ -268,6 +268,8 @@ class PKilometerFragment : Fragment() {
                 "jaraktempuh" to roundingDistance(jarak.toDouble())
             )
 
+            Log.d(TAG, "checkout: $params")
+
             // check all field value when user click button order
             when {
                 patokanAlamatPengirim.isEmpty() -> {
@@ -316,12 +318,9 @@ class PKilometerFragment : Fragment() {
                             if (jenisBarang.isEmpty()) {
                                 showMessageFieldRequired()
                             } else {
-                                Log.d(TAG, "checkout: $params")
                                 viewModel.changeOrderPaket.observe(viewLifecycleOwner) { value ->
                                     val id = value["id"] as Int
                                     val state = value["state"] as Boolean
-
-                                    Log.d(TAG, "checkout: $value")
 
                                     if (state) {
                                         observeEditCheckout(id, params)
@@ -335,7 +334,6 @@ class PKilometerFragment : Fragment() {
                             if (jenisBarangLainnya.isEmpty()) {
                                 showMessageFieldRequired()
                             } else {
-                                Log.d(TAG, "checkout: $params")
                                 viewModel.changeOrderPaket.observe(viewLifecycleOwner) { value ->
                                     val id = value["id"] as Int
                                     val state = value["state"] as Boolean
@@ -468,6 +466,7 @@ class PKilometerFragment : Fragment() {
                     val result = response.data?.get(0)
                     result?.also {
                         moveToCheckout(
+                            it.id ?: 0,
                             it.namapengirim.toString(),
                             it.nomorpemesanan.toString(),
                             it.biaya.toString()
@@ -501,11 +500,13 @@ class PKilometerFragment : Fragment() {
 
     private fun observeEditCheckout(id: Int, params: HashMap<String, String>) {
         viewModel.editCheckout(id, params).observe(viewLifecycleOwner) { response ->
+            Log.d(TAG, "observeEditCheckout: response = $response")
             if (response != null) {
                 if (response.success!!) {
                     val result = response.data
                     result?.also {
                         moveToCheckout(
+                            it.id ?: 0,
                             params["namapengirim"].toString(),
                             it.nomorpemesanan.toString(),
                             it.biaya.toString()
@@ -654,6 +655,7 @@ class PKilometerFragment : Fragment() {
     }
 
     private fun moveToCheckout(
+        id: Int,
         namaPengirim: String,
         nomorPemesanan: String,
         totalPembayaran: String
@@ -663,6 +665,7 @@ class PKilometerFragment : Fragment() {
                 TYPE_PACKAGE_KILOMETER_STRING
             )
                 .apply {
+                    this.id = id
                     titlePackage = "Kilometer"
                     noInvoice = nomorPemesanan
                     name = namaPengirim
@@ -693,10 +696,6 @@ class PKilometerFragment : Fragment() {
         super.onDestroy()
         _binding = null
 
-        Log.d(
-            TAG, "onDestroy: Dipanggil"
-        )
-
         viewModel.apply {
             removeFormAsalPengirim()
             removeFormAsalPenerima()
@@ -708,6 +707,7 @@ class PKilometerFragment : Fragment() {
             setStateInfoPengirim(false)
             setStateInfoPenerima(false)
             setStateInfoPickup(false)
+            changeOrderPaket(state = false)
         }
     }
 }

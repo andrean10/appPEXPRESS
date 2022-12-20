@@ -7,8 +7,6 @@
     android:background="#E2B62A"
     tools:context=".view.splash.onboarding.OnBoardingActivity">
 
-    <!--    android:background="@color/primaryColor"-->
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_get_started"
         style="@style/ButtonOnboarding"
@@ -41,7 +39,7 @@
         android:id="@+id/layout_onboarding_indicators"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_4"
+        android:layout_marginTop="@dimen/dimen_16"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="@dimen/dimen_16"

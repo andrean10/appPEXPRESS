@@ -13,6 +13,8 @@ import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentDetailStatusOrderBinding
 import com.pexpress.pexpresscustomer.model.status_order.ResultStatusOrder
 import com.pexpress.pexpresscustomer.utils.FormatDate
+import com.pexpress.pexpresscustomer.utils.UtilsCode
+import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_PROCESS_PAYMENT
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_POST
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_VIEW
 import com.pexpress.pexpresscustomer.utils.formatRupiah
@@ -83,7 +85,15 @@ class DetailStatusOrderFragment : Fragment() {
                     PATTERN_DATE_VIEW
                 )
 
-                tvStatusOrder.text = it.namastatuspengiriman.toString()
+                tvStatusOrder.text = if (it.statuspengiriman == MILESTONE_PROCESS_PAYMENT.toInt()) {
+                    it.informasistatuspengiriman
+                } else {
+                    getString(
+                        R.string.milestone_detail_status_pengiriman,
+                        it.informasistatuspengiriman,
+                    )
+
+                }
                 tvNomorPemesanan.text = it.nomorpemesanan.toString()
                 tvPengirim.text = it.namapengirim.toString()
                 tvPenerima.text = it.namapenerima.toString()

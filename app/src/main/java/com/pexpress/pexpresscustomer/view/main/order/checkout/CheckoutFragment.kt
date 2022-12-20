@@ -81,6 +81,7 @@ class CheckoutFragment : Fragment() {
                     viewModelPFixRate.changeOrderPaket(args.id, true)
                 }
                 TYPE_PACKAGE_KILOMETER_STRING -> {
+                    Log.d(TAG, "onCreate: id = $args.id")
                     viewModelPKilometer.changeOrderPaket(args.id, true)
                 }
             }
@@ -103,7 +104,7 @@ class CheckoutFragment : Fragment() {
         args = CheckoutFragmentArgs.fromBundle(arguments as Bundle)
         setupView()
     }
-
+ 
     private fun setupView() {
         viewModelCheckout.asuransi()
         with(binding) {
@@ -454,6 +455,7 @@ class CheckoutFragment : Fragment() {
                     viewModelPFixRate.changeOrderPaket(args.id, true)
                 }
                 TYPE_PACKAGE_KILOMETER_STRING -> {
+                    Log.d(TAG, "onOptionsItemSelected: id = $args.id")
                     viewModelPKilometer.changeOrderPaket(args.id, true)
                 }
             }

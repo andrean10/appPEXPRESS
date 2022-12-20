@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import com.pexpress.pexpresscustomer.model.checkout.ResponseEditCheckout
 import com.pexpress.pexpresscustomer.model.checkout.kilometer.ResponseCheckoutKilometer
+import com.pexpress.pexpresscustomer.model.checkout.kilometer.ResponseEditCheckoutKilometer
 import com.pexpress.pexpresscustomer.model.distance.ResponseDistance
 import com.pexpress.pexpresscustomer.model.kilometer.ongkir.ResponseCheckOngkirKilometer
 import com.pexpress.pexpresscustomer.model.order.ResultJenisBarang
@@ -66,7 +66,7 @@ class PKilometerViewModel : ViewModel() {
     private var _checkSubTotal = MutableLiveData<Boolean>()
     private var _cekOngkirKilometer: MutableLiveData<ResponseCheckOngkirKilometer?>? = null
     private var _checkout: MutableLiveData<ResponseCheckoutKilometer?>? = null
-    private var _editCheckout: MutableLiveData<ResponseEditCheckout?>? = null
+    private var _editCheckout: MutableLiveData<ResponseEditCheckoutKilometer?>? = null
 
     private val _stateChangePaket = MutableLiveData<HashMap<String, Any>>().apply {
         value = hashMapOf(
@@ -75,7 +75,7 @@ class PKilometerViewModel : ViewModel() {
         )
     }
 
-    fun changeOrderPaket(id: Int, state: Boolean) {
+    fun changeOrderPaket(id: Int = 0, state: Boolean) {
         _stateChangePaket.value = hashMapOf(
             "id" to id,
             "state" to state
@@ -263,13 +263,16 @@ class PKilometerViewModel : ViewModel() {
         return _checkout as MutableLiveData<ResponseCheckoutKilometer?>
     }
 
-    fun editCheckout(id: Int, params: HashMap<String, String>): LiveData<ResponseEditCheckout?> {
+    fun editCheckout(
+        id: Int,
+        params: HashMap<String, String>
+    ): LiveData<ResponseEditCheckoutKilometer?> {
         _editCheckout = MutableLiveData()
-        val client = ApiConfig.getApiService().editCheckout(id, params)
-        client.enqueue(object : Callback<ResponseEditCheckout> {
+        val client = ApiConfig.getApiService().editCheckoutKilometer(id, params)
+        client.enqueue(object : Callback<ResponseEditCheckoutKilometer> {
             override fun onResponse(
-                call: Call<ResponseEditCheckout>,
-                response: Response<ResponseEditCheckout>
+                call: Call<ResponseEditCheckoutKilometer>,
+                response: Response<ResponseEditCheckoutKilometer>
             ) {
                 if (response.isSuccessful) {
                     val result = response.body()
@@ -280,17 +283,17 @@ class PKilometerViewModel : ViewModel() {
                     val error =
                         Gson().fromJson(
                             response.errorBody()?.string(),
-                            ResponseEditCheckout::class.java
+                            ResponseEditCheckoutKilometer::class.java
                         )
                     _editCheckout!!.postValue(error)
                 }
             }
 
-            override fun onFailure(call: Call<ResponseEditCheckout>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseEditCheckoutKilometer>, t: Throwable) {
                 _editCheckout!!.postValue(null)
             }
         })
-        return _editCheckout as MutableLiveData<ResponseEditCheckout?>
+        return _editCheckout as MutableLiveData<ResponseEditCheckoutKilometer?>
     }
 
     val stateInfoPengirim: LiveData<Boolean> = _stateInfoPengirim

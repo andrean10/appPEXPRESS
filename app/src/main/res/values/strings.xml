@@ -102,7 +102,7 @@
     <string name="picklocation_placeholder_failed_get_cabang2">Maaf untuk sementara kecamatan anda belum terdaftar di cabang!</string>
     <string name="code_rupiah">Rp. %s</string>
     <string name="wib_format">%s WIB</string>
-    <string name="datetime_format">%s %s WIB</string>
+    <string name="datetime_format">%s WIB</string>
 
     <string name="complete_order_sukses">Order Sukses</string>
     <string name="complete_order_failed">Anda Belum Bayar</string>

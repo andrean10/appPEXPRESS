@@ -308,12 +308,9 @@ class PFixRateFragment : Fragment() {
                             if (jenisBarang.isEmpty()) {
                                 showMessageFieldRequired()
                             } else {
-                                Log.d(TAG, "checkout: $params")
                                 viewModel.changeOrderPaket.observe(viewLifecycleOwner) { value ->
                                     val id = value["id"] as Int
                                     val state = value["state"] as Boolean
-
-                                    Log.d(TAG, "checkout: $value")
 
                                     if (state) {
                                         observeEditCheckout(id, params)
@@ -327,8 +324,6 @@ class PFixRateFragment : Fragment() {
                             if (jenisBarangLainnya.isEmpty()) {
                                 showMessageFieldRequired()
                             } else {
-                                Log.d(TAG, "checkout: $params")
-
                                 viewModel.changeOrderPaket.observe(viewLifecycleOwner) { value ->
                                     val id = value["id"] as Int
                                     val state = value["state"] as Boolean
@@ -667,6 +662,7 @@ class PFixRateFragment : Fragment() {
             setStateInfoPengirim(false)
             setStateInfoPenerima(false)
             setStateInfoPickup(false)
+            changeOrderPaket(state = false)
         }
     }
 }

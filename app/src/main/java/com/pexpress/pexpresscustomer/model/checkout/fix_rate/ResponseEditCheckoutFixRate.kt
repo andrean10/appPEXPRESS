@@ -1,8 +1,8 @@
-package com.pexpress.pexpresscustomer.model.checkout
+package com.pexpress.pexpresscustomer.model.checkout.fix_rate
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseEditCheckout(
+data class ResponseEditCheckoutFixRate(
 
 	@field:SerializedName("data")
 	val data: Data? = null,

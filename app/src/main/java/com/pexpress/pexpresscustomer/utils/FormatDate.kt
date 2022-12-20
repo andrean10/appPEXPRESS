@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class FormatDate {
+
     fun outputDateFormat(pattern: String): SimpleDateFormat {
         return SimpleDateFormat(pattern, Locale.getDefault()).apply {
             timeZone = TimeZone.getTimeZone("UTC")
@@ -20,7 +21,7 @@ class FormatDate {
             try {
                 val parseDate = sdf.parse(date)
                 parseDate?.also {
-                    formattedTime = outputDateFormat(newPattern).format(parseDate)
+                    formattedTime = outputDateFormat(newPattern).format(it)
                 }
             } catch (e: ParseException) {
                 Log.e("TAG", "formateDate: ${e.printStackTrace()}")

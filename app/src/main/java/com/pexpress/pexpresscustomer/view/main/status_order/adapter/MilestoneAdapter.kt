@@ -1,5 +1,6 @@
 package com.pexpress.pexpresscustomer.view.main.status_order.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
@@ -10,17 +11,29 @@ import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.ItemsMilestoneBinding
 import com.pexpress.pexpresscustomer.model.resi.milestone.ResultMilestone
 import com.pexpress.pexpresscustomer.utils.FormatDate
+import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_DELIVERY
+import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_IN_TRANSIT
+import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_NOT_DELIVERY
+import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_PACKAGE_ALREADY_PICKUP
+import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_PROCESS_DELIVERY
+import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_PROCESS_PAYMENT
+import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_PROCESS_SHUTTLE
+import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_PROCESS_TRANSIT
+import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_RELEASE
+import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_RETURNED_TO_SENDER
+import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_SHUTTLE
+import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_TRANSIT
+import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_WAITING_FOR_PICKUP
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_FROM_API
+import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_FROM_API2
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_VIEW_MILESTONE
-import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_TIME_VIEW_MILESTONE
-import com.pexpress.pexpresscustomer.utils.UtilsCode.STATUS_PACKAGE_DELIVERED
-import com.pexpress.pexpresscustomer.utils.UtilsCode.STATUS_PACKAGE_PROCCESS_PAYMENT
-import com.pexpress.pexpresscustomer.utils.UtilsCode.STATUS_PACKAGE_WAITING_FOR_PICKUP
 
 class MilestoneAdapter : RecyclerView.Adapter<MilestoneAdapter.MilestoneViewHolder>() {
 
     private var onItemClickCallBack: OnItemClickCallBack? = null
     private val listMilestone = arrayListOf<ResultMilestone>()
+
+    private val TAG = MilestoneAdapter::class.simpleName
 
     fun setDataMilestone(itemMilestone: List<ResultMilestone>?) {
         if (itemMilestone == null) return
@@ -43,53 +56,178 @@ class MilestoneAdapter : RecyclerView.Adapter<MilestoneAdapter.MilestoneViewHold
 
     inner class MilestoneViewHolder(private val binding: ItemsMilestoneBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        private val formatDate = FormatDate()
+
         fun bind(milestone: ResultMilestone, position: Int) {
+            var namaKurir = ""
+            var tanggalStatus = ""
+            when (milestone.statuspengiriman) {
+                MILESTONE_PROCESS_PAYMENT -> {
+                    namaKurir = ""
+                    tanggalStatus = itemView.context.getString(
+                        R.string.datetime_format, formatDate.formatedDate(
+                            milestone.paytime,
+                            PATTERN_DATE_FROM_API,
+                            PATTERN_DATE_VIEW_MILESTONE
+                        )
+                    )
+                }
+                MILESTONE_WAITING_FOR_PICKUP -> {
+                    namaKurir = milestone.namakurir.toString()
+                    tanggalStatus = itemView.context.getString(
+                        R.string.datetime_format,
+                        formatDate.formatedDate(
+                            "${milestone.tanggalpenugasanpickup} ${milestone.jampenugasanpickup}",
+                            PATTERN_DATE_FROM_API2,
+                            PATTERN_DATE_VIEW_MILESTONE,
+                        )
+                    )
+                }
+                MILESTONE_PACKAGE_ALREADY_PICKUP -> {
+                    namaKurir = milestone.namakurir.toString()
+                    tanggalStatus = itemView.context.getString(
+                        R.string.datetime_format, formatDate.formatedDate(
+                            "${milestone.tanggalpickup} ${milestone.jampickup}",
+                            PATTERN_DATE_FROM_API2,
+                            PATTERN_DATE_VIEW_MILESTONE
+                        )
+                    )
+                }
+                MILESTONE_TRANSIT -> {
+                    namaKurir = milestone.namakurirDelivery.toString()
+                    tanggalStatus = itemView.context.getString(
+                        R.string.datetime_format, formatDate.formatedDate(
+                            milestone.tanggalpenugasantransit,
+                            PATTERN_DATE_FROM_API,
+                            PATTERN_DATE_VIEW_MILESTONE
+                        )
+                    )
+                }
+                MILESTONE_PROCESS_TRANSIT
+                -> {
+                    namaKurir = milestone.namakurirDelivery.toString()
+                    tanggalStatus = itemView.context.getString(
+                        R.string.datetime_format, formatDate.formatedDate(
+                            "${milestone.tglpenugasandelivery} ${milestone.jampenugasandelivery}",
+                            PATTERN_DATE_FROM_API2,
+                            PATTERN_DATE_VIEW_MILESTONE
+                        )
+                    )
+                }
+                MILESTONE_IN_TRANSIT
+                -> {
+                    namaKurir = milestone.namakurirDelivery.toString()
+                    tanggalStatus = itemView.context.getString(
+                        R.string.datetime_format, formatDate.formatedDate(
+                            "${milestone.tglprosesintransit} ${milestone.jamprosesintransit}",
+                            PATTERN_DATE_FROM_API2,
+                            PATTERN_DATE_VIEW_MILESTONE
+                        )
+                    )
+                }
+                MILESTONE_SHUTTLE
+                -> {
+                    namaKurir = milestone.namakurirShuttle.toString()
+                    tanggalStatus = itemView.context.getString(
+                        R.string.datetime_format, formatDate.formatedDate(
+                            "${milestone.tanggalpenugasanshuttle} ${milestone.jampenugasanshuttle}",
+                            PATTERN_DATE_FROM_API2,
+                            PATTERN_DATE_VIEW_MILESTONE
+                        )
+                    )
+                }
+                MILESTONE_PROCESS_SHUTTLE -> {
+                    namaKurir = milestone.namakurirShuttle.toString()
+                    tanggalStatus = itemView.context.getString(
+                        R.string.datetime_format, formatDate.formatedDate(
+                            "${milestone.tglprosesshuttle} ${milestone.jamprosesshuttle}",
+                            PATTERN_DATE_FROM_API2,
+                            PATTERN_DATE_VIEW_MILESTONE
+                        )
+                    )
+                }
+                MILESTONE_RELEASE -> {
+                    namaKurir = milestone.namakurirShuttle.toString()
+                    tanggalStatus = itemView.context.getString(
+                        R.string.datetime_format, formatDate.formatedDate(
+                            "${milestone.tglrelase} ${milestone.jamrelase}",
+                            PATTERN_DATE_FROM_API2,
+                            PATTERN_DATE_VIEW_MILESTONE
+                        )
+                    )
+                }
+                MILESTONE_PROCESS_DELIVERY -> {
+                    namaKurir = milestone.namakurirDelivery.toString()
+                    tanggalStatus = itemView.context.getString(
+                        R.string.datetime_format, formatDate.formatedDate(
+                            "${milestone.tglpenugasandelivery} ${milestone.jampenugasandelivery}",
+                            PATTERN_DATE_FROM_API2,
+                            PATTERN_DATE_VIEW_MILESTONE
+                        )
+                    )
+                }
+                MILESTONE_NOT_DELIVERY
+                -> {
+                    namaKurir = milestone.namakurirDelivery.toString()
+                    tanggalStatus = itemView.context.getString(
+                        R.string.datetime_format, formatDate.formatedDate(
+                            "${milestone.tglpending} ${milestone.jampending}",
+                            PATTERN_DATE_FROM_API2,
+                            PATTERN_DATE_VIEW_MILESTONE
+                        )
+                    )
+                }
+                MILESTONE_RETURNED_TO_SENDER -> {
+                    namaKurir = milestone.namakurirDelivery.toString()
+                    tanggalStatus = itemView.context.getString(
+                        R.string.datetime_format, formatDate.formatedDate(
+                            "${milestone.tglpenugasankembali} ${milestone.jampenugasankembali}",
+                            PATTERN_DATE_FROM_API2,
+                            PATTERN_DATE_VIEW_MILESTONE
+                        )
+                    )
+                }
+                MILESTONE_DELIVERY -> {
+                    namaKurir = milestone.namakurirDelivery.toString()
+                    tanggalStatus = itemView.context.getString(
+                        R.string.datetime_format, formatDate.formatedDate(
+                            "${milestone.tanggaldelivery} ${milestone.jamdelivery}",
+                            PATTERN_DATE_FROM_API2,
+                            PATTERN_DATE_VIEW_MILESTONE
+                        )
+                    )
+                }
+            }
+
             with(binding) {
-                val formatDate = FormatDate()
-                val tanggal = formatDate.formatedDate(
-                    milestone.tglcreate,
-                    PATTERN_DATE_FROM_API,
-                    PATTERN_DATE_VIEW_MILESTONE
-                )
-                val waktu = formatDate.formatedDate(
-                    milestone.tglcreate,
-                    PATTERN_DATE_FROM_API,
-                    PATTERN_TIME_VIEW_MILESTONE
-                )
-
-                tvTanggalStatus.text =
-                    itemView.context.getString(R.string.datetime_format, tanggal, waktu)
-
-                if (milestone.statuspengiriman == STATUS_PACKAGE_DELIVERED) {
-                    tvStatus.text = itemView.context.getString(
+                tvTanggalStatus.text = tanggalStatus
+                tvStatus.text = if (milestone.statuspengiriman == MILESTONE_DELIVERY) {
+                    itemView.context.getString(
                         R.string.milestone_status_pengiriman,
                         milestone.namastatuspengiriman,
-                        milestone.diserahkanolehdelivery
+                        milestone.diserahkanolehdelivery,
                     )
-
-                    if (!milestone.fotomenyerahkan.isNullOrEmpty()) {
-                        viewVisible(tvFotoPenerimaPengiriman)
-                    }
                 } else {
-                    tvStatus.text = milestone.namastatuspengiriman
+                    milestone.namastatuspengiriman
                 }
 
-                tvDetailStatusPengiriman.text = if (!milestone.namakurir.isNullOrEmpty()) {
-                    if (milestone.statuspengiriman != STATUS_PACKAGE_PROCCESS_PAYMENT) {
+                tvDetailStatusPengiriman.text =
+                    if (milestone.statuspengiriman == MILESTONE_PROCESS_PAYMENT) {
+                        milestone.informasistatuspengiriman
+                    } else {
                         itemView.context.getString(
                             R.string.milestone_detail_status_pengiriman,
                             milestone.informasistatuspengiriman,
-                            milestone.namakurir
+                            namaKurir
                         )
-                    } else {
-                        milestone.informasistatuspengiriman
-                    }
-                } else {
-                    milestone.informasistatuspengiriman
-                }
 
-                tvFotoPenerimaPengiriman.setOnClickListener {
-                    onItemClickCallBack?.onItemClicked(milestone.fotomenyerahkandelivery.toString())
+                    }
+
+                if (milestone.statuspengiriman == MILESTONE_DELIVERY && !milestone.fotomenyerahkandelivery.isNullOrEmpty()) {
+                    viewVisible(tvFotoPenerimaPengiriman)
+                    tvFotoPenerimaPengiriman.setOnClickListener {
+                        onItemClickCallBack?.onItemClicked(milestone.fotomenyerahkandelivery.toString())
+                    }
                 }
 
                 // lines milestone condition

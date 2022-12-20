@@ -1,6 +1,7 @@
 package com.pexpress.pexpresscustomer.view.main.status_order.detail.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -76,6 +77,7 @@ class MilestoneFragment : Fragment() {
     }
 
     private fun prepareData() {
+//        Log.d(TAG, "prepareData: $idPengiriman")
         with(binding) {
             viewModel.milestone(idPengiriman)
             viewModel.milestone.observe(viewLifecycleOwner) { response ->
