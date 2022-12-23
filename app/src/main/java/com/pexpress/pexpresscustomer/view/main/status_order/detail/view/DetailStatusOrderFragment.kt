@@ -13,7 +13,6 @@ import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentDetailStatusOrderBinding
 import com.pexpress.pexpresscustomer.model.status_order.ResultStatusOrder
 import com.pexpress.pexpresscustomer.utils.FormatDate
-import com.pexpress.pexpresscustomer.utils.UtilsCode
 import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_PROCESS_PAYMENT
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_POST
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_VIEW
