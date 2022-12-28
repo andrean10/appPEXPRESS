@@ -13,10 +13,13 @@ import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentDetailStatusOrderBinding
 import com.pexpress.pexpresscustomer.model.status_order.ResultStatusOrder
 import com.pexpress.pexpresscustomer.utils.FormatDate
+import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_DELIVERY
 import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_PROCESS_PAYMENT
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_POST
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_VIEW
+import com.pexpress.pexpresscustomer.utils.capitalizeEachWords
 import com.pexpress.pexpresscustomer.utils.formatRupiah
+import com.pexpress.pexpresscustomer.utils.moveToSAndK
 import com.pexpress.pexpresscustomer.view.main.order.viewmodel.OrderPaketViewModel
 import com.pexpress.pexpresscustomer.view.main.status_order.detail.DetailStatusOrderActivity.Companion.EXTRA_DATA
 
@@ -84,14 +87,14 @@ class DetailStatusOrderFragment : Fragment() {
                     PATTERN_DATE_VIEW
                 )
 
-                tvStatusOrder.text = if (it.statuspengiriman == MILESTONE_PROCESS_PAYMENT.toInt()) {
-                    it.informasistatuspengiriman
-                } else {
+                tvStatusOrder.text = if (it.statuspengiriman == MILESTONE_DELIVERY.toInt()) {
                     getString(
-                        R.string.milestone_detail_status_pengiriman,
-                        it.informasistatuspengiriman,
+                        R.string.milestone_status_pengiriman,
+                        it.namastatuspengiriman,
+                        it.diserahkanolehdelivery?.uppercase(),
                     )
-
+                } else {
+                    it.namastatuspengiriman
                 }
                 tvNomorPemesanan.text = it.nomorpemesanan.toString()
                 tvPengirim.text = it.namapengirim.toString()
@@ -110,6 +113,8 @@ class DetailStatusOrderFragment : Fragment() {
                             ""
                         }
                 tvBerat.text = getString(R.string.dimension_weight_size_2, it.berat)
+                tvAsuransi.text = "${it.asuransi}."
+                btnLihatSdank.setOnClickListener { requireActivity().moveToSAndK() }
                 tvOngkir.text = formatRupiah(it.biaya?.toDouble() ?: 0.0)
             }
         }

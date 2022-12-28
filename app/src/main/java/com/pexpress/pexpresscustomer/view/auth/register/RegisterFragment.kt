@@ -13,8 +13,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentRegisterBinding
+import com.pexpress.pexpresscustomer.utils.loader
 import com.pexpress.pexpresscustomer.utils.showMessage
 import com.pexpress.pexpresscustomer.view.auth.viewmodel.AuthViewModel
+import com.pexpress.pexpresscustomer.view.dialog.DialogLoadingFragment
 import www.sanju.motiontoast.MotionToast
 
 class RegisterFragment : Fragment() {
@@ -22,6 +24,7 @@ class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
     private val viewModel by activityViewModels<AuthViewModel>()
+    private lateinit var loadingFragment: DialogLoadingFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +42,11 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setToolbar()
+        setupView()
+    }
 
+    private fun setupView() {
+        loadingFragment = DialogLoadingFragment()
         numberPhoneObserve()
 
         with(binding) {
@@ -64,28 +71,34 @@ class RegisterFragment : Fragment() {
     }
 
     private fun moveToOTP() {
+        loadingFragment.loader(parentFragmentManager, true)
+
         with(binding) {
             val numberPhone = "08${edtNumberPhone.text.toString().trim()}"
+            observeRegister(numberPhone)
+        }
+    }
 
-            viewModel.register(numberPhone).observe(viewLifecycleOwner) { response ->
-                if (response != null) {
-                    if (response.success!!) {
-                        val toVerifyOTP =
-                            RegisterFragmentDirections.actionRegisterFragmentToVerifyOTPFragment(
-                                numberPhone
-                            )
-                        findNavController().navigate(toVerifyOTP)
-                    } else {
-                        edtNumberPhone.error = response.message
-                    }
+    private fun observeRegister(numberPhone: String) {
+        viewModel.register(numberPhone).observe(viewLifecycleOwner) { response ->
+            loadingFragment.loader(parentFragmentManager, false)
+            if (response != null) {
+                if (response.success!!) {
+                    val toVerifyOTP =
+                        RegisterFragmentDirections.actionRegisterFragmentToVerifyOTPFragment(
+                            numberPhone
+                        )
+                    findNavController().navigate(toVerifyOTP)
                 } else {
-                    showMessage(
-                        requireActivity(),
-                        getString(R.string.failed_title),
-                        getString(R.string.failed_description),
-                        MotionToast.TOAST_ERROR
-                    )
+                    binding.edtNumberPhone.error = response.message
                 }
+            } else {
+                showMessage(
+                    requireActivity(),
+                    getString(R.string.failed_title),
+                    getString(R.string.failed_description),
+                    MotionToast.TOAST_ERROR
+                )
             }
         }
     }

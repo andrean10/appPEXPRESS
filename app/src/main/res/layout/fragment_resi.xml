@@ -20,7 +20,8 @@
         android:id="@+id/layout_receipt"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="visible"
+        android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,15 +77,30 @@
                 <TextView
                     android:id="@+id/tv_no_resi"
                     style="@style/PrimaryTextStyle.Regular"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_4"
                     android:gravity="center"
+                    android:drawablePadding="@dimen/dimen_4"
                     android:textColor="@color/primaryTextColorLight"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_jenis_layanan"
-                    tools:text="PEX2022021700041" />
+                    tools:text="PEX2022021700041"
+                    app:drawableEndCompat="@drawable/ic_copy_text" />
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/btn_copy_text"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="@dimen/dimen_4"-->
+<!--                    android:src="@drawable/ic_copy_text"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintHorizontal_bias="0.5"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/tv_no_resi"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/tv_no_resi" />-->
 
                 <View
                     android:id="@+id/line_resi"
@@ -418,13 +434,13 @@
         </com.google.android.material.card.MaterialCardView>
     </androidx.core.widget.NestedScrollView>
 
-    <ProgressBar
-        android:id="@+id/pb_resi"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+<!--    <ProgressBar-->
+<!--        android:id="@+id/pb_resi"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/toolbar" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

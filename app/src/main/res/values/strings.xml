@@ -141,9 +141,10 @@
     <string name="checkout_e_wallet">E-Wallet</string>
     <string name="checkout_qris">QRIS</string>
     <string name="checkout_jumlah_pembayaran">Jumlah Pembayaran</string>
-    <string name="checkout_asuransi_pengiriman_description">Pex asuransi bersifat wajib jika paket yang dikirim berupa objek atau dokumen berharga. Besaran ganti rugi yang diberikan sesuai jenis paketnya</string>
+    <string name="checkout_asuransi_pengiriman_description">Untuk perlindungan terhadap resiko kerusakan atau kehilangan barang hingga senilai Rp. 5,000,000 (lima juta rupiah) S&amp;K berlaku.</string>
+    <string name="checkout_asuransi_pengiriman_sandk">Lihat S&amp;K</string>
     <string name="checkout_asuransi_pengiriman">Asuransi Pengiriman</string>
-    <string name="checkout_biaya_asuransi">Biaya Asuransi</string>
+    <string name="checkout_biaya_asuransi">Proteksikan Paket Kamu</string>
     <string name="checkout_total_pembayaran">Total Pembayaran</string>
     <string name="order_checkout">Checkout</string>
     <string name="order_subtotal">Subtotal</string>
@@ -168,11 +169,14 @@
     <string name="history_jenis_layanan">Jenis Layanan</string>
     <string name="history_jenis_barang">Jenis Barang</string>
     <string name="history_ukuran_barang">Ukuran Barang</string>
+    <string name="history_asuransi">Asuransi</string>
     <string name="history_tarif">Tarif</string>
     <string name="empty_milestone">Milestone Tidak Ditemukan</string>
     <string name="milestone_lihat_foto_penerima">Lihat Foto Penerima</string>
     <string name="milestone_status_pemesanan">Status Pemesanan</string>
     <string name="pick_location_cari_lokasi">Cari Lokasi</string>
+    <string name="pick_location_form_pengirim">Masukkan Alamat Lengkap Asal</string>
+    <string name="pick_location_form_penerima">Masukkan Alamat Lengkap Tujuan</string>
     <string name="pick_place_pilih_titik_lokasi">Pilih Titik Lokasi</string>
     <string name="placeholder_account_edit_profile">Ubah Profile</string>
     <string name="placeholder_account_log_out">Log Out</string>

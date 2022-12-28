@@ -96,7 +96,7 @@ class TrackingOrderFragment : Fragment() {
             tvNoResi.text = resultTracking.nomortracking
             tvStatus.text =
                 if (resultTracking.statuspengiriman == MILESTONE_DELIVERY.toInt()) {
-                    "${resultTracking.namastatuspengiriman} ${resultTracking.millestone?.get(0)?.diserahkanoleh}"
+                    "${resultTracking.namastatuspengiriman} ${resultTracking.millestone?.get(0)?.diserahkanolehdelivery?.capitalizeEachWords}"
                 } else {
                     resultTracking.namastatuspengiriman
                 }

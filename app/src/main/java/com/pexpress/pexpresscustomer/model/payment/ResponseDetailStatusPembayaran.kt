@@ -16,6 +16,12 @@ data class ResponseDetailStatusPembayaran(
 
 data class ResultDetailStatusPembayaran(
 
+    @field:SerializedName("asuransi")
+    val asuransi: String? = null,
+
+    @field:SerializedName("kurang")
+    val kurang: String? = null,
+
     @field:SerializedName("account_number")
     val accountNumber: String? = null,
 

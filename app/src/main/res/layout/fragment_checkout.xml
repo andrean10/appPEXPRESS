@@ -24,12 +24,11 @@
         app:layout_constraintBottom_toTopOf="@+id/layout_total_price"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:paddingStart="@dimen/dimen_16"
             android:paddingTop="@dimen/dimen_16"
             android:paddingEnd="@dimen/dimen_16"
@@ -433,6 +432,19 @@
                         app:layout_constraintTop_toBottomOf="@+id/checkbox_asuransi_pengiriman" />
 
                     <TextView
+                        android:id="@+id/btn_sandk"
+                        style="@style/PrimaryTextStyle.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_32"
+                        android:layout_marginTop="@dimen/dimen_4"
+                        android:text="@string/checkout_asuransi_pengiriman_sandk"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/placeholder_asuransi_pengiriman"
+                        app:layout_constraintStart_toStartOf="@+id/placeholder_asuransi_pengiriman"
+                        app:layout_constraintTop_toBottomOf="@+id/placeholder_asuransi_pengiriman" />
+
+                    <TextView
                         android:id="@+id/tv_price_asuransi"
                         style="@style/PriceTextStyle.SemiBold"
                         android:layout_width="0dp"
@@ -468,7 +480,7 @@
             android:layout_marginEnd="@dimen/dimen_16"
             android:gravity="end"
             android:text="@string/checkout_total_pembayaran"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/tv_total_pay"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
             app:layout_constraintStart_toStartOf="parent"
@@ -494,6 +506,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:enabled="false"
+            app:shapeAppearance="?attr/shapeAppearance"
             android:text="@string/checkout_bayar_sekarang"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

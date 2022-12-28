@@ -102,6 +102,9 @@ class DetailStatusPembayaranFragment : Fragment() {
                         tvBank.visibility = View.GONE
                     }
                 }
+
+                tvAsuransi.text = result.asuransi
+                tvKurang.text = formatRupiah(result.kurang?.toDouble() ?: 0.0)
             }
         }
     }

@@ -92,6 +92,10 @@ interface ApiService {
     @GET("cabang")
     fun cabang(@Query("id_district") district: Int): Call<ResponseCabang>
 
+    // Check Cut-Off
+    @GET("pengiriman/check-tgl-Order")
+    fun checkCutOff(@Query("id_layanan") layanan: Int): Call<ResponseCheckCutOff>
+
     // Checkout
     @FormUrlEncoded
     @POST("checkout")

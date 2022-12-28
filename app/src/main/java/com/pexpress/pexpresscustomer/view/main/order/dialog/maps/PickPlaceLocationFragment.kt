@@ -105,6 +105,13 @@ class PickPlaceLocationFragment : Fragment() {
         with(binding) {
 //            modalMaps = MapsFragment() // tidak digunakan
 
+            when (idForm) {
+                FORM_PENGIRIM -> tiPlacePrediction.hint =
+                    getString(R.string.pick_location_form_pengirim)
+                FORM_PENERIMA -> tiPlacePrediction.hint =
+                    getString(R.string.pick_location_form_penerima)
+            }
+
             token = AutocompleteSessionToken.newInstance()
             if (!Places.isInitialized()) {
                 Places.initialize(requireContext(), BuildConfig.MAPS_API_KEY)

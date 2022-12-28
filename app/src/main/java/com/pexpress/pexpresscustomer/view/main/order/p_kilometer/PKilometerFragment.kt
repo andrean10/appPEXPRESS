@@ -33,17 +33,20 @@ import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_VIEW
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_KILOMETER
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_KILOMETER_STRING
+import com.pexpress.pexpresscustomer.view.dialog.DialogLoadingFragment
 import com.pexpress.pexpresscustomer.view.main.order.dialog.jenis_barang.JenisBarangDialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.dialog.jenis_layanan.JenisLayananDialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.dialog.ukuran_barang.UkuranBarangDialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.viewmodel.PKilometerViewModel
 import www.sanju.motiontoast.MotionToast
+import java.util.*
 
 class PKilometerFragment : Fragment() {
 
     private var _binding: FragmentPKilometerBinding? = null
     private val binding get() = _binding!!
     private val viewModel by activityViewModels<PKilometerViewModel>()
+    private lateinit var loadingFragment: DialogLoadingFragment
 
     private lateinit var userPreference: UserPreference
 
@@ -95,6 +98,8 @@ class PKilometerFragment : Fragment() {
     }
 
     private fun prepareViewKilometer() {
+        loadingFragment = DialogLoadingFragment()
+
         with(binding) {
             cdInfoPengirim.setOnClickListener {
                 with(viewModel) {
@@ -185,25 +190,19 @@ class PKilometerFragment : Fragment() {
             }
 
             edtTanggalPickup.setOnClickListener {
-                // Makes only dates from today forward selectable.
-                val constraintsBuilder =
-                    CalendarConstraints.Builder()
-                        .setValidator(DateValidatorPointForward.now())
-
-                val datePicker =
-                    MaterialDatePicker.Builder.datePicker()
-                        .setTitleText("Select date")
-                        .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-                        .setCalendarConstraints(constraintsBuilder.build())
-                        .build()
-
-                datePicker.show(parentFragmentManager, "TAG")
-
-                datePicker.addOnPositiveButtonClickListener { selection ->
-                    edtTanggalPickup.setText(
-                        FormatDate().outputDateFormat(PATTERN_DATE_VIEW).format(selection)
+                loadingFragment.loader(parentFragmentManager, true)
+                if (jenisLayanan.isEmpty()) {
+                    loadingFragment.loader(parentFragmentManager, false)
+                    showMessage(
+                        requireActivity(),
+                        getString(R.string.text_warning),
+                        "Pilih jenis layanan terlebih dahulu sebelum mengisi tanggal pickup!",
+                        MotionToast.TOAST_WARNING,
                     )
+                    return@setOnClickListener
                 }
+
+                observeCheckCutOff(jenisLayanan.toInt())
             }
 
             edtJenisBarangPickup.setOnClickListener {
@@ -267,8 +266,6 @@ class PKilometerFragment : Fragment() {
                 "longpenerima" to longPenerima,
                 "jaraktempuh" to roundingDistance(jarak.toDouble())
             )
-
-            Log.d(TAG, "checkout: $params")
 
             // check all field value when user click button order
             when {
@@ -414,6 +411,60 @@ class PKilometerFragment : Fragment() {
         viewModel.formJenisBarang.observe(viewLifecycleOwner) { value ->
             jenisBarang = value.id.toString()
             binding.edtJenisBarangPickup.setText(value.namajenisbarang)
+        }
+    }
+
+    private fun openPickDate(isCutOff: Boolean) {
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Jakarta"))
+        lateinit var validator: CalendarConstraints.DateValidator
+        val today = MaterialDatePicker.todayInUtcMilliseconds()
+
+        if (isCutOff) {
+            validator = DateValidatorPointForward.now()
+            calendar.timeInMillis = today
+        } else {
+            calendar.apply {
+                timeInMillis = today
+                add(Calendar.DAY_OF_YEAR, 1)
+            }
+            validator = DateValidatorPointForward.from(calendar.timeInMillis)
+        }
+
+        val constraintsBuilder =
+            CalendarConstraints.Builder()
+                .setValidator(validator)
+        val datePicker =
+            MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Pilih Tanggal Pickup")
+                .setSelection(calendar.timeInMillis)
+                .setCalendarConstraints(constraintsBuilder.build())
+                .build()
+
+        datePicker.show(parentFragmentManager, "TAG")
+
+        datePicker.addOnPositiveButtonClickListener { selection ->
+            binding.edtTanggalPickup.setText(
+                FormatDate().outputDateFormat(PATTERN_DATE_VIEW).format(selection)
+            )
+        }
+    }
+
+    private fun observeCheckCutOff(layanan: Int) {
+        viewModel.checkCutOff(layanan).observe(viewLifecycleOwner) { response ->
+            loadingFragment.loader(parentFragmentManager, false)
+            if (response != null) {
+                if (response.success!!) {
+                    val status = response.status ?: true
+                    openPickDate(status)
+                } else {
+                    showMessage(
+                        requireActivity(),
+                        getString(R.string.failed_title),
+                        getString(R.string.failed_description),
+                        MotionToast.TOAST_ERROR
+                    )
+                }
+            }
         }
     }
 

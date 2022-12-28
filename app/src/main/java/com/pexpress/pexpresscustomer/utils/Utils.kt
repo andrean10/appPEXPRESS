@@ -1,30 +1,32 @@
 package com.pexpress.pexpresscustomer.utils
 
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import android.util.Base64
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.appbar.MaterialToolbar
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.model.distance.Distance
+import com.pexpress.pexpresscustomer.view.dialog.DialogLoadingFragment
 import www.sanju.motiontoast.MotionToast
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
-import kotlin.math.PI
-import kotlin.math.acos
-import kotlin.math.cos
-import kotlin.math.sin
 
 fun showMessage(
     activity: Activity,
@@ -199,39 +201,6 @@ fun normalizedNumber2(number: String): String {
     }
 }
 
-// algoritma heversine
-fun distance(
-    latOrigin: Double,
-    longOrigin: Double,
-    latDestination: Double,
-    longDestination: Double,
-): String {
-    val R = 6371 // radian bumi bulat
-    // hitung perbedaan atau selisih longitude asal dan tujuan
-    val longDiff = longOrigin - longDestination
-    // hitung jarak
-    var distance =
-        sin(deg2rad(latOrigin)) *
-                sin(deg2rad(latDestination)) +
-                cos(deg2rad(latOrigin)) *
-                cos(deg2rad(latDestination)) *
-                cos(deg2rad(longDiff))
-    distance = acos(distance)
-
-    // konversi jarak radian ke bujur
-//        distance = rad2deg(distance)
-    // jarak dalam km
-    val distanceKm = distance * R
-    // return distance km
-    return String.format(Locale.US, "%.2f", distanceKm)
-}
-
-// konversi radian ke bujur
-//private fun rad2deg(distance: Double) = (distance * 180.0 / PI)
-
-// konversi bujur ke radian
-private fun deg2rad(lat1: Double) = (lat1 * PI / 180.0)
-
 fun getAuthToken(key: String): String {
     val authKey = "$key:"
     val byteData = authKey.toByteArray()
@@ -274,4 +243,25 @@ fun roundingDistance(jarak: Double): String {
     val df = DecimalFormat("#")
     df.roundingMode = RoundingMode.UP
     return df.format(jarak)
+}
+
+fun Context.copyText(value: CharSequence) {
+    val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+    val clip = ClipData.newPlainText("label", value)
+    clipboard?.setPrimaryClip(clip)
+    Toast.makeText(this, "Teks disalin", Toast.LENGTH_SHORT).show()
+}
+
+fun Activity.moveToSAndK() {
+    val uri = Uri.parse("https://sites.google.com/view/snk-insurance-pex/beranda")
+    val intent = Intent(Intent.ACTION_VIEW, uri)
+    startActivity(intent)
+}
+
+fun DialogLoadingFragment.loader(manager: FragmentManager, state: Boolean) {
+    if (state) {
+        show(manager, DialogLoadingFragment.TAG)
+    } else {
+        dismiss()
+    }
 }

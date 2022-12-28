@@ -35,7 +35,6 @@ object UtilsCode {
 
     //    const val STATUS_PACKAGE_DELIVERED = 10
 //    const val STATUS_PACKAGE_PROCCESS_PAYMENT = 11
-    const val STATUS_PACKAGE_WAITING_FOR_PICKUP = 2
 
     const val CASH_PAYMENT_CODE = 1
     const val VA_PAYMENT_CODE = 2

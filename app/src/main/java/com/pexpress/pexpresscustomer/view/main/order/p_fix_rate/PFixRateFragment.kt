@@ -32,17 +32,20 @@ import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_VIEW
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_FIXRATE
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_FIXRATE_STRING
+import com.pexpress.pexpresscustomer.view.dialog.DialogLoadingFragment
 import com.pexpress.pexpresscustomer.view.main.order.dialog.jenis_barang.JenisBarangDialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.dialog.jenis_layanan.JenisLayananDialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.dialog.ukuran_barang.UkuranBarangDialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.viewmodel.PFixRateViewModel
 import www.sanju.motiontoast.MotionToast
+import java.util.*
 
 class PFixRateFragment : Fragment() {
 
     private var _binding: FragmentPFixRateBinding? = null
     private val binding get() = _binding!!
     private val viewModel by activityViewModels<PFixRateViewModel>()
+    private lateinit var loadingFragment: DialogLoadingFragment
 
     private lateinit var userPreference: UserPreference
 
@@ -92,6 +95,8 @@ class PFixRateFragment : Fragment() {
     }
 
     private fun prepareViewFixRate() {
+        loadingFragment = DialogLoadingFragment()
+
         with(binding) {
             cdInfoPengirim.setOnClickListener {
                 with(viewModel) {
@@ -183,25 +188,19 @@ class PFixRateFragment : Fragment() {
             }
 
             edtTanggalPickup.setOnClickListener {
-                // Makes only dates from today forward selectable.
-                val constraintsBuilder =
-                    CalendarConstraints.Builder()
-                        .setValidator(DateValidatorPointForward.now())
-
-                val datePicker =
-                    MaterialDatePicker.Builder.datePicker()
-                        .setTitleText("Select date")
-                        .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-                        .setCalendarConstraints(constraintsBuilder.build())
-                        .build()
-
-                datePicker.show(parentFragmentManager, "TAG")
-
-                datePicker.addOnPositiveButtonClickListener { selection ->
-                    edtTanggalPickup.setText(
-                        FormatDate().outputDateFormat(PATTERN_DATE_VIEW).format(selection)
+                loadingFragment.loader(parentFragmentManager, true)
+                if (jenisLayanan.isEmpty()) {
+                    loadingFragment.loader(parentFragmentManager, false)
+                    showMessage(
+                        requireActivity(),
+                        getString(R.string.text_warning),
+                        "Pilih jenis layanan terlebih dahulu sebelum mengisi tanggal pickup!",
+                        MotionToast.TOAST_WARNING,
                     )
+                    return@setOnClickListener
                 }
+
+                observeCheckCutOff(jenisLayanan.toInt())
             }
 
             edtJenisBarangPickup.setOnClickListener {
@@ -403,6 +402,60 @@ class PFixRateFragment : Fragment() {
         }
     }
 
+    private fun openPickDate(isCutOff: Boolean) {
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Jakarta"))
+        lateinit var validator: CalendarConstraints.DateValidator
+        val today = MaterialDatePicker.todayInUtcMilliseconds()
+
+        if (isCutOff) {
+            validator = DateValidatorPointForward.now()
+            calendar.timeInMillis = today
+        } else {
+            calendar.apply {
+                timeInMillis = today
+                add(Calendar.DAY_OF_YEAR, 1)
+            }
+            validator = DateValidatorPointForward.from(calendar.timeInMillis)
+        }
+
+        val constraintsBuilder =
+            CalendarConstraints.Builder()
+                .setValidator(validator)
+        val datePicker =
+            MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Pilih Tanggal Pickup")
+                .setSelection(calendar.timeInMillis)
+                .setCalendarConstraints(constraintsBuilder.build())
+                .build()
+
+        datePicker.show(parentFragmentManager, "TAG")
+
+        datePicker.addOnPositiveButtonClickListener { selection ->
+            binding.edtTanggalPickup.setText(
+                FormatDate().outputDateFormat(PATTERN_DATE_VIEW).format(selection)
+            )
+        }
+    }
+
+    private fun observeCheckCutOff(layanan: Int) {
+        viewModel.checkCutOff(layanan).observe(viewLifecycleOwner) { response ->
+            loadingFragment.loader(parentFragmentManager, false)
+            if (response != null) {
+                if (response.success!!) {
+                    val status = response.status ?: true
+                    openPickDate(status)
+                } else {
+                    showMessage(
+                        requireActivity(),
+                        getString(R.string.failed_title),
+                        getString(R.string.failed_description),
+                        MotionToast.TOAST_ERROR
+                    )
+                }
+            }
+        }
+    }
+
     private fun observeCheckSubTotal() {
         viewModel.checkSubtotal.observe(viewLifecycleOwner) { state ->
             if (state) {
@@ -600,10 +653,11 @@ class PFixRateFragment : Fragment() {
 
     private fun moveToPickLocation(idForm: Int) {
         val toPickLocation =
-            PFixRateFragmentDirections.actionPFixRateFragmentToPickPlaceLocationFragment().apply {
-                codeForm = idForm
-                typePackage = TYPE_PACKAGE_FIXRATE
-            }
+            PFixRateFragmentDirections.actionPFixRateFragmentToPickPlaceLocationFragment()
+                .apply {
+                    codeForm = idForm
+                    typePackage = TYPE_PACKAGE_FIXRATE
+                }
         findNavController().navigate(toPickLocation)
     }
 
@@ -648,8 +702,6 @@ class PFixRateFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-
-        Log.d(TAG, "onDestroy: Dipanggil")
 
         viewModel.apply {
             removeFormAsalPengirim()

@@ -52,7 +52,7 @@
                         android:ellipsize="end"
                         android:maxLines="2"
                         app:layout_constraintEnd_toStartOf="@+id/tv_detail_order"
-                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="Pesanan Diterima" />
@@ -446,6 +446,42 @@
                         app:layout_constraintStart_toEndOf="@+id/tv_placeholder_jenis_barang"
                         app:layout_constraintTop_toTopOf="@+id/tv_placeholder_jenis_barang"
                         tools:text="Makanan Kering" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_asuransi"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="@string/history_asuransi"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_jenis_barang" />
+
+                    <TextView
+                        android:id="@+id/tv_asuransi"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_16"
+                        android:layout_marginEnd="@dimen/dimen_4"
+                        android:gravity="end"
+                        app:layout_constraintBottom_toBottomOf="@+id/btn_lihat_sdank"
+                        app:layout_constraintEnd_toStartOf="@+id/btn_lihat_sdank"
+                        app:layout_constraintStart_toEndOf="@+id/tv_placeholder_asuransi"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_asuransi"
+                        tools:text="Ya" />
+
+                    <TextView
+                        android:id="@+id/btn_lihat_sdank"
+                        style="@style/PrimaryTextStyle.SemiBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_16"
+                        android:gravity="end"
+                        android:text="Lihat S&amp;K"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_asuransi" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

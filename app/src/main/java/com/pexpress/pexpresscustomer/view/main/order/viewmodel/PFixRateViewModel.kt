@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import com.pexpress.pexpresscustomer.model.checkout.fix_rate.ResponseEditCheckoutFixRate
 import com.pexpress.pexpresscustomer.model.checkout.fix_rate.ResponseCheckout
+import com.pexpress.pexpresscustomer.model.checkout.fix_rate.ResponseEditCheckoutFixRate
 import com.pexpress.pexpresscustomer.model.fix_rate.ongkir.ResponseCheckOngkirFixRate
+import com.pexpress.pexpresscustomer.model.order.ResponseCheckCutOff
 import com.pexpress.pexpresscustomer.model.order.ResultJenisBarang
 import com.pexpress.pexpresscustomer.model.order.ResultJenisLayanan
 import com.pexpress.pexpresscustomer.model.order.ResultJenisUkuran
@@ -64,6 +65,7 @@ class PFixRateViewModel : ViewModel() {
     private val _formUkuranBarang = MutableLiveData<ResultJenisUkuran>()
     private val _formJenisBarang = MutableLiveData<ResultJenisBarang>()
 
+    private var _checkCutOff: MutableLiveData<ResponseCheckCutOff?>? = null
     private var _checkSubTotal = MutableLiveData<Boolean>()
     private var _cekOngkirFixRate: MutableLiveData<ResponseCheckOngkirFixRate?>? = null
     private var _checkout: MutableLiveData<ResponseCheckout?>? = null
@@ -174,6 +176,40 @@ class PFixRateViewModel : ViewModel() {
                 _formUkuranBarang.value?.idjenisukuran != null
     }
 
+    fun checkCutOff(layanan: Int): LiveData<ResponseCheckCutOff?> {
+        _checkCutOff = MutableLiveData()
+        cutOff(layanan)
+        return _checkCutOff as MutableLiveData<ResponseCheckCutOff?>
+    }
+
+    private fun cutOff(layanan: Int) {
+        val client = ApiConfig.getApiService().checkCutOff(layanan)
+        client.enqueue(object : Callback<ResponseCheckCutOff> {
+            override fun onResponse(
+                call: Call<ResponseCheckCutOff>,
+                response: Response<ResponseCheckCutOff>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    result.also {
+                        _checkCutOff!!.postValue(it)
+                    }
+                } else {
+                    val error =
+                        Gson().fromJson(
+                            response.errorBody()?.string(),
+                            ResponseCheckCutOff::class.java
+                        )
+                    _checkCutOff!!.postValue(error)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseCheckCutOff>, t: Throwable) {
+                _checkCutOff!!.postValue(null)
+            }
+        })
+    }
+
     fun checkOngkirFixRate(params: HashMap<String, String>): LiveData<ResponseCheckOngkirFixRate?> {
         _cekOngkirFixRate = MutableLiveData()
         ongkirFixRate(params)
@@ -238,7 +274,10 @@ class PFixRateViewModel : ViewModel() {
         return _checkout as MutableLiveData<ResponseCheckout?>
     }
 
-    fun editCheckout(id: Int, params: HashMap<String, String>): LiveData<ResponseEditCheckoutFixRate?> {
+    fun editCheckout(
+        id: Int,
+        params: HashMap<String, String>
+    ): LiveData<ResponseEditCheckoutFixRate?> {
         _editCheckout = MutableLiveData()
         val client = ApiConfig.getApiService().editCheckoutFixRate(id, params)
         client.enqueue(object : Callback<ResponseEditCheckoutFixRate> {
@@ -281,6 +320,7 @@ class PFixRateViewModel : ViewModel() {
     val formUkuranBarang: LiveData<ResultJenisUkuran> = _formUkuranBarang
     val formJenisBarang: LiveData<ResultJenisBarang> = _formJenisBarang
 
+    val checkCutOff: LiveData<ResponseCheckCutOff?>? = _checkCutOff
     val checkSubtotal: LiveData<Boolean> = _checkSubTotal
 
     val changeOrderPaket: LiveData<HashMap<String, Any>> = _stateChangePaket

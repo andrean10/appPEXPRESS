@@ -26,6 +26,7 @@ import com.pexpress.pexpresscustomer.model.checkout.asuransi.ResultAsuransi
 import com.pexpress.pexpresscustomer.model.type_payments.ResultEWallet
 import com.pexpress.pexpresscustomer.model.type_payments.ResultVA
 import com.pexpress.pexpresscustomer.network.ApiConfig
+import com.pexpress.pexpresscustomer.utils.*
 import com.pexpress.pexpresscustomer.utils.UtilsCode.CASH_PAYMENT_CODE
 import com.pexpress.pexpresscustomer.utils.UtilsCode.EWALLET_PAYMENT_CODE
 import com.pexpress.pexpresscustomer.utils.UtilsCode.QRIS_PAYMENT_CODE
@@ -33,10 +34,6 @@ import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_FIXRATE_STRING
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_KILOMETER_STRING
 import com.pexpress.pexpresscustomer.utils.UtilsCode.VA_PAYMENT_CODE
-import com.pexpress.pexpresscustomer.utils.formatRegexRupiah
-import com.pexpress.pexpresscustomer.utils.formatRupiah
-import com.pexpress.pexpresscustomer.utils.getAuthToken
-import com.pexpress.pexpresscustomer.utils.showMessage
 import com.pexpress.pexpresscustomer.view.main.order.dialog.e_wallet.EWalletDialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.dialog.qrcode.QRCodeDialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.dialog.va.VADialogFragment
@@ -45,6 +42,7 @@ import com.pexpress.pexpresscustomer.view.main.order.viewmodel.PFixRateViewModel
 import com.pexpress.pexpresscustomer.view.main.order.viewmodel.PKilometerViewModel
 import com.pexpress.pexpresscustomer.view.main.order.viewmodel.PaymentViewModel
 import www.sanju.motiontoast.MotionToast
+import kotlin.math.roundToInt
 
 
 class CheckoutFragment : Fragment() {
@@ -66,6 +64,7 @@ class CheckoutFragment : Fragment() {
 
     private var paymentCode = 0
     private var totalPayment = 0.0
+    private var priceAsuransi = 0.0
 
     private var resultAsuransi: ResultAsuransi? = null
     private var resultVA: ResultVA? = null
@@ -81,7 +80,6 @@ class CheckoutFragment : Fragment() {
                     viewModelPFixRate.changeOrderPaket(args.id, true)
                 }
                 TYPE_PACKAGE_KILOMETER_STRING -> {
-                    Log.d(TAG, "onCreate: id = $args.id")
                     viewModelPKilometer.changeOrderPaket(args.id, true)
                 }
             }
@@ -104,7 +102,7 @@ class CheckoutFragment : Fragment() {
         args = CheckoutFragmentArgs.fromBundle(arguments as Bundle)
         setupView()
     }
- 
+
     private fun setupView() {
         viewModelCheckout.asuransi()
         with(binding) {
@@ -131,7 +129,6 @@ class CheckoutFragment : Fragment() {
             checkboxAsuransiPengiriman.setOnCheckedChangeListener { _, state ->
                 tvTotalPay.text = formatRupiah(
                     if (state) {
-                        var priceAsuransi = 0.0
                         if (viewModelCheckout.isReadyDataAsuransi.value == true) {
                             priceAsuransi = resultAsuransi?.value?.toDouble() ?: 0.0
                         }
@@ -141,6 +138,8 @@ class CheckoutFragment : Fragment() {
                     }
                 )
             }
+
+            btnSandk.setOnClickListener { requireActivity().moveToSAndK() }
 
             btnPayClick()
             observeVAPayment()
@@ -157,7 +156,8 @@ class CheckoutFragment : Fragment() {
 
                 val paramsAsuransi = hashMapOf(
                     "no_invoice" to args.noInvoice,
-                    "biaya" to totalPayFormat
+                    "biaya" to totalPayFormat,
+                    "asuransi" to priceAsuransi.roundToInt().toString()
                 )
 
                 when (paymentCode) {

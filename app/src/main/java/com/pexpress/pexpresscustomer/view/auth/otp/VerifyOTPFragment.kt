@@ -18,8 +18,10 @@ import com.pexpress.pexpresscustomer.databinding.FragmentVerifyOtpBinding
 import com.pexpress.pexpresscustomer.db.User
 import com.pexpress.pexpresscustomer.db.UtilsApplications
 import com.pexpress.pexpresscustomer.session.UserPreference
+import com.pexpress.pexpresscustomer.utils.loader
 import com.pexpress.pexpresscustomer.utils.showMessage
 import com.pexpress.pexpresscustomer.view.auth.viewmodel.AuthViewModel
+import com.pexpress.pexpresscustomer.view.dialog.DialogLoadingFragment
 import com.pexpress.pexpresscustomer.view.main.MainActivity
 import www.sanju.motiontoast.MotionToast
 
@@ -29,6 +31,8 @@ class VerifyOTPFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel by activityViewModels<AuthViewModel>()
     private lateinit var userPreference: UserPreference
+
+    private lateinit var loadingFragment: DialogLoadingFragment
 
     private lateinit var numberPhone: String
     private var otp = false
@@ -67,6 +71,7 @@ class VerifyOTPFragment : Fragment() {
     }
 
     private fun setupViewOTP() {
+        loadingFragment = DialogLoadingFragment()
         userPreference = UserPreference(requireContext())
         binding.tvOtpDesc.text = getString(R.string.otp_desc, numberPhone)
 
@@ -182,6 +187,7 @@ class VerifyOTPFragment : Fragment() {
     private fun observeOTP(params: HashMap<String, String>) {
         viewModel.otp(params).observe(viewLifecycleOwner) { response ->
             if (response != null) {
+                loadingFragment.loader(parentFragmentManager, false)
                 if (response.success!!) {
                     // store number to userpreferences
                     userPreference.apply {
@@ -190,6 +196,7 @@ class VerifyOTPFragment : Fragment() {
                         setDeviceId(stringAndroidID)
                     }
                     moveToMainActivity()
+//                    loadingFragment.loader(requireActivity(), parentFragmentManager, false)
                 } else {
                     showMessage(
                         requireActivity(),
@@ -210,6 +217,7 @@ class VerifyOTPFragment : Fragment() {
     }
 
     private fun moveToMain() {
+        loadingFragment.loader(parentFragmentManager, true)
         // check verify otp when succes move to main
         with(binding) {
             val otpDigit = edtOtpDigit.text.toString().trim()

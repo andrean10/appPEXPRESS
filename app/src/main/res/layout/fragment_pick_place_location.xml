@@ -24,7 +24,7 @@
         android:layout_marginStart="@dimen/dimen_24"
         android:layout_marginTop="@dimen/dimen_16"
         android:layout_marginEnd="@dimen/dimen_24"
-        android:hint="@string/pick_location_cari_lokasi"
+        android:hint="@string/pick_location_form_penerima"
         app:endIconMode="clear_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,11 +32,12 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_place_prediction"
-            style="@style/CustomTextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
             android:imeOptions="actionSearch"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textSize="12sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!--    <com.google.android.material.button.MaterialButton-->

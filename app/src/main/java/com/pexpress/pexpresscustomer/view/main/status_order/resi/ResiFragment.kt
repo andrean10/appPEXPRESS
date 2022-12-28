@@ -27,9 +27,8 @@ import com.pexpress.pexpresscustomer.BuildConfig
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentResiBinding
 import com.pexpress.pexpresscustomer.model.resi.ResultResi
-import com.pexpress.pexpresscustomer.utils.formatRupiah
-import com.pexpress.pexpresscustomer.utils.sdk29AndUp
-import com.pexpress.pexpresscustomer.utils.showMessage
+import com.pexpress.pexpresscustomer.utils.*
+import com.pexpress.pexpresscustomer.view.dialog.DialogLoadingFragment
 import com.pexpress.pexpresscustomer.view.main.order.viewmodel.OrderPaketViewModel
 import www.sanju.motiontoast.MotionToast
 import java.io.File
@@ -47,6 +46,7 @@ class ResiFragment : Fragment() {
     private var readPermissionGranted = false
     private var writePermissionGranted = false
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
+    private lateinit var loadingFragment: DialogLoadingFragment
 
     var path: String? = null
     var bitmapResi: Bitmap? = null
@@ -69,6 +69,12 @@ class ResiFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setToolbar()
+        setupView()
+    }
+
+    private fun setupView() {
+        loadingFragment = DialogLoadingFragment()
+        loadingFragment.loader(parentFragmentManager, true)
 
         val noInvoice = ResiFragmentArgs.fromBundle(arguments as Bundle).noInvoice
         observerResi(noInvoice)
@@ -79,7 +85,7 @@ class ResiFragment : Fragment() {
     private fun observerResi(noInvoince: String) {
         with(binding) {
             viewModel.checkResi(noInvoince).observe(viewLifecycleOwner) { response ->
-                pbResi.visibility = View.GONE
+                loadingFragment.loader(parentFragmentManager, false)
                 if (response != null) {
                     if (response.success!!) {
                         response.data?.let {
@@ -188,7 +194,11 @@ class ResiFragment : Fragment() {
 
     private fun prepareResi(resi: ResultResi) {
         with(binding) {
-            tvNoResi.text = resi.nomortracking
+            tvNoResi.apply {
+                text = resi.nomortracking
+                setOnClickListener { requireContext().copyText(tvNoResi.text) }
+            }
+//            btnCopyText.setOnClickListener { requireContext().copyText(tvNoResi.text) }
             tvTanggalTransaction.text = resi.tglcreate
             tvAsalPengirim.text =
                 "${capitalizeEachWord(resi.district)}, ${capitalizeEachWord(resi.regencies)}"

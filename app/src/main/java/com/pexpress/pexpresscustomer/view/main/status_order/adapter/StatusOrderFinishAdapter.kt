@@ -42,7 +42,11 @@ class StatusOrderFinishAdapter() :
                     .into(imgStatusOrder)
 
                 tvResiOrder.text = statusOrder.nomorpemesanan
-                tvStatusOrder.text = statusOrder.namastatuspengiriman
+                tvStatusOrder.text = itemView.context.getString(
+                    R.string.milestone_status_pengiriman,
+                    statusOrder.namastatuspengiriman,
+                    statusOrder.diserahkanolehdelivery?.uppercase(),
+                )
                 tvStatusDate.text = statusOrder.tglcreate
             }
 
