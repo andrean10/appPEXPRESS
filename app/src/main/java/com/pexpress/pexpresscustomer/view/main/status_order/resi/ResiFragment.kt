@@ -10,6 +10,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -28,6 +29,7 @@ import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentResiBinding
 import com.pexpress.pexpresscustomer.model.resi.ResultResi
 import com.pexpress.pexpresscustomer.utils.*
+import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 import com.pexpress.pexpresscustomer.view.dialog.DialogLoadingFragment
 import com.pexpress.pexpresscustomer.view.main.order.viewmodel.OrderPaketViewModel
 import www.sanju.motiontoast.MotionToast
@@ -35,7 +37,6 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
-import java.util.*
 
 class ResiFragment : Fragment() {
 
@@ -92,7 +93,11 @@ class ResiFragment : Fragment() {
                             val result = it[0]
                             prepareResi(result)
                             observeJenisLayanan(result.jenispengiriman)
-                            observeJenisBarang(result.jenisbarang.toString())
+                            if (result.jenisbarang.isNullOrEmpty()) {
+                                tvJenisBarang.text = result.jenisbaranglainnya
+                            } else {
+                                observeJenisBarang(result.jenisbarang.toString())
+                            }
                             observeJenisUkuran(result.jenisukuran, result)
                         }
                         layoutReceipt.visibility = View.VISIBLE
@@ -198,10 +203,9 @@ class ResiFragment : Fragment() {
                 text = resi.nomortracking
                 setOnClickListener { requireContext().copyText(tvNoResi.text) }
             }
-//            btnCopyText.setOnClickListener { requireContext().copyText(tvNoResi.text) }
             tvTanggalTransaction.text = resi.tglcreate
             tvAsalPengirim.text =
-                "${capitalizeEachWord(resi.district)}, ${capitalizeEachWord(resi.regencies)}"
+                "${resi.district?.capitalizeEachWords}, ${resi.regencies?.capitalizeEachWords}"
             tvNamaPengirim.text = resi.namapengirim
             tvTelponPengirim.text = resi.teleponpengirim
             tvNamaPenerima.text = resi.namapenerima
@@ -221,20 +225,6 @@ class ResiFragment : Fragment() {
                 e.printStackTrace()
             }
         }
-    }
-
-    private fun capitalizeEachWord(text: String?): String? {
-        val s = text?.split(" ")
-            ?.joinToString(separator = " ") { s ->
-                s.replaceFirstChar { char ->
-                    if (char.isLowerCase()) {
-                        char.titlecase(Locale.getDefault())
-                    } else {
-                        char.toString()
-                    }
-                }
-            }
-        return s
     }
 
     private fun setupDownloadResi() {

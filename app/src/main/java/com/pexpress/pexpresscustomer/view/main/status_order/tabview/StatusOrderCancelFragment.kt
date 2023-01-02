@@ -83,8 +83,6 @@ class StatusOrderCancelFragment : Fragment() {
                     if (response.success!!) {
                         val result = response.data
 
-                        Log.d(TAG, "observeStatusOrder: ${result?.isNotEmpty()}")
-
                         if (result!!.isNotEmpty()) {
                             statusOrderAdapter.setDataOrder(result as List<ResultStatusOrder>?)
                             isNotEmptyStatusOrder(true)

@@ -20,6 +20,9 @@ data class ResponseStatusOrder(
 @Parcelize
 data class ResultStatusOrder(
 
+    @field:SerializedName("jenisbaranglainnya")
+    val jenisbaranglainnya: String? = null,
+
     @field:SerializedName("asuransi")
     val asuransi: String? = null,
 

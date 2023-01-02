@@ -2,7 +2,6 @@ package com.pexpress.pexpresscustomer.view.main.order.p_kilometer
 
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -10,6 +9,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -30,7 +30,6 @@ import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_PENERIMA
 import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_PENGIRIM
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_POST
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_VIEW
-import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_KILOMETER
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_KILOMETER_STRING
 import com.pexpress.pexpresscustomer.view.dialog.DialogLoadingFragment
@@ -218,6 +217,7 @@ class PKilometerFragment : Fragment() {
     }
 
     private fun checkout() {
+        loadingFragment.loader(parentFragmentManager, true)
         with(binding) {
             val namaPengirim = edtNamaPengirim.text.toString().trim()
             val namaPenerima = edtNamaPenerima.text.toString().trim()
@@ -237,7 +237,6 @@ class PKilometerFragment : Fragment() {
             val jenisBarangLainnya = edtJenisBarangLainnya.text.toString().trim()
 
             val user = userPreference.getUser()
-
             val params = hashMapOf(
                 "idcustomer" to user.id.toString(),
                 "namapengirim" to namaPengirim,
@@ -256,7 +255,7 @@ class PKilometerFragment : Fragment() {
                 "cabangasal" to cabangAsal,
                 "cabangtujuan" to cabangTujuan,
                 "jenisbarang" to if (!isClickLainnya) jenisBarang else "",
-                "catatan" to if (isClickLainnya) jenisBarangLainnya else "",
+                "jenisbaranglainnya" to if (isClickLainnya) jenisBarangLainnya else "",
                 "gkecpengirim" to gKecPengirim,
                 "gkecpenerima" to gKecPenerima,
                 "tglpickup" to tanggalPickup,
@@ -441,7 +440,6 @@ class PKilometerFragment : Fragment() {
                 .build()
 
         datePicker.show(parentFragmentManager, "TAG")
-
         datePicker.addOnPositiveButtonClickListener { selection ->
             binding.edtTanggalPickup.setText(
                 FormatDate().outputDateFormat(PATTERN_DATE_VIEW).format(selection)
@@ -455,6 +453,13 @@ class PKilometerFragment : Fragment() {
             if (response != null) {
                 if (response.success!!) {
                     val status = response.status ?: true
+                    if (!status) {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.info_pick_date_cut_off),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                     openPickDate(status)
                 } else {
                     showMessage(
@@ -512,6 +517,7 @@ class PKilometerFragment : Fragment() {
 
     private fun observeCheckout(params: HashMap<String, String>) {
         viewModel.checkout(params).observe(viewLifecycleOwner) { response ->
+            loadingFragment.loader(parentFragmentManager, false)
             if (response != null) {
                 if (response.success!!) {
                     val result = response.data?.get(0)
@@ -551,7 +557,7 @@ class PKilometerFragment : Fragment() {
 
     private fun observeEditCheckout(id: Int, params: HashMap<String, String>) {
         viewModel.editCheckout(id, params).observe(viewLifecycleOwner) { response ->
-            Log.d(TAG, "observeEditCheckout: response = $response")
+            loadingFragment.loader(parentFragmentManager, false)
             if (response != null) {
                 if (response.success!!) {
                     val result = response.data

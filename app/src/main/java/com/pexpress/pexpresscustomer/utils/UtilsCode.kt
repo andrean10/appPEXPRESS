@@ -4,6 +4,7 @@ object UtilsCode {
     const val TAG = "AppDebug"
 
     const val TIME_DELAY_SCREEN = 3000L
+    const val TIME_DELAY_OPEN_PICK_DATE = 4000L
     const val MODE_NIGHT = 1
     const val MODE_LIGHT = 0
     const val UNDEFINIED_MODE = -1

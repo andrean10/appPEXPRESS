@@ -165,10 +165,14 @@ class DetailStatusOrderFragment : Fragment() {
                 val result = response.detail
                 dataStatusOrder?.also { detailOrder ->
                     result?.also {
-                        for (dataBarang in it) {
-                            if (dataBarang.id == detailOrder.jenisbarang?.toInt()) {
-                                binding.tvJenisBarang.text = dataBarang.namajenisbarang
-                                break
+                        if (detailOrder.jenisbarang.isNullOrEmpty()) {
+                            binding.tvJenisBarang.text = detailOrder.jenisbaranglainnya.toString()
+                        } else {
+                            for (dataBarang in it) {
+                                if (dataBarang.id == detailOrder.jenisbarang.toInt()) {
+                                    binding.tvJenisBarang.text = dataBarang.namajenisbarang
+                                    break
+                                }
                             }
                         }
                     }

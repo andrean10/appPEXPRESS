@@ -64,6 +64,9 @@ data class ResultResi(
     @field:SerializedName("namajenisbarang")
     val namajenisbarang: String? = null,
 
+    @field:SerializedName("jenisbaranglainnya")
+    val jenisbaranglainnya: String? = null,
+
     @field:SerializedName("panjang")
     val panjang: String? = null,
 

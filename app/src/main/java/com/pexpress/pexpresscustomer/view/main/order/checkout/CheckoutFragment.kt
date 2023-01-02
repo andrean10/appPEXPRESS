@@ -127,11 +127,14 @@ class CheckoutFragment : Fragment() {
 //            cdMethodQris.setOnClickListener { menuPaymentClickListener(cdMethodQris) }
 
             checkboxAsuransiPengiriman.setOnCheckedChangeListener { _, state ->
+                priceAsuransi = if (viewModelCheckout.isReadyDataAsuransi.value == true) {
+                    resultAsuransi?.value?.toDouble() ?: 0.0
+                } else {
+                    0.0
+                }
+
                 tvTotalPay.text = formatRupiah(
                     if (state) {
-                        if (viewModelCheckout.isReadyDataAsuransi.value == true) {
-                            priceAsuransi = resultAsuransi?.value?.toDouble() ?: 0.0
-                        }
                         totalPayment + priceAsuransi
                     } else {
                         totalPayment

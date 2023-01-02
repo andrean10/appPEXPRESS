@@ -10,6 +10,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -30,6 +31,7 @@ import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_PENGIRIM
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_POST
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_VIEW
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
+import com.pexpress.pexpresscustomer.utils.UtilsCode.TIME_DELAY_OPEN_PICK_DATE
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_FIXRATE
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_FIXRATE_STRING
 import com.pexpress.pexpresscustomer.view.dialog.DialogLoadingFragment
@@ -37,6 +39,10 @@ import com.pexpress.pexpresscustomer.view.main.order.dialog.jenis_barang.JenisBa
 import com.pexpress.pexpresscustomer.view.main.order.dialog.jenis_layanan.JenisLayananDialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.dialog.ukuran_barang.UkuranBarangDialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.viewmodel.PFixRateViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import www.sanju.motiontoast.MotionToast
 import java.util.*
 
@@ -216,6 +222,7 @@ class PFixRateFragment : Fragment() {
     }
 
     private fun checkout() {
+        loadingFragment.loader(parentFragmentManager, true)
         with(binding) {
             val namaPengirim = edtNamaPengirim.text.toString().trim()
             val namaPenerima = edtNamaPenerima.text.toString().trim()
@@ -235,7 +242,6 @@ class PFixRateFragment : Fragment() {
             val jenisBarangLainnya = edtJenisBarangLainnya.text.toString().trim()
 
             val user = userPreference.getUser()
-
             val params = hashMapOf(
                 "idcustomer" to user.id.toString(),
                 "namapengirim" to namaPengirim,
@@ -254,7 +260,7 @@ class PFixRateFragment : Fragment() {
                 "cabangasal" to cabangAsal,
                 "cabangtujuan" to cabangTujuan,
                 "jenisbarang" to if (!isClickLainnya) jenisBarang else "",
-                "catatan" to if (isClickLainnya) jenisBarangLainnya else "",
+                "jenisbaranglainnya" to if (isClickLainnya) jenisBarangLainnya else "",
                 "gkecpengirim" to gKecPengirim,
                 "gkecpenerima" to gKecPenerima,
                 "tglpickup" to tanggalPickup,
@@ -429,7 +435,6 @@ class PFixRateFragment : Fragment() {
                 .build()
 
         datePicker.show(parentFragmentManager, "TAG")
-
         datePicker.addOnPositiveButtonClickListener { selection ->
             binding.edtTanggalPickup.setText(
                 FormatDate().outputDateFormat(PATTERN_DATE_VIEW).format(selection)
@@ -443,6 +448,14 @@ class PFixRateFragment : Fragment() {
             if (response != null) {
                 if (response.success!!) {
                     val status = response.status ?: true
+                    if (!status) {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.info_pick_date_cut_off),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
                     openPickDate(status)
                 } else {
                     showMessage(
@@ -499,6 +512,7 @@ class PFixRateFragment : Fragment() {
 
     private fun observeCheckout(params: HashMap<String, String>) {
         viewModel.checkout(params).observe(viewLifecycleOwner) { response ->
+            loadingFragment.loader(parentFragmentManager, false)
             if (response != null) {
                 if (response.success!!) {
                     val result = response.data?.get(0)
@@ -537,8 +551,8 @@ class PFixRateFragment : Fragment() {
     }
 
     private fun observeEditCheckout(id: Int, params: HashMap<String, String>) {
-        Log.d(TAG, "observeEditCheckout: $params")
         viewModel.editCheckout(id, params).observe(viewLifecycleOwner) { response ->
+            loadingFragment.loader(parentFragmentManager, false)
             if (response != null) {
                 if (response.success!!) {
                     val result = response.data
