@@ -1,5 +1,8 @@
 package com.pexpress.pexpresscustomer.view.main.order.p_fix_rate
 
+import android.graphics.Paint
+import android.location.Geocoder
+import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
@@ -22,16 +25,21 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.snackbar.Snackbar
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentPFixRateBinding
+import com.pexpress.pexpresscustomer.model.order.ResultJenisBarang
+import com.pexpress.pexpresscustomer.model.order.ResultJenisLayanan
+import com.pexpress.pexpresscustomer.model.order.ResultJenisUkuran
+import com.pexpress.pexpresscustomer.model.status_order.ResultStatusOrder
 import com.pexpress.pexpresscustomer.session.UserPreference
 import com.pexpress.pexpresscustomer.utils.*
 import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_PENERIMA
 import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_PENGIRIM
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_POST
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_VIEW
+import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_TIME
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
-import com.pexpress.pexpresscustomer.utils.UtilsCode.TIME_DELAY_OPEN_PICK_DATE
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_FIXRATE
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TYPE_PACKAGE_FIXRATE_STRING
 import com.pexpress.pexpresscustomer.view.dialog.DialogLoadingFragment
@@ -39,10 +47,6 @@ import com.pexpress.pexpresscustomer.view.main.order.dialog.jenis_barang.JenisBa
 import com.pexpress.pexpresscustomer.view.main.order.dialog.jenis_layanan.JenisLayananDialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.dialog.ukuran_barang.UkuranBarangDialogFragment
 import com.pexpress.pexpresscustomer.view.main.order.viewmodel.PFixRateViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import www.sanju.motiontoast.MotionToast
 import java.util.*
 
@@ -52,12 +56,15 @@ class PFixRateFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel by activityViewModels<PFixRateViewModel>()
     private lateinit var loadingFragment: DialogLoadingFragment
+    private lateinit var geocoder: Geocoder
 
     private lateinit var userPreference: UserPreference
 
     private lateinit var modalJenisLayanan: JenisLayananDialogFragment
     private lateinit var modalUkuranBarang: UkuranBarangDialogFragment
     private lateinit var modalJenisBarang: JenisBarangDialogFragment
+
+    private var data: ResultStatusOrder? = null
 
     private var cabangAsal = ""
     private var cabangTujuan = ""
@@ -72,6 +79,9 @@ class PFixRateFragment : Fragment() {
     private var jenisLayanan = ""
     private var jenisUkuran = ""
     private var jenisBarang = ""
+    private var kodeDiskon = ""
+    private var amountDiskon = 0
+    private var tarif = 0
 
     private var isPengirim = false
     private var isClickLainnya = false
@@ -93,11 +103,17 @@ class PFixRateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (arguments != null) {
+            data = PFixRateFragmentArgs.fromBundle(arguments as Bundle).data
+        }
+
         setToolbar()
         userPreference = UserPreference(requireContext())
+        geocoder = Geocoder(requireContext(), Locale("id", "ID"))
 
         prepareViewFixRate()
         prepareDataFixRate()
+        if (data != null) prepareDataRepeatOrder(data!!)
     }
 
     private fun prepareViewFixRate() {
@@ -144,6 +160,7 @@ class PFixRateFragment : Fragment() {
             btnCheckout.setOnClickListener { checkout() }
         }
     }
+
 
     private fun prepareDataFixRate() {
         modalJenisLayanan = JenisLayananDialogFragment()
@@ -194,9 +211,9 @@ class PFixRateFragment : Fragment() {
             }
 
             edtTanggalPickup.setOnClickListener {
-                loadingFragment.loader(parentFragmentManager, true)
-                if (jenisLayanan.isEmpty()) {
-                    loadingFragment.loader(parentFragmentManager, false)
+                Log.d(TAG, "prepareDataFixRate: $jenisLayanan")
+                Log.d(TAG, "prepareDataFixRate: ${jenisLayanan == null || jenisLayanan == ""}")
+                if (jenisLayanan == null || jenisLayanan == "") {
                     showMessage(
                         requireActivity(),
                         getString(R.string.text_warning),
@@ -204,9 +221,9 @@ class PFixRateFragment : Fragment() {
                         MotionToast.TOAST_WARNING,
                     )
                     return@setOnClickListener
+                } else {
+                    viewModel.checkStateCutOff(true)
                 }
-
-                observeCheckCutOff(jenisLayanan.toInt())
             }
 
             edtJenisBarangPickup.setOnClickListener {
@@ -217,6 +234,123 @@ class PFixRateFragment : Fragment() {
             boxLainnya.setOnCheckedChangeListener { _, state ->
                 isClickLainnya = state
                 checkClickLainnya(state)
+            }
+        }
+    }
+
+    private fun prepareDataRepeatOrder(data: ResultStatusOrder) {
+        val paramsPengirim: HashMap<String, Any> = hashMapOf(
+            "id_cabang_asal" to data.cabangAwal.toString(),
+            "alamatpengirim" to getNameLocation(
+                data.latpengirim?.toDouble() ?: 0.0,
+                data.longpengirim?.toDouble() ?: 0.0
+            ),
+            "gkecpengirim" to data.gkecamatanpengirim.toString(),
+            "kecamatanpengirim" to data.kecamatanpengirim.toString(),
+        )
+        val paramsPenerima: HashMap<String, Any> = hashMapOf(
+            "id_cabang_tujuan" to data.cabang.toString(),
+            "alamatpenerima" to getNameLocation(
+                data.latpenerima?.toDouble() ?: 0.0,
+                data.longpenerima?.toDouble() ?: 0.0
+            ),
+            "gkecpenerima" to data.gkecamatanpenerima.toString(),
+            "kecamatanpenerima" to data.kecamatanpenerima.toString(),
+        )
+
+        val paramsLatLongPengirim = hashMapOf(
+            "latpengirim" to data.latpengirim.toString(),
+            "longpengirim" to data.longpengirim.toString()
+        )
+
+        val paramsLatLongPenerima = hashMapOf(
+            "latpenerima" to data.latpenerima.toString(),
+            "longpenerima" to data.longpenerima.toString()
+        )
+
+        viewModel.apply {
+            setStateInfoPengirim(true)
+            setStateInfoPenerima(true)
+            setStateInfoPickup(true)
+
+            setFormAsalPengirim(paramsPengirim)
+            setFormAsalPenerima(paramsPenerima)
+
+            setFormLatLongPengirim(paramsLatLongPengirim)
+            setFormLatLongPenerima(paramsLatLongPenerima)
+
+            setFormJenisLayanan(
+                ResultJenisLayanan(
+                    idlayanan = data.jenispengiriman?.toInt() ?: 0,
+                    layanan = data.namajenispengiriman
+                )
+            )
+
+            setFormUkuranBarang(
+                ResultJenisUkuran(
+                    idjenisukuran = data.jenisukuran?.toInt() ?: 0,
+                    jenisukuran = data.namajenisukuran
+                )
+            )
+
+            setFormJenisBarang(
+                ResultJenisBarang(
+                    id = data.jenisbarang?.toInt() ?: 0,
+                    namajenisbarang = data.namajenisbarang
+                )
+            )
+        }
+
+
+        with(binding) {
+            edtNamaPengirim.setText(data.namapengirim)
+            edtNumberPhonePengirim.setText(normalizedNumber(data.teleponpengirim ?: "0"))
+            edtPatokanAlamatPengirim.setText(data.alamatpengirim)
+            edtCatatanLokasiPengirim.setText(data.catatanpengirim)
+            // kecamatan pengirim
+//            kecamatanPengirim = data.kecamatanpengirim.toString()
+
+            edtNamaPenerima.setText(data.namapenerima)
+            edtNumberPhonePenerima.setText(normalizedNumber(data.teleponpenerima ?: "0"))
+            edtPatokanAlamatPenerima.setText(data.alamatpenerima)
+            edtCatatanLokasiPenerima.setText(data.catatanpenerima)
+            // kecamatan penerima
+//            kecamatanPenerima = data.kecamatanpenerima.toString()
+
+            // jenis layanan
+//            edtJenisLayananPickup.setText(data.namajenispengiriman)
+//            jenisLayanan = data.jenispengiriman.toString()
+            // jenis ukuran
+//            edtUkuranBarangPickup.setText(data.namajenisukuran)
+//            jenisUkuran = data.jenisukuran.toString()
+            // cabang asal
+//            cabangAsal = data.cabangAwal.toString()
+            // cabang tujuan
+//            cabangTujuan = data.cabang.toString()
+
+            // gkecPengirim
+//            gKecPengirim = data.gkecamatanpengirim.toString()
+            // gkecPenerima
+//            gKecPenerima = data.gkecamatanpenerima.toString()
+            // lat pengirim
+//            latPengirim = data.latpengirim.toString()
+            // long pengirim
+//            longPengirim = data.longpengirim.toString()
+            // lat penerima
+//            latPenerima = data.latpenerima.toString()
+            // long penerima
+//            longPenerima = data.longpenerima.toString()
+
+            // cek jenis barang lainnya
+            if (data.jenisbarang != null) {
+                isClickLainnya = false
+                boxLainnya.isChecked = false
+//                edtJenisBarangPickup.setText(data.namajenisbarang)
+//                jenisBarang = data.jenisbarang.toString()
+            } else {
+                isClickLainnya = true
+                boxLainnya.isChecked = true
+                edtJenisBarangLainnya.setText(data.jenisbaranglainnya) // jika ada
             }
         }
     }
@@ -267,8 +401,13 @@ class PFixRateFragment : Fragment() {
                 "latpengirim" to latPengirim,
                 "longpengirim" to longPengirim,
                 "latpenerima" to latPenerima,
-                "longpenerima" to longPenerima
+                "longpenerima" to longPenerima,
+                "kode_diskon" to kodeDiskon,
+                "amount_diskon" to amountDiskon.toString() // baru ditambahkan
             )
+
+            Log.d(TAG, "checkout: $params")
+
             // check all field value when user click button order
             when {
                 patokanAlamatPengirim.isEmpty() -> {
@@ -317,6 +456,8 @@ class PFixRateFragment : Fragment() {
                                     val id = value["id"] as Int
                                     val state = value["state"] as Boolean
 
+                                    Log.d(TAG, "checkout: $params")
+
                                     if (state) {
                                         observeEditCheckout(id, params)
                                     } else {
@@ -347,6 +488,50 @@ class PFixRateFragment : Fragment() {
         }
     }
 
+    private fun getNameLocation(latitude: Double, longitude: Double): String {
+        var alamat = ""
+        try {
+            val address = geocoder.getFromLocation(latitude, longitude, 1)
+            alamat = address[0].getAddressLine(0)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.w(TAG, "Tidak bisa mendapatkan lokasi!")
+        }
+        return alamat
+    }
+
+    private fun openPickDate(isCutOff: Boolean) {
+        val today = MaterialDatePicker.todayInUtcMilliseconds()
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Jakarta"))
+        calendar.apply {
+            timeInMillis = today
+            add(Calendar.DAY_OF_YEAR, if (isCutOff) 0 else 1)
+        }
+        val validator = DateValidatorPointForward.from(calendar.timeInMillis)
+
+        val constraintsBuilder =
+            CalendarConstraints.Builder()
+                .setValidator(validator)
+        val datePicker =
+            MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Pilih Tanggal Pickup")
+                .setSelection(calendar.timeInMillis)
+                .setCalendarConstraints(constraintsBuilder.build())
+                .build()
+
+        datePicker.show(parentFragmentManager, "TAG")
+        datePicker.addOnPositiveButtonClickListener { selection ->
+            val date = FormatDate().outputDateFormat(PATTERN_DATE_VIEW).format(selection)
+            binding.edtTanggalPickup.setText(date)
+
+            viewModel.apply {
+                checkStateDiskon()
+//                checkStateCutOff()
+            }
+            observeCheckLibur(FormatDate().formatedDate(date, PATTERN_DATE_VIEW, PATTERN_DATE_POST))
+        }
+    }
+
     private fun observeFormAsalPengirim() {
         viewModel.formAsalPengirim.observe(viewLifecycleOwner) { value ->
             cabangAsal = value["id_cabang_asal"].toString()
@@ -356,13 +541,6 @@ class PFixRateFragment : Fragment() {
             binding.edtAsalPengirim.setText(asalPengirim)
 
             viewModel.checkStateSubTotal()
-        }
-    }
-
-    private fun observeLocationPengirim() {
-        viewModel.formLatLongPengirim.observe(viewLifecycleOwner) { value ->
-            latPengirim = value["latpengirim"].toString()
-            longPengirim = value["longpengirim"].toString()
         }
     }
 
@@ -378,6 +556,13 @@ class PFixRateFragment : Fragment() {
         }
     }
 
+    private fun observeLocationPengirim() {
+        viewModel.formLatLongPengirim.observe(viewLifecycleOwner) { value ->
+            latPengirim = value["latpengirim"].toString()
+            longPengirim = value["longpengirim"].toString()
+        }
+    }
+
     private fun observeLocationPenerima() {
         viewModel.formLatLongPenerima.observe(viewLifecycleOwner) { value ->
             latPenerima = value["latpenerima"].toString()
@@ -389,7 +574,10 @@ class PFixRateFragment : Fragment() {
         viewModel.formJenisLayanan.observe(viewLifecycleOwner) { value ->
             jenisLayanan = value.idlayanan.toString()
             binding.edtJenisLayananPickup.setText(value.layanan)
-            viewModel.checkStateSubTotal()
+            viewModel.apply {
+                checkStateSubTotal()
+                checkStateCutOff(false)
+            }
         }
     }
 
@@ -408,71 +596,89 @@ class PFixRateFragment : Fragment() {
         }
     }
 
-    private fun openPickDate(isCutOff: Boolean) {
-        val calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Jakarta"))
-        lateinit var validator: CalendarConstraints.DateValidator
-        val today = MaterialDatePicker.todayInUtcMilliseconds()
-
-        if (isCutOff) {
-            validator = DateValidatorPointForward.now()
-            calendar.timeInMillis = today
-        } else {
-            calendar.apply {
-                timeInMillis = today
-                add(Calendar.DAY_OF_YEAR, 1)
-            }
-            validator = DateValidatorPointForward.from(calendar.timeInMillis)
-        }
-
-        val constraintsBuilder =
-            CalendarConstraints.Builder()
-                .setValidator(validator)
-        val datePicker =
-            MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Pilih Tanggal Pickup")
-                .setSelection(calendar.timeInMillis)
-                .setCalendarConstraints(constraintsBuilder.build())
-                .build()
-
-        datePicker.show(parentFragmentManager, "TAG")
-        datePicker.addOnPositiveButtonClickListener { selection ->
-            binding.edtTanggalPickup.setText(
-                FormatDate().outputDateFormat(PATTERN_DATE_VIEW).format(selection)
-            )
-        }
-    }
-
-    private fun observeCheckCutOff(layanan: Int) {
-        viewModel.checkCutOff(layanan).observe(viewLifecycleOwner) { response ->
-            loadingFragment.loader(parentFragmentManager, false)
-            if (response != null) {
-                if (response.success!!) {
-                    val status = response.status ?: true
-                    if (!status) {
-                        Toast.makeText(
-                            requireContext(),
-                            getString(R.string.info_pick_date_cut_off),
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-
-                    openPickDate(status)
-                } else {
-                    showMessage(
-                        requireActivity(),
-                        getString(R.string.failed_title),
-                        getString(R.string.failed_description),
-                        MotionToast.TOAST_ERROR
-                    )
+    private fun observeCheckStateCutOff() {
+        viewModel.checkStateCutOff.observe(viewLifecycleOwner) { map ->
+            Log.d(TAG, "observeCheckStateCutOff: Dipanggil")
+            Log.d(TAG, "observeCheckStateCutOff: $map")
+            if (map != null) {
+                val isFromDate = map["isFromPickDate"] as Boolean
+                if (map["jenisLayanan"] as Boolean) {
+                    observeCheckCutOff(jenisLayanan.toInt(), isFromDate)
                 }
             }
         }
     }
 
-    private fun observeCheckSubTotal() {
-        viewModel.checkSubtotal.observe(viewLifecycleOwner) { state ->
-            if (state) {
-                val params = hashMapOf(
+    private fun observeCheckStateDiskon() {
+        lateinit var params: HashMap<String, Any>
+        viewModel.checkStateDiskon.observe(viewLifecycleOwner) { state ->
+            Log.d(TAG, "observeCheckStateDiskon: checkDiskon state = $state ")
+            val timeNow = Calendar.getInstance().time
+            var tanggalPickup = binding.edtTanggalPickup.text.toString().trim()
+
+            if (data != null) {
+                params = hashMapOf(
+                    "cabangAwal" to cabangAsal.toInt(),
+                    "cabangTujuan" to cabangTujuan.toInt(),
+                    "jenisPengiriman" to jenisLayanan.toInt(),
+                    "jenisUkuran" to jenisUkuran.toInt(),
+                )
+
+                if (tanggalPickup.isNotEmpty()) {
+                    val time = FormatDate().outputDateFormat(PATTERN_TIME).format(timeNow)
+                    tanggalPickup = "${
+                        FormatDate().formatedDate(
+                            tanggalPickup,
+                            PATTERN_DATE_VIEW,
+                            PATTERN_DATE_POST
+                        )
+                    } $time"
+
+                    params["tglpickup"] = tanggalPickup
+                    observeCheckDiskonFixRate(params)
+                }
+            } else if (state) {
+                Log.d(TAG, "observeCheckStateDiskon: Dipanggil di bagian state true")
+                params = hashMapOf(
+                    "cabangAwal" to cabangAsal.toInt(),
+                    "cabangTujuan" to cabangTujuan.toInt(),
+                    "jenisPengiriman" to jenisLayanan.toInt(),
+                    "jenisUkuran" to jenisUkuran.toInt(),
+                )
+
+                if (tanggalPickup.isNotEmpty()) {
+                    Log.d(TAG, "observeCheckStateDiskon: Tanggal Pickup Tidak kosong")
+                    val time = FormatDate().outputDateFormat(PATTERN_TIME).format(timeNow)
+                    tanggalPickup = "${
+                        FormatDate().formatedDate(
+                            tanggalPickup,
+                            PATTERN_DATE_VIEW,
+                            PATTERN_DATE_POST
+                        )
+                    } $time"
+
+                    params["tglpickup"] = tanggalPickup
+                    observeCheckDiskonFixRate(params)
+                }
+            }
+        }
+    }
+
+    private fun observeCheckStateSubTotal() {
+        lateinit var params: HashMap<String, String>
+        viewModel.checkStateSubtotal.observe(viewLifecycleOwner) { state ->
+            Log.d(TAG, "observeCheckSubTotal: state check subtotal = $state")
+            if (data != null) {
+                params = hashMapOf(
+                    "cabangasal" to cabangAsal,
+                    "cabangtujuan" to cabangTujuan,
+                    "jenispengiriman" to jenisLayanan,
+                    "jenisukuran" to jenisUkuran,
+                    "type" to TYPE_PACKAGE_FIXRATE_STRING
+                )
+                observeCheckOngkir(params)
+            } else if (state) {
+                params = hashMapOf(
                     "cabangasal" to cabangAsal,
                     "cabangtujuan" to cabangTujuan,
                     "jenispengiriman" to jenisLayanan,
@@ -485,18 +691,197 @@ class PFixRateFragment : Fragment() {
         }
     }
 
+    private fun observeCheckCutOff(layanan: Int, isFromDate: Boolean) {
+//        loadingFragment.loader(parentFragmentManager, true)
+        viewModel.checkCutOff(layanan).observe(viewLifecycleOwner) { response ->
+//            loadingFragment.loader(parentFragmentManager, false)
+            if (response != null) {
+                if (response.success!!) {
+                    val status = response.status ?: true
+                    Log.d(TAG, "observeCheckCutOff: status = $status")
+                    if (!status) {
+                        validationCutOff()
+                    }
+
+                    Log.d(TAG, "observeCheckCutOff: isFromDate = $isFromDate")
+
+                    if (isFromDate) {
+                        openPickDate(status)
+                    }
+                } else {
+                    showMessage(
+                        requireActivity(),
+                        getString(R.string.failed_title),
+                        getString(R.string.failed_description),
+                        MotionToast.TOAST_ERROR
+                    )
+                }
+            }
+        }
+    }
+
+    private fun validationCutOff() {
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Jakarta"))
+        calendar.add(Calendar.DAY_OF_YEAR, 1)
+        val formatedDateNow =
+            FormatDate().outputDateFormat(PATTERN_DATE_VIEW).format(calendar.time)
+        val dateNow =
+            FormatDate().outputDateFormat(PATTERN_DATE_VIEW).parse(formatedDateNow)
+
+        with(binding) {
+            val snackbar = Snackbar.make(
+                layoutPfixRate,
+                getString(R.string.info_pick_date_cut_off),
+                Snackbar.LENGTH_INDEFINITE
+            ).setAction("Oke") {
+
+            }
+
+            val toast = Toast.makeText(
+                requireContext(),
+                getString(R.string.info_pick_date_cut_off),
+                Toast.LENGTH_LONG
+            )
+
+            val tanggalPickup = edtTanggalPickup.text.toString()
+            if (tanggalPickup.isNotEmpty()) {
+                val formatedSelectedDate =
+                    FormatDate().outputDateFormat(PATTERN_DATE_VIEW).parse(tanggalPickup)
+
+                Log.d(TAG, "observeCheckCutOff: calendar time = $dateNow")
+                Log.d(TAG, "observeCheckCutOff: formatedSelectedDate = $formatedSelectedDate")
+                Log.d(
+                    TAG,
+                    "observeCheckCutOff: compareTo = ${formatedSelectedDate.before(dateNow)}"
+                )
+
+                // jika tanggal di pilih di form ternyata cut off maka tanggal dihapus
+                if (formatedSelectedDate != null && dateNow != null) {
+                    if (formatedSelectedDate.before(dateNow)) {
+                        edtTanggalPickup.setText("")
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                            snackbar.show()
+                        } else {
+                            toast.show()
+                        }
+                    }
+                }
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    snackbar.show()
+                } else {
+                    toast.show()
+                }
+            }
+        }
+    }
+
+    private fun observeCheckDiskonFixRate(params: HashMap<String, Any>) {
+        Log.d(TAG, "observeCheckDiskonFixRate: Dipanggil")
+        viewModel.checkDiskonFixRate(params).observe(viewLifecycleOwner) { response ->
+            Log.d(TAG, "observeCheckDiskonFixRate: Get response di server diskon fix rate")
+            if (response != null) {
+                if (response.status != null) {
+                    val result = response.data
+                    if (result != null) {
+                        val frnpDiskon = result.frnpdiskon
+                        val diskon = result.diskonharga
+                        kodeDiskon = result.frkddiskon.toString()
+
+                        Log.d(TAG, "observeCheckDiskonFixRate: subtotal = $tarif")
+                        Log.d(TAG, "observeCheckDiskonFixRate: frnpDiskon = $frnpDiskon")
+                        Log.d(TAG, "observeCheckDiskonFixRate: diskon = $diskon")
+
+                        var totalTarif = 0
+                        var isDiskon = false
+                        when {
+                            frnpDiskon != null && frnpDiskon > 0 -> {
+                                val subDiskon = tarif.div(frnpDiskon)
+                                totalTarif = tarif - subDiskon
+                                isDiskon = true
+                                amountDiskon = subDiskon
+                            }
+                            diskon != null && diskon > 0 -> {
+                                totalTarif = tarif - diskon
+                                isDiskon = true
+                                amountDiskon = diskon
+                            }
+                            else -> {
+                                amountDiskon = 0
+                            }
+                        }
+
+                        checkVisibilityDiskon(isDiskon, totalTarif)
+
+                        Log.d(TAG, "observeCheckDiskonFixRate: diskonAmount = $amountDiskon")
+                        Log.d(TAG, "observeCheckDiskonFixRate: totalTarif = $totalTarif")
+                    }
+                } else {
+                    showMessage(
+                        requireActivity(),
+                        getString(R.string.failed_title),
+                        getString(R.string.failed_description),
+                        MotionToast.TOAST_ERROR
+                    )
+                }
+            }
+        }
+    }
+
     private fun observeCheckOngkir(params: HashMap<String, String>) {
+        Log.d(TAG, "observeCheckOngkir: Dipanggil")
         viewModel.checkOngkirFixRate(params).observe(viewLifecycleOwner) { response ->
             with(binding) {
                 if (response != null) {
                     if (response.success!!) {
                         val result = response.data?.get(0)
-
-                        tvTotalSubtotal.text = formatRupiah(result?.tarif?.toDouble() ?: 0.0)
+                        tarif = result?.tarif?.toInt() ?: 0
+                        tvTotalSubtotal.text = formatRupiah(tarif.toDouble())
                         btnCheckout.isEnabled = true
 
+                        viewModel.checkStateDiskon()
                     } else {
                         tvTotalSubtotal.text = getString(R.string.p_tarif_not_found)
+                    }
+                } else {
+                    showMessage(
+                        requireActivity(),
+                        getString(R.string.failed_title),
+                        getString(R.string.failed_description),
+                        MotionToast.TOAST_ERROR
+                    )
+                }
+            }
+        }
+    }
+
+    private fun observeCheckLibur(tanggal: String) {
+        viewModel.checkHariLibur(tanggal).observe(viewLifecycleOwner) { response ->
+            with(binding) {
+                if (response != null) {
+                    val status = response.status
+                    if (status != null) {
+                        if (status) {
+                            Log.d(TAG, "observeCheckLibur: $status")
+
+                            edtTanggalPickup.setText("")
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                                Snackbar.make(
+                                    layoutPfixRate,
+                                    getString(R.string.info_pick_date_off),
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                showMessage(
+                                    requireActivity(),
+                                    getString(R.string.failed_title),
+                                    getString(R.string.info_pick_date_off),
+                                    MotionToast.TOAST_ERROR
+                                )
+                            }
+                        }
                     }
                 } else {
                     showMessage(
@@ -606,6 +991,11 @@ class PFixRateFragment : Fragment() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        observeCheckStateCutOff()
+    }
+
     override fun onResume() {
         super.onResume()
         setVisibilityBottomHead(requireActivity(), false)
@@ -631,7 +1021,9 @@ class PFixRateFragment : Fragment() {
         observeJenisLayanan()
         observeUkuranBarang()
         observeJenisBarang()
-        observeCheckSubTotal()
+//        observeCheckStateCutOff() // di komen
+        observeCheckStateSubTotal()
+        observeCheckStateDiskon()
     }
 
     private val pickContact = registerForActivityResult(PickContact()) {
@@ -649,6 +1041,26 @@ class PFixRateFragment : Fragment() {
                     binding.edtNumberPhonePenerima.setText(normalizedNumber(getString(0)))
                 }
                 close()
+            }
+        }
+    }
+
+    private fun checkVisibilityDiskon(isDiskon: Boolean, totalTarif: Int) {
+        Log.d(TAG, "checkVisibilityDiskon: isDiskon, $isDiskon and totalTarif, $totalTarif")
+        with(binding) {
+            tvTotalSubtotal.apply {
+                paintFlags = if (isDiskon) {
+                    paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                } else {
+                    paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                }
+                alpha = if (isDiskon) 0.8f else 1f
+                textSize = if (isDiskon) 18f else 21f
+            }
+
+            tvTotalDiscountSubtotal.apply {
+                visibility = if (isDiskon) VISIBLE else GONE
+                text = getString(R.string.code_rupiah, "$totalTarif")
             }
         }
     }
@@ -696,6 +1108,7 @@ class PFixRateFragment : Fragment() {
     }
 
     private fun showMessageFieldRequired() {
+//        loadingFragment.loader(parentFragmentManager, false)
         showMessage(
             requireActivity(),
             "Gagal Checkout!",
@@ -728,6 +1141,10 @@ class PFixRateFragment : Fragment() {
             setStateInfoPengirim(false)
             setStateInfoPenerima(false)
             setStateInfoPickup(false)
+            setStateCutOff()
+            setStateSubTotal(false)
+            setStateDiskon(false)
+            checkStateCutOff(false)
             changeOrderPaket(state = false)
         }
     }

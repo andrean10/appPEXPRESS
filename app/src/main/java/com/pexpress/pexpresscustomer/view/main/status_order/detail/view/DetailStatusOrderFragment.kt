@@ -13,11 +13,10 @@ import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentDetailStatusOrderBinding
 import com.pexpress.pexpresscustomer.model.status_order.ResultStatusOrder
 import com.pexpress.pexpresscustomer.utils.FormatDate
+import com.pexpress.pexpresscustomer.utils.UtilsCode
 import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_DELIVERY
-import com.pexpress.pexpresscustomer.utils.UtilsCode.MILESTONE_PROCESS_PAYMENT
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_POST
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_VIEW
-import com.pexpress.pexpresscustomer.utils.capitalizeEachWords
 import com.pexpress.pexpresscustomer.utils.formatRupiah
 import com.pexpress.pexpresscustomer.utils.moveToSAndK
 import com.pexpress.pexpresscustomer.view.main.order.viewmodel.OrderPaketViewModel
@@ -55,16 +54,43 @@ class DetailStatusOrderFragment : Fragment() {
         setupView()
 
         with(binding) {
+            tvOrderAgain.setOnClickListener {
+                if (dataStatusOrder != null) {
+                    if (dataStatusOrder!!.tipepengiriman == UtilsCode.TYPE_PACKAGE_FIXRATE_STRING) {
+                        moveToOrderFixRate(dataStatusOrder!!)
+                    } else {
+                        moveToOrderKilometer(dataStatusOrder!!)
+                    }
+                }
+            }
             tvDetailOrder.setOnClickListener { moveToMilestone() }
             tvDetailResi.setOnClickListener { moveToResi() }
         }
+    }
+
+    private fun moveToOrderFixRate(resultStatusOrder: ResultStatusOrder) {
+        val toOrderFixRate =
+            DetailStatusOrderFragmentDirections.actionDetailStatusOrderFragmentToPFixRateFragment()
+                .apply {
+                    data = resultStatusOrder
+                }
+        findNavController().navigate(toOrderFixRate)
+    }
+
+    private fun moveToOrderKilometer(resultStatusOrder: ResultStatusOrder) {
+        val toOrderKilometer =
+            DetailStatusOrderFragmentDirections.actionDetailStatusOrderFragmentToPKilometerFragment()
+                .apply {
+                    data = resultStatusOrder
+                }
+        findNavController().navigate(toOrderKilometer)
     }
 
     private fun moveToMilestone() {
         val toMilestone =
             DetailStatusOrderFragmentDirections.actionDetailStatusOrderFragmentToMilestoneFragment()
                 .apply {
-                    id = dataStatusOrder?.reffno ?: 0
+                    id = (dataStatusOrder?.reffno ?: "0").toInt()
                 }
         findNavController().navigate(toMilestone)
     }
@@ -81,21 +107,26 @@ class DetailStatusOrderFragment : Fragment() {
     private fun setupView() {
         with(binding) {
             dataStatusOrder?.also {
+                if ((it.statuspengiriman ?: "0").toInt() == UtilsCode.STATUS_PACKAGE_DELIVERED) {
+                    cdRepeatOrder.visibility = View.VISIBLE
+                }
+
                 val tanggalPickup = FormatDate().formatedDate(
                     it.tanggalpickup,
                     PATTERN_DATE_POST,
                     PATTERN_DATE_VIEW
                 )
 
-                tvStatusOrder.text = if (it.statuspengiriman == MILESTONE_DELIVERY.toInt()) {
-                    getString(
-                        R.string.milestone_status_pengiriman,
-                        it.namastatuspengiriman,
-                        it.diserahkanolehdelivery?.uppercase(),
-                    )
-                } else {
-                    it.namastatuspengiriman
-                }
+                tvStatusOrder.text =
+                    if (it.statuspengiriman?.toInt() == MILESTONE_DELIVERY.toInt()) {
+                        getString(
+                            R.string.milestone_status_pengiriman,
+                            it.namastatuspengiriman,
+                            it.diserahkanolehdelivery?.uppercase(),
+                        )
+                    } else {
+                        it.namastatuspengiriman
+                    }
                 tvNomorPemesanan.text = it.nomorpemesanan.toString()
                 tvPengirim.text = it.namapengirim.toString()
                 tvPenerima.text = it.namapenerima.toString()
@@ -115,6 +146,8 @@ class DetailStatusOrderFragment : Fragment() {
                 tvBerat.text = getString(R.string.dimension_weight_size_2, it.berat)
                 tvAsuransi.text = "${it.asuransi}."
                 btnLihatSdank.setOnClickListener { requireActivity().moveToSAndK() }
+                tvNamaDiskon.text = it.namadiskon ?: "-"
+                tvDiskon.text = formatRupiah(it.trdiskon?.toDouble() ?: 0.0)
                 tvOngkir.text = formatRupiah(it.biaya?.toDouble() ?: 0.0)
             }
         }
@@ -128,7 +161,7 @@ class DetailStatusOrderFragment : Fragment() {
                 dataStatusOrder?.also { detailOrder ->
                     result?.also {
                         for (dataLayanan in it) {
-                            if (dataLayanan.idlayanan == detailOrder.jenispengiriman) {
+                            if (dataLayanan.idlayanan == detailOrder.jenispengiriman?.toInt()) {
                                 binding.tvJenisLayanan.text = dataLayanan.layanan!!
                                 break
                             }
@@ -147,7 +180,7 @@ class DetailStatusOrderFragment : Fragment() {
                 dataStatusOrder?.also { detailOrder ->
                     result?.also {
                         for (dataUkuran in it) {
-                            if (dataUkuran.idjenisukuran == detailOrder.jenisukuran) {
+                            if (dataUkuran.idjenisukuran == detailOrder.jenisukuran?.toInt()) {
                                 binding.tvUkuranBarang.text = dataUkuran.jenisukuran!!
                                 break
                             }

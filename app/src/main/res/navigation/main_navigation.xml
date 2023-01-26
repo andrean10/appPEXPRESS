@@ -87,13 +87,14 @@
         <argument
             android:name="type"
             app:argType="string" />
-        <argument android:name="title_package"
-            app:argType="string"
-            android:defaultValue='""' />
+        <argument
+            android:name="title_package"
+            android:defaultValue='""'
+            app:argType="string" />
         <argument
             android:name="id"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/vaPaymentFragment"
@@ -102,9 +103,9 @@
         tools:layout="@layout/fragment_va_payment">
         <argument
             android:name="data_va"
+            android:defaultValue="@null"
             app:argType="com.pexpress.pexpresscustomer.db.payments.VAPayment"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
         <action
             android:id="@+id/action_payoutFragment_to_checkOrderFragment"
             app:destination="@id/checkOrderFragment"
@@ -149,13 +150,13 @@
             app:destination="@id/checkOrderFragment"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_cashPaymentFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
         <argument
             android:name="isFromOrder"
             android:defaultValue="false"
             app:argType="boolean" />
-        <action
-            android:id="@+id/action_cashPaymentFragment_to_navigation_home"
-            app:destination="@id/navigation_home" />
     </fragment>
     <fragment
         android:id="@+id/checkOrderFragment"
@@ -179,6 +180,10 @@
             app:popExitAnim="@anim/to_left"
             app:popUpTo="@id/main_navigation"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="isFromOrder"
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/EWalletPaymentFragment"
@@ -313,7 +318,7 @@
         android:id="@+id/proofDeliveryFragment2"
         android:name="com.pexpress.pexpresscustomer.view.main.status_order.detail.view.proofdelivery.ProofDeliveryFragment"
         android:label="fragment_proof_delivery"
-        tools:layout="@layout/fragment_proof_delivery" >
+        tools:layout="@layout/fragment_proof_delivery">
         <argument
             android:name="img"
             app:argType="string" />

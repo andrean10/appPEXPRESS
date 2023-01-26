@@ -8,8 +8,9 @@ import java.util.*
 class FormatDate {
 
     fun outputDateFormat(pattern: String): SimpleDateFormat {
-        return SimpleDateFormat(pattern, Locale.getDefault()).apply {
-            timeZone = TimeZone.getTimeZone("UTC")
+        return SimpleDateFormat(pattern, Locale("id", "ID")).apply {
+//            timeZone = TimeZone.getTimeZone("UTC")
+            timeZone = TimeZone.getDefault()
         }
     }
 

@@ -7,9 +7,9 @@ import com.bumptech.glide.Glide
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.ItemsHistoryBinding
 import com.pexpress.pexpresscustomer.model.status_order.ResultStatusOrder
-import com.pexpress.pexpresscustomer.view.main.status_order.tabview.StatusOrderCancelFragment
 
-class StatusOrderCancelAdapter() : RecyclerView.Adapter<StatusOrderCancelAdapter.HistoryOrderViewHolder>() {
+class StatusOrderCancelAdapter :
+    RecyclerView.Adapter<StatusOrderCancelAdapter.HistoryOrderViewHolder>() {
 
     private var onItemClickCallBack: OnItemClickCallBack? = null
     private val listStatusOrder = arrayListOf<ResultStatusOrder>()

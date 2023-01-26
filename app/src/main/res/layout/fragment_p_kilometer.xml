@@ -589,7 +589,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_16"
-            android:layout_marginTop="@dimen/dimen_6"
+            android:layout_marginTop="@dimen/dimen_12"
             android:layout_marginEnd="@dimen/dimen_16"
             android:gravity="end"
             android:text="@string/order_subtotal"
@@ -598,7 +598,6 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
@@ -606,14 +605,28 @@
             style="@style/PriceTextStyle.SemiBold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_4"
-            android:layout_marginBottom="@dimen/dimen_6"
             android:gravity="end"
             android:text="@string/placeholder_default_subtotal"
             android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_total_discount_subtotal"
+            app:layout_constraintEnd_toEndOf="@+id/placeholder_subtotal"
+            app:layout_constraintStart_toStartOf="@+id/placeholder_subtotal"
+            tools:alpha="0.8" />
+
+        <TextView
+            android:id="@+id/tv_total_discount_subtotal"
+            style="@style/PriceTextStyle.SemiBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_6"
+            android:gravity="end"
+            android:text="@string/placeholder_default_subtotal"
+            android:textSize="21sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/placeholder_subtotal"
-            app:layout_constraintStart_toStartOf="@+id/placeholder_subtotal" />
+            app:layout_constraintStart_toStartOf="@+id/placeholder_subtotal"
+            tools:visibility="visible" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_checkout"

@@ -19,6 +19,9 @@ data class ResponseCheckOngkirKilometer(
 @Parcelize
 data class ResultCheckOngkirKilometer(
 
+    @field:SerializedName("tarif")
+    val tarif: String? = null,
+
     @field:SerializedName("jenisukuran")
     val jenisukuran: String? = null,
 

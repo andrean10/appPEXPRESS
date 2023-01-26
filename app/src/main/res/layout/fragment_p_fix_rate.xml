@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_pfix_rate"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/layout_pfix_rate"
     tools:context=".view.main.order.p_fix_rate.PFixRateFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -72,7 +72,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/placeholder_info_pengirim"
                         android:layout_marginTop="@dimen/dimen_12"
-                        android:visibility="gone">
+                        android:visibility="gone"
+                        tools:visibility="visible">
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/ti_asal_pengirim"
@@ -566,13 +567,31 @@
         android:layout_alignParentBottom="true"
         android:elevation="@dimen/dimen_8">
 
+        <!--        <TextView-->
+        <!--            android:id="@+id/tv_name_diskon"-->
+        <!--            style="@style/PrimaryTextStyle.Regular"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="@dimen/dimen_16"-->
+        <!--            android:layout_marginTop="@dimen/dimen_6"-->
+        <!--            android:layout_marginEnd="@dimen/dimen_16"-->
+        <!--            android:layout_marginBottom="@dimen/dimen_4"-->
+        <!--            android:gravity="end"-->
+        <!--            android:visibility="gone"-->
+        <!--            app:layout_constraintBottom_toTopOf="@+id/placeholder_subtotal"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"-->
+        <!--            tools:text="Nama Diskon"-->
+        <!--            tools:visibility="visible" />-->
+
         <TextView
             android:id="@+id/placeholder_subtotal"
             style="@style/SecondaryTextStyle.Bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_16"
-            android:layout_marginTop="@dimen/dimen_6"
+            android:layout_marginTop="@dimen/dimen_12"
             android:layout_marginEnd="@dimen/dimen_16"
             android:gravity="end"
             android:text="@string/order_subtotal"
@@ -589,14 +608,37 @@
             style="@style/PriceTextStyle.SemiBold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_4"
-            android:layout_marginBottom="@dimen/dimen_6"
             android:gravity="end"
             android:text="@string/placeholder_default_subtotal"
             android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_total_discount_subtotal"
+            app:layout_constraintEnd_toEndOf="@+id/placeholder_subtotal"
+            app:layout_constraintStart_toStartOf="@+id/placeholder_subtotal"
+            tools:alpha="0.8" />
+
+        <!--        <View-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="2dp"-->
+        <!--            android:background="?attr/colorPrimary"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@+id/tv_total_subtotal"-->
+        <!--            app:layout_constraintEnd_toEndOf="@id/tv_total_subtotal"-->
+        <!--            app:layout_constraintStart_toStartOf="@+id/tv_total_subtotal"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/placeholder_subtotal" />-->
+
+        <TextView
+            android:id="@+id/tv_total_discount_subtotal"
+            style="@style/PriceTextStyle.SemiBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_6"
+            android:gravity="end"
+            android:text="@string/placeholder_default_subtotal"
+            android:textSize="21sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/placeholder_subtotal"
-            app:layout_constraintStart_toStartOf="@+id/placeholder_subtotal" />
+            app:layout_constraintStart_toStartOf="@+id/placeholder_subtotal"
+            tools:visibility="visible" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_checkout"

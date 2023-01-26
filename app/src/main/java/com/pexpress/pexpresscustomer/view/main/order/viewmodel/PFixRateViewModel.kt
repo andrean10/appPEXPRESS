@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.pexpress.pexpresscustomer.model.checkout.fix_rate.ResponseCheckout
 import com.pexpress.pexpresscustomer.model.checkout.fix_rate.ResponseEditCheckoutFixRate
+import com.pexpress.pexpresscustomer.model.checkout.hari_libur.ResponseCheckHariLibur
+import com.pexpress.pexpresscustomer.model.diskon.ResponseCheckDiskon
 import com.pexpress.pexpresscustomer.model.fix_rate.ongkir.ResponseCheckOngkirFixRate
 import com.pexpress.pexpresscustomer.model.order.ResponseCheckCutOff
 import com.pexpress.pexpresscustomer.model.order.ResultJenisBarang
@@ -65,9 +67,15 @@ class PFixRateViewModel : ViewModel() {
     private val _formUkuranBarang = MutableLiveData<ResultJenisUkuran>()
     private val _formJenisBarang = MutableLiveData<ResultJenisBarang>()
 
+    private var _checkStateCutOff = MutableLiveData<HashMap<String, Boolean>?>()
+    private var _checkStateSubTotal = MutableLiveData<Boolean>()
+    private var _checkStateDiskon = MutableLiveData<Boolean>()
+
     private var _checkCutOff: MutableLiveData<ResponseCheckCutOff?>? = null
-    private var _checkSubTotal = MutableLiveData<Boolean>()
+    private var _checkHariLibur: MutableLiveData<ResponseCheckHariLibur?>? = null
+    private var _checkDiskonFixRate: MutableLiveData<ResponseCheckDiskon?>? = null
     private var _cekOngkirFixRate: MutableLiveData<ResponseCheckOngkirFixRate?>? = null
+
     private var _checkout: MutableLiveData<ResponseCheckout?>? = null
     private var _editCheckout: MutableLiveData<ResponseEditCheckoutFixRate?>? = null
 
@@ -95,6 +103,18 @@ class PFixRateViewModel : ViewModel() {
 
     fun setStateInfoPickup(state: Boolean) {
         _stateInfoPickup.value = state
+    }
+
+    fun setStateCutOff() {
+        _checkStateCutOff.value = null
+    }
+
+    fun setStateSubTotal(state: Boolean) {
+        _checkStateSubTotal.value = state
+    }
+
+    fun setStateDiskon(state: Boolean) {
+        _checkStateDiskon.value = state
     }
 
     fun setFormAsalPengirim(value: HashMap<String, Any>) {
@@ -169,17 +189,49 @@ class PFixRateViewModel : ViewModel() {
         _formJenisBarang.value = ResultJenisBarang()
     }
 
+    fun checkStateCutOff(isFromPickDate: Boolean = false) {
+        _checkStateCutOff.value = hashMapOf(
+            "isFromPickDate" to isFromPickDate,
+            "jenisLayanan" to (_formJenisLayanan.value?.idlayanan != null)
+        )
+    }
+
     fun checkStateSubTotal() {
-        _checkSubTotal.value = _formAsalPengirim.value?.get("id_cabang_asal") != 0 &&
+        _checkStateSubTotal.value = _formAsalPengirim.value?.get("id_cabang_asal") != 0 &&
                 _formAsalPenerima.value?.get("id_cabang_tujuan") != 0 &&
                 _formJenisLayanan.value?.idlayanan != null &&
                 _formUkuranBarang.value?.idjenisukuran != null
+    }
+
+    fun checkStateDiskon() {
+        _checkStateDiskon.value = _formAsalPengirim.value?.get("id_cabang_asal") != 0 &&
+                _formAsalPenerima.value?.get("id_cabang_tujuan") != 0 &&
+                _formJenisLayanan.value?.idlayanan != null &&
+                _formUkuranBarang.value?.idjenisukuran != null
+    }
+
+    fun checkOngkirFixRate(params: HashMap<String, String>): LiveData<ResponseCheckOngkirFixRate?> {
+        _cekOngkirFixRate = MutableLiveData()
+        ongkirFixRate(params)
+        return _cekOngkirFixRate as MutableLiveData<ResponseCheckOngkirFixRate?>
     }
 
     fun checkCutOff(layanan: Int): LiveData<ResponseCheckCutOff?> {
         _checkCutOff = MutableLiveData()
         cutOff(layanan)
         return _checkCutOff as MutableLiveData<ResponseCheckCutOff?>
+    }
+
+    fun checkHariLibur(tanggal: String): LiveData<ResponseCheckHariLibur?> {
+        _checkHariLibur = MutableLiveData()
+        hariLibur(tanggal)
+        return _checkHariLibur as MutableLiveData<ResponseCheckHariLibur?>
+    }
+
+    fun checkDiskonFixRate(params: HashMap<String, Any>): LiveData<ResponseCheckDiskon?> {
+        _checkDiskonFixRate = MutableLiveData()
+        diskon(params)
+        return _checkDiskonFixRate as MutableLiveData<ResponseCheckDiskon?>
     }
 
     private fun cutOff(layanan: Int) {
@@ -210,10 +262,60 @@ class PFixRateViewModel : ViewModel() {
         })
     }
 
-    fun checkOngkirFixRate(params: HashMap<String, String>): LiveData<ResponseCheckOngkirFixRate?> {
-        _cekOngkirFixRate = MutableLiveData()
-        ongkirFixRate(params)
-        return _cekOngkirFixRate as MutableLiveData<ResponseCheckOngkirFixRate?>
+    private fun hariLibur(tanggal: String) {
+        val client = ApiConfig.getApiService().checkLibur(tanggal)
+        client.enqueue(object : Callback<ResponseCheckHariLibur> {
+            override fun onResponse(
+                call: Call<ResponseCheckHariLibur>,
+                response: Response<ResponseCheckHariLibur>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    result.also {
+                        _checkHariLibur!!.postValue(it)
+                    }
+                } else {
+                    val error =
+                        Gson().fromJson(
+                            response.errorBody()?.string(),
+                            ResponseCheckHariLibur::class.java
+                        )
+                    _checkHariLibur!!.postValue(error)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseCheckHariLibur>, t: Throwable) {
+                _checkHariLibur!!.postValue(null)
+            }
+        })
+    }
+
+    private fun diskon(params: HashMap<String, Any>) {
+        val client = ApiConfig.getApiService().checkDiskon(params)
+        client.enqueue(object : Callback<ResponseCheckDiskon> {
+            override fun onResponse(
+                call: Call<ResponseCheckDiskon>,
+                response: Response<ResponseCheckDiskon>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    result.also {
+                        _checkDiskonFixRate?.postValue(it)
+                    }
+                } else {
+                    val error =
+                        Gson().fromJson(
+                            response.errorBody()?.string(),
+                            ResponseCheckDiskon::class.java
+                        )
+                    _checkDiskonFixRate?.postValue(error)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseCheckDiskon>, t: Throwable) {
+                _checkDiskonFixRate?.postValue(null)
+            }
+        })
     }
 
     private fun ongkirFixRate(params: HashMap<String, String>) {
@@ -320,8 +422,9 @@ class PFixRateViewModel : ViewModel() {
     val formUkuranBarang: LiveData<ResultJenisUkuran> = _formUkuranBarang
     val formJenisBarang: LiveData<ResultJenisBarang> = _formJenisBarang
 
-    val checkCutOff: LiveData<ResponseCheckCutOff?>? = _checkCutOff
-    val checkSubtotal: LiveData<Boolean> = _checkSubTotal
+    val checkStateCutOff: MutableLiveData<HashMap<String, Boolean>?> = _checkStateCutOff
+    val checkStateSubtotal: LiveData<Boolean> = _checkStateSubTotal
+    val checkStateDiskon: LiveData<Boolean> = _checkStateDiskon
 
     val changeOrderPaket: LiveData<HashMap<String, Any>> = _stateChangePaket
 }

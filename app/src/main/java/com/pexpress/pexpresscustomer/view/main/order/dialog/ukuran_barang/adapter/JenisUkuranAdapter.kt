@@ -3,7 +3,6 @@ package com.pexpress.pexpresscustomer.view.main.order.dialog.ukuran_barang.adapt
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.pexpress.pexpresscustomer.R.string.dimension_weight_size_2
 import com.pexpress.pexpresscustomer.databinding.ItemsJenisUkuranBinding
 import com.pexpress.pexpresscustomer.model.order.ResultJenisUkuran
 

@@ -18,6 +18,7 @@ import com.pexpress.pexpresscustomer.databinding.FragmentVerifyOtpBinding
 import com.pexpress.pexpresscustomer.db.User
 import com.pexpress.pexpresscustomer.db.UtilsApplications
 import com.pexpress.pexpresscustomer.session.UserPreference
+import com.pexpress.pexpresscustomer.utils.UtilsCode.DEFAULT_TIMER
 import com.pexpress.pexpresscustomer.utils.loader
 import com.pexpress.pexpresscustomer.utils.showMessage
 import com.pexpress.pexpresscustomer.view.auth.viewmodel.AuthViewModel
@@ -66,7 +67,10 @@ class VerifyOTPFragment : Fragment() {
 
         with(binding) {
             btnVerification.setOnClickListener { moveToMain() }
-            btnRetrySendCode.setOnClickListener { getOTPAgain() }
+            btnRetrySendCode.setOnClickListener {
+                observeCountDownTimer()
+                getOTPAgain()
+            }
         }
     }
 
@@ -77,6 +81,8 @@ class VerifyOTPFragment : Fragment() {
 
         stringAndroidID =
             Settings.Secure.getString(requireActivity().contentResolver, Settings.Secure.ANDROID_ID)
+
+        observeCountDownTimer()
     }
 
     private fun getOTPAgain() {
@@ -89,6 +95,20 @@ class VerifyOTPFragment : Fragment() {
         }
         // Mengambil OTP kembali
         viewModel.getOtpAgain(numberPhone)
+    }
+
+    private fun observeCountDownTimer() {
+        viewModel.startCountDownTimer()
+        viewModel.countDownTimer.observe(viewLifecycleOwner) { timer ->
+            with(binding) {
+                tvCountdown.text = timer
+                if (timer == DEFAULT_TIMER) {
+                    stateTextResendOTP(true)
+                } else {
+                    stateTextResendOTP(false)
+                }
+            }
+        }
     }
 
     private fun observeInputOTP() {
@@ -242,6 +262,18 @@ class VerifyOTPFragment : Fragment() {
             putExtra(MainActivity.EXTRA_IS_FROM_AUTH, true)
         })
         activity?.finish()
+    }
+
+    private fun stateTextResendOTP(state: Boolean) {
+        with(binding) {
+            if (state) {
+                btnRetrySendCode.alpha = 1F
+                btnRetrySendCode.isEnabled = true
+            } else {
+                btnRetrySendCode.alpha = 0.5F
+                btnRetrySendCode.isEnabled = false
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

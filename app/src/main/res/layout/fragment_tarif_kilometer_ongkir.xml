@@ -104,8 +104,8 @@
                     android:id="@+id/edt_ukuran_barang"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
                     android:focusableInTouchMode="false"
+                    android:imeOptions="actionNext"
                     android:inputType="none"
                     android:maxLines="1"
                     tools:text="Small" />

@@ -187,14 +187,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun moveToWhatsapp(numberPhone: String) {
-        if (isWhatsappInstalled()) {
-            startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("https://api.whatsapp.com/send?phone=$numberPhone")
-                )
+//        if (isWhatsappInstalled()) {
+//        }
+        startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://api.whatsapp.com/send?phone=$numberPhone")
             )
-        }
+        )
     }
 
     private fun showPopUp(message: String, numberPhone: String? = null) {

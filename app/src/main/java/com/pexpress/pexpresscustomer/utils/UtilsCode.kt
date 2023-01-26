@@ -16,6 +16,7 @@ object UtilsCode {
     const val PATTERN_DATE_VIEW_STATUS_PEMBAYARAN = "dd MMMM yyyy HH:mm"
     const val PATTERN_DATE_VIEW_MILESTONE = "EE, dd MMMM yyyy HH:mm"
     const val PATTERN_TIME_VIEW_MILESTONE = "HH:mm"
+    const val PATTERN_TIME = "HH:mm"
 
     const val FORM_PENGIRIM = 1
     const val FORM_PENERIMA = 2
@@ -34,7 +35,7 @@ object UtilsCode {
     const val TYPE_PACKAGE_FIXRATE_STRING = "fix_rate"
     const val TYPE_PACKAGE_KILOMETER_STRING = "kilometer"
 
-    //    const val STATUS_PACKAGE_DELIVERED = 10
+    const val STATUS_PACKAGE_DELIVERED = 10
 //    const val STATUS_PACKAGE_PROCCESS_PAYMENT = 11
 
     const val CASH_PAYMENT_CODE = 1
@@ -64,4 +65,5 @@ object UtilsCode {
     const val MILESTONE_RETURNED_TO_SENDER = "31"
     const val MILESTONE_DELIVERY = "10"
 
+    const val DEFAULT_TIMER = "00 : 00"
 }

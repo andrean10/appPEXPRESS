@@ -215,6 +215,7 @@
     <string name="jenis_layanan_title">Jenis Layanan</string>
     <string name="jenis_ukuran_title">Jenis Ukuran</string>
     <string name="jenis_barang_title">Jenis Barang</string>
+    <string name="repeat_order_title">Pilih Tanggal Order</string>
     <string name="home_profil_anda_belum_lengkap">Profil anda belum lengkap!</string>
     <string name="home_menu_pex_chargo">Untuk order pex cargo hubungi CS Pex Jakarta 0895&#8211;8100&#8211;30066. Terima kasih</string>
     <string name="home_menu_mitra">Untuk menjadi mitra Pex hubungi nomor 0895&#8211;6034&#8211;15486. Terima kasih</string>
@@ -272,7 +273,7 @@
     <string name="history_patokan_alamat_pengirim">Patokan Alamat</string>
     <string name="history_patokan_alamat_penerima">Patokan Alamat</string>
     <string name="placeholder_icon_arrow">Icon Arrow</string>
-    <string name="placeholder_default_subtotal">Rp 0</string>
+    <string name="placeholder_default_subtotal">Rp. 0</string>
     <string name="placeholder_default_jarak">0 Km</string>
     <string name="placeholder_close_icon">Close Icon</string>
     <string name="placeholder_barcode_resi">Barcode Resi</string>
@@ -285,7 +286,10 @@
     <string name="desc_right">Icon Arrow Right</string>
     <string name="desc_logo_bank">Logo Bank</string>
     <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
-
-    <string name="info_pick_date_cut_off">Anda telah melewati batas waktu pemesanan, silahkan pilih tanggal permintaan pikcup pada tanggal berikutnya</string>
+    <string name="info_pick_date_cut_off">Anda telah melewati batas waktu pemesanan, silahkan pilih tanggal berikutnya</string>
+    <string name="info_pick_date_off">Tanggal yang anda pilih libur, silahkan pilih tanggal berikutnya</string>
+    <string name="text_order_again">Ya, order again</string>
+    <string name="text_repeat_order_again">Repeat order again ?</string>
+    <!--    <string name="info_pick_date_libur">Tanggal yang anda pilih libur, silahkan pilih tanggal permintaan pickup pada tanggal berikutnya</string>-->
 
 </resources>

@@ -30,12 +30,55 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cd_repeat_order"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="?attr/shapeAppearance"
+                tools:visibility="visible">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_16">
+
+                    <TextView
+                        android:id="@+id/tv_repeat_order"
+                        style="@style/PrimaryTextStyle.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dimen_16"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="@string/text_repeat_order_again"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_order_again"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_order_again"
+                        style="@style/DetailTextStyle.Regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_order_again"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cd_status_pesanan"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cd_repeat_order"
                 app:shapeAppearance="?attr/shapeAppearance">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -538,6 +581,52 @@
                         tools:text="Transfer" />
 
                     <TextView
+                        android:id="@+id/tv_placeholder_nama_diskon"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="Nama Diskon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_pembayaran" />
+
+                    <TextView
+                        android:id="@+id/tv_nama_diskon"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_64"
+                        android:gravity="end"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_placeholder_nama_diskon"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_nama_diskon"
+                        tools:text="Diskon Awal Januari 2023" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder_diskon"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_14"
+                        android:text="Diskon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_nama_diskon" />
+
+                    <TextView
+                        android:id="@+id/tv_diskon"
+                        style="@style/PrimaryTextStyle.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_64"
+                        android:gravity="end"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_placeholder_diskon"
+                        app:layout_constraintTop_toTopOf="@+id/tv_placeholder_diskon"
+                        tools:text="Rp. 10" />
+
+                    <TextView
                         android:id="@+id/tv_placeholder_ongkir"
                         style="@style/PrimaryTextStyle.Regular"
                         android:layout_width="0dp"
@@ -545,7 +634,7 @@
                         android:layout_marginTop="@dimen/dimen_14"
                         android:text="@string/history_tarif"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_pembayaran" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_diskon" />
 
                     <TextView
                         android:id="@+id/tv_ongkir"
@@ -559,7 +648,6 @@
                         app:layout_constraintStart_toEndOf="@+id/tv_placeholder_ongkir"
                         app:layout_constraintTop_toTopOf="@+id/tv_placeholder_ongkir"
                         tools:text="Rp. 25.000" />
-
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

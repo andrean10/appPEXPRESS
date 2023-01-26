@@ -10,8 +10,10 @@ import com.pexpress.pexpresscustomer.model.checkout.ResponseCheckoutUpdate
 import com.pexpress.pexpresscustomer.model.checkout.asuransi.ResponseAsuransi
 import com.pexpress.pexpresscustomer.model.checkout.fix_rate.ResponseCheckout
 import com.pexpress.pexpresscustomer.model.checkout.fix_rate.ResponseEditCheckoutFixRate
+import com.pexpress.pexpresscustomer.model.checkout.hari_libur.ResponseCheckHariLibur
 import com.pexpress.pexpresscustomer.model.checkout.kilometer.ResponseCheckoutKilometer
 import com.pexpress.pexpresscustomer.model.checkout.kilometer.ResponseEditCheckoutKilometer
+import com.pexpress.pexpresscustomer.model.diskon.ResponseCheckDiskon
 import com.pexpress.pexpresscustomer.model.distance.ResponseDistance
 import com.pexpress.pexpresscustomer.model.fix_rate.ongkir.ResponseCheckOngkirFixRate
 import com.pexpress.pexpresscustomer.model.kilometer.ongkir.ResponseCheckOngkirKilometer
@@ -96,6 +98,16 @@ interface ApiService {
     @GET("pengiriman/check-tgl-Order")
     fun checkCutOff(@Query("id_layanan") layanan: Int): Call<ResponseCheckCutOff>
 
+    // Check Diskon
+    @FormUrlEncoded
+    @POST("check-diskon")
+    fun checkDiskon(@FieldMap params: HashMap<String, Any>): Call<ResponseCheckDiskon>
+
+    // Check Diskon
+    @FormUrlEncoded
+    @POST("check-libur")
+    fun checkLibur(@Field("hari") hari: String): Call<ResponseCheckHariLibur>
+
     // Checkout
     @FormUrlEncoded
     @POST("checkout")
@@ -165,8 +177,8 @@ interface ApiService {
 
 
     // Check Pembayaran
-    @GET("payments/check")
-    fun checkPembayaran(@Query("no_invoice") noInvoice: String): Call<ResponseCheckPembayaran>
+    @GET("payments/check/{id}")
+    fun checkPembayaran(@Path("id") noInvoice: String): Call<ResponseCheckPembayaran>
 
     // Pengiriman
     @GET("pengiriman/detail")

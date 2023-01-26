@@ -18,7 +18,10 @@ class DialogLoadingFragment : DialogFragment() {
         const val EXTRA_CANCELED_TOUCH_OUTSIDE = "extra_canceled_touch_outside"
     }
 
-    fun newInstance(title: String = "Loading...", isCanceledTouchOutside: Boolean = false): DialogLoadingFragment {
+    fun newInstance(
+        title: String = "Loading...",
+        isCanceledTouchOutside: Boolean = false
+    ): DialogLoadingFragment {
         val fragment = DialogLoadingFragment()
         val args = Bundle()
         args.putString(EXTRA_TITLE, title)

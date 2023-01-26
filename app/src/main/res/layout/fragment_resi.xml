@@ -21,11 +21,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone"
-        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:visibility="visible">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/receipt"
@@ -80,16 +80,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_4"
-                    android:gravity="center"
                     android:drawablePadding="@dimen/dimen_4"
+                    android:gravity="center"
                     android:textColor="@color/primaryTextColorLight"
+                    app:drawableEndCompat="@drawable/ic_copy_text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_jenis_layanan"
-                    tools:text="PEX2022021700041"
-                    app:drawableEndCompat="@drawable/ic_copy_text" />
+                    tools:text="PEX2022021700041" />
 
                 <View
                     android:id="@+id/line_resi"

@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
+import com.pexpress.pexpresscustomer.model.checkout.hari_libur.ResponseCheckHariLibur
 import com.pexpress.pexpresscustomer.model.checkout.kilometer.ResponseCheckoutKilometer
 import com.pexpress.pexpresscustomer.model.checkout.kilometer.ResponseEditCheckoutKilometer
+import com.pexpress.pexpresscustomer.model.diskon.ResponseCheckDiskon
 import com.pexpress.pexpresscustomer.model.distance.ResponseDistance
 import com.pexpress.pexpresscustomer.model.kilometer.ongkir.ResponseCheckOngkirKilometer
 import com.pexpress.pexpresscustomer.model.order.ResponseCheckCutOff
@@ -63,10 +65,16 @@ class PKilometerViewModel : ViewModel() {
     private val _formUkuranBarang = MutableLiveData<ResultJenisUkuran>()
     private val _formJenisBarang = MutableLiveData<ResultJenisBarang>()
 
-    private var _checkCutOff: MutableLiveData<ResponseCheckCutOff?>? = null
+    private var _checkStateCutOff = MutableLiveData<HashMap<String, Boolean>?>()
+    private var _checkStateDiskon = MutableLiveData<Boolean>()
+    private var _checkStateSubTotal = MutableLiveData<Boolean>()
+
     private var _distance: MutableLiveData<ResponseDistance?>? = null
-    private var _checkSubTotal = MutableLiveData<Boolean>()
+    private var _checkCutOff: MutableLiveData<ResponseCheckCutOff?>? = null
+    private var _checkHariLibur: MutableLiveData<ResponseCheckHariLibur?>? = null
+    private var _checkDiskonKilometer: MutableLiveData<ResponseCheckDiskon?>? = null
     private var _cekOngkirKilometer: MutableLiveData<ResponseCheckOngkirKilometer?>? = null
+
     private var _checkout: MutableLiveData<ResponseCheckoutKilometer?>? = null
     private var _editCheckout: MutableLiveData<ResponseEditCheckoutKilometer?>? = null
 
@@ -94,6 +102,18 @@ class PKilometerViewModel : ViewModel() {
 
     fun setStateInfoPickup(state: Boolean) {
         _stateInfoPickup.value = state
+    }
+
+    fun setStateCutOff() {
+        _checkStateCutOff.value = null
+    }
+
+    fun setStateSubTotal(state: Boolean) {
+        _checkStateSubTotal.value = state
+    }
+
+    fun setStateDiskon(state: Boolean) {
+        _checkStateDiskon.value = state
     }
 
     fun setFormAsalPengirim(value: HashMap<String, Any>) {
@@ -168,17 +188,49 @@ class PKilometerViewModel : ViewModel() {
         _formJenisBarang.value = ResultJenisBarang()
     }
 
+    fun checkStateCutOff(isFromPickDate: Boolean = false) {
+        _checkStateCutOff.value = hashMapOf(
+            "isFromPickDate" to isFromPickDate,
+            "jenisLayanan" to (_formJenisLayanan.value?.idlayanan != null)
+        )
+    }
+
     fun checkStateSubTotal() {
-        _checkSubTotal.value = _formAsalPengirim.value?.get("id_cabang_asal") != 0 &&
+        _checkStateSubTotal.value = _formAsalPengirim.value?.get("id_cabang_asal") != 0 &&
                 _formAsalPenerima.value?.get("id_cabang_tujuan") != 0 &&
                 _formJenisLayanan.value?.idlayanan != null &&
                 _formUkuranBarang.value?.idjenisukuran != null
+    }
+
+    fun checkStateDiskon() {
+        _checkStateDiskon.value = _formAsalPengirim.value?.get("id_cabang_asal") != 0 &&
+                _formAsalPenerima.value?.get("id_cabang_tujuan") != 0 &&
+                _formJenisLayanan.value?.idlayanan != null &&
+                _formUkuranBarang.value?.idjenisukuran != null
+    }
+
+    fun checkOngkirKilometer(params: HashMap<String, String>): LiveData<ResponseCheckOngkirKilometer?> {
+        _cekOngkirKilometer = MutableLiveData()
+        ongkirKilometer(params)
+        return _cekOngkirKilometer as MutableLiveData<ResponseCheckOngkirKilometer?>
     }
 
     fun checkCutOff(layanan: Int): LiveData<ResponseCheckCutOff?> {
         _checkCutOff = MutableLiveData()
         cutOff(layanan)
         return _checkCutOff as MutableLiveData<ResponseCheckCutOff?>
+    }
+
+    fun checkHariLibur(tanggal: String): LiveData<ResponseCheckHariLibur?> {
+        _checkHariLibur = MutableLiveData()
+        hariLibur(tanggal)
+        return _checkHariLibur as MutableLiveData<ResponseCheckHariLibur?>
+    }
+
+    fun checkDiskonKilometer(params: HashMap<String, Any>): LiveData<ResponseCheckDiskon?> {
+        _checkDiskonKilometer = MutableLiveData()
+        diskon(params)
+        return _checkDiskonKilometer as MutableLiveData<ResponseCheckDiskon?>
     }
 
     private fun cutOff(layanan: Int) {
@@ -209,10 +261,60 @@ class PKilometerViewModel : ViewModel() {
         })
     }
 
-    fun checkOngkirKilometer(params: HashMap<String, String>): LiveData<ResponseCheckOngkirKilometer?> {
-        _cekOngkirKilometer = MutableLiveData()
-        ongkirKilometer(params)
-        return _cekOngkirKilometer as MutableLiveData<ResponseCheckOngkirKilometer?>
+    private fun hariLibur(tanggal: String) {
+        val client = ApiConfig.getApiService().checkLibur(tanggal)
+        client.enqueue(object : Callback<ResponseCheckHariLibur> {
+            override fun onResponse(
+                call: Call<ResponseCheckHariLibur>,
+                response: Response<ResponseCheckHariLibur>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    result.also {
+                        _checkHariLibur!!.postValue(it)
+                    }
+                } else {
+                    val error =
+                        Gson().fromJson(
+                            response.errorBody()?.string(),
+                            ResponseCheckHariLibur::class.java
+                        )
+                    _checkHariLibur!!.postValue(error)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseCheckHariLibur>, t: Throwable) {
+                _checkHariLibur!!.postValue(null)
+            }
+        })
+    }
+
+    private fun diskon(params: HashMap<String, Any>) {
+        val client = ApiConfig.getApiService().checkDiskon(params)
+        client.enqueue(object : Callback<ResponseCheckDiskon> {
+            override fun onResponse(
+                call: Call<ResponseCheckDiskon>,
+                response: Response<ResponseCheckDiskon>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    result.also {
+                        _checkDiskonKilometer?.postValue(it)
+                    }
+                } else {
+                    val error =
+                        Gson().fromJson(
+                            response.errorBody()?.string(),
+                            ResponseCheckDiskon::class.java
+                        )
+                    _checkDiskonKilometer?.postValue(error)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseCheckDiskon>, t: Throwable) {
+                _checkDiskonKilometer?.postValue(null)
+            }
+        })
     }
 
     private fun ongkirKilometer(params: HashMap<String, String>) {
@@ -345,8 +447,9 @@ class PKilometerViewModel : ViewModel() {
     val formUkuranBarang: LiveData<ResultJenisUkuran> = _formUkuranBarang
     val formJenisBarang: LiveData<ResultJenisBarang> = _formJenisBarang
 
-    val checkCutOff: LiveData<ResponseCheckCutOff?>? = _checkCutOff
-    val checkSubtotal: LiveData<Boolean> = _checkSubTotal
+    val checkStateCutOff: MutableLiveData<HashMap<String, Boolean>?> = _checkStateCutOff
+    val checkStateSubtotal: LiveData<Boolean> = _checkStateSubTotal
+    val checkStateDiskon: LiveData<Boolean> = _checkStateDiskon
 
     val changeOrderPaket: LiveData<HashMap<String, Any>> = _stateChangePaket
 

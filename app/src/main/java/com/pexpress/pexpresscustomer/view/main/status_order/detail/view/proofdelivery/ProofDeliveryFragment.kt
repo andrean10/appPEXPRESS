@@ -1,7 +1,6 @@
 package com.pexpress.pexpresscustomer.view.main.status_order.detail.view.proofdelivery
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -13,7 +12,6 @@ import com.bumptech.glide.Glide
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentProofDeliveryBinding
 import com.pexpress.pexpresscustomer.network.ApiConfig
-import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 
 class ProofDeliveryFragment : Fragment() {
 

@@ -332,7 +332,9 @@ class MainActivity : AppCompatActivity() {
                 action()
                 dialogInterface.dismiss()
             }
-            setOnDismissListener { moveToAuth() }
+            setOnDismissListener {
+                moveToAuth()
+            }
             show()
         }
     }
@@ -369,8 +371,4 @@ class MainActivity : AppCompatActivity() {
 //        )
 //    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-//        inAppUpdate.onDestroy()
-    }
 }

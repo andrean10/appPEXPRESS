@@ -2,7 +2,6 @@ package com.pexpress.pexpresscustomer.view.main.status_order.tabview
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentStatusOrderCancelBinding
 import com.pexpress.pexpresscustomer.model.status_order.ResultStatusOrder
 import com.pexpress.pexpresscustomer.session.UserPreference
-import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 import com.pexpress.pexpresscustomer.utils.showMessage
 import com.pexpress.pexpresscustomer.view.main.status_order.adapter.StatusOrderCancelAdapter
 import com.pexpress.pexpresscustomer.view.main.status_order.detail.DetailStatusOrderActivity

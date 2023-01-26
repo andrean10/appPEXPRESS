@@ -198,11 +198,21 @@
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
+                android:id="@+id/tv_countdown"
+                style="@style/PrimaryTextStyle.SemiBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                app:layout_constraintEnd_toEndOf="@+id/cd_otp_digit4"
+                app:layout_constraintTop_toBottomOf="@+id/cd_otp_digit4"
+                tools:text="01:00" />
+
+            <TextView
                 android:id="@+id/dummy_otp_text"
                 style="@style/SecondaryTextStyle.Regular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_48"
+                android:layout_marginTop="@dimen/dimen_32"
                 android:text="@string/dummy_otp_tv"
                 android:textAlignment="center"
                 android:textSize="16sp"
@@ -210,7 +220,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cd_otp_digit" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_countdown" />
 
             <TextView
                 android:id="@+id/btn_retry_send_code"

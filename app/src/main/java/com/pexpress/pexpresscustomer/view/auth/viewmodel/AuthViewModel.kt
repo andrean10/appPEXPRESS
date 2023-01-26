@@ -1,5 +1,6 @@
 package com.pexpress.pexpresscustomer.view.auth.viewmodel
 
+import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,12 +10,18 @@ import com.pexpress.pexpresscustomer.model.auth.ResponseLogin
 import com.pexpress.pexpresscustomer.model.auth.ResponseOTP
 import com.pexpress.pexpresscustomer.model.auth.ResponseRegister
 import com.pexpress.pexpresscustomer.network.ApiConfig
+import com.pexpress.pexpresscustomer.utils.UtilsCode.DEFAULT_TIMER
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class AuthViewModel : ViewModel() {
 
+    private val DURATION = TimeUnit.MINUTES.toMillis(1)
+
+    private val _countDownTimer = MutableLiveData<String>()
     private var _login: MutableLiveData<ResponseLogin?>? = null
     private var _register: MutableLiveData<ResponseRegister?>? = null
     private var _otp: MutableLiveData<ResponseOTP?>? = null
@@ -44,6 +51,32 @@ class AuthViewModel : ViewModel() {
         retryOTP(numberPhone)
         return _otp as MutableLiveData<ResponseOTP?>
     }
+
+    fun startCountDownTimer() {
+        setCountDownTimer.start()
+    }
+
+    private val setCountDownTimer = object : CountDownTimer(DURATION, 1000) {
+
+        // Callback function, fired on regular interval
+        override fun onTick(l: Long) {
+            val elapsedMinutes = String.format(
+                Locale.ENGLISH, "%02d : %02d",
+                TimeUnit.MILLISECONDS.toMinutes(l),
+                TimeUnit.MILLISECONDS.toSeconds(l) -
+                        TimeUnit.MILLISECONDS.toSeconds(TimeUnit.MILLISECONDS.toMinutes(l))
+            )
+
+            _countDownTimer.postValue(elapsedMinutes)
+        }
+
+        // Callback function, fired
+        // when the time is up
+        override fun onFinish() {
+            _countDownTimer.postValue(DEFAULT_TIMER)
+        }
+    }
+
 
     private fun checkLogin(contact: String) {
         val client = ApiConfig.getApiService().login(contact)
@@ -142,4 +175,6 @@ class AuthViewModel : ViewModel() {
             }
         })
     }
+
+    val countDownTimer: LiveData<String> = _countDownTimer
 }

@@ -147,8 +147,8 @@ fun isLoading(
 //    return MultipartBody.Part.createFormData(name, "", reqFileImage)
 //}
 
-fun setVisibilityBottomHead(activity: Activity, state: Boolean) {
-    activity.findViewById<MaterialToolbar>(R.id.toolbar_main).visibility =
+fun setVisibilityBottomHead(activity: Activity?, state: Boolean) {
+    activity?.findViewById<MaterialToolbar>(R.id.toolbar_main)?.visibility =
         if (state) VISIBLE else GONE
 }
 

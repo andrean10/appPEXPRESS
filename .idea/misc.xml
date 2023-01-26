@@ -84,7 +84,7 @@
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_ongkir.xml" value="0.19739583333333333" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_otp.xml" value="0.1" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_p_fix_rate.xml" value="0.33" />
-        <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_p_kilometer.xml" value="0.25" />
+        <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_p_kilometer.xml" value="0.33" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_payout.xml" value="0.25" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_pick_location.xml" value="0.33" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_pick_location_dialog.xml" value="0.205" />
@@ -109,7 +109,7 @@
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_testing.xml" value="0.19739583333333333" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_tracking_order.xml" value="0.25" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_va_payment.xml" value="0.25" />
-        <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_verify_otp.xml" value="0.25" />
+        <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_verify_otp.xml" value="0.33" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_virtual_account.xml" value="0.18333333333333332" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_virtual_account_dialog.xml" value="0.22" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/items_history.xml" value="0.33" />

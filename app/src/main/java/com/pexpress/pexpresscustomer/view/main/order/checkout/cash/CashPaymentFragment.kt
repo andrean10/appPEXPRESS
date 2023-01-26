@@ -1,12 +1,10 @@
 package com.pexpress.pexpresscustomer.view.main.order.checkout.cash
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -15,7 +13,6 @@ import com.pexpress.pexpresscustomer.BuildConfig
 import com.pexpress.pexpresscustomer.R
 import com.pexpress.pexpresscustomer.databinding.FragmentCashPaymentBinding
 import com.pexpress.pexpresscustomer.db.payments.CashPayment
-import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
 import com.pexpress.pexpresscustomer.utils.formatRegexRupiah
 import com.pexpress.pexpresscustomer.utils.getAuthToken
 import com.pexpress.pexpresscustomer.utils.setVisibilityBottomHead
@@ -118,6 +115,7 @@ class CashPaymentFragment : Fragment() {
                 .apply {
                     noInvoice = dataCash.noInvoice
                     isCashPayment = true
+                    isFromOrder = isOrder
                 }
         findNavController().navigate(toCheckOrder)
     }
@@ -129,11 +127,6 @@ class CashPaymentFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             findNavController().navigateUp()
-//            if (isOrder) {
-//                findNavController().navigate(R.id.action_cashPaymentFragment_to_navigation_home)
-//            } else {
-//                findNavController().navigateUp()
-//            }
         }
         return super.onOptionsItemSelected(item)
     }

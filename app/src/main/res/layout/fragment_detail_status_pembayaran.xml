@@ -206,7 +206,7 @@
                         android:layout_marginTop="@dimen/dimen_14"
                         android:text="Asuransi"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_ewallet"/>
+                        app:layout_constraintTop_toBottomOf="@+id/tv_ewallet" />
 
                     <TextView
                         android:id="@+id/tv_asuransi"
@@ -293,7 +293,6 @@
                         app:layout_constraintStart_toEndOf="@+id/tv_placeholder_kurang"
                         app:layout_constraintTop_toTopOf="@+id/tv_placeholder_kurang"
                         tools:text="Rp. 10.000" />
-
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

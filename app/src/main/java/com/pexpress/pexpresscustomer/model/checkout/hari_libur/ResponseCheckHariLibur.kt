@@ -1,11 +1,8 @@
-package com.pexpress.pexpresscustomer.model.order
+package com.pexpress.pexpresscustomer.model.checkout.hari_libur
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseCheckCutOff(
-
-    @field:SerializedName("success")
-    val success: Boolean? = null,
+data class ResponseCheckHariLibur(
 
     @field:SerializedName("message")
     val message: String? = null,
