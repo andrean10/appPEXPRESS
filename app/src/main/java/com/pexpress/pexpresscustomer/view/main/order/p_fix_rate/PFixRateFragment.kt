@@ -76,7 +76,7 @@ class PFixRateFragment : Fragment() {
     private var longPenerima = ""
     private var kecamatanPengirim = ""
     private var kecamatanPenerima = ""
-    private var jenisLayanan = ""
+    private var jenisLayanan: Int? = null
     private var jenisUkuran = ""
     private var jenisBarang = ""
     private var kodeDiskon = ""
@@ -85,6 +85,7 @@ class PFixRateFragment : Fragment() {
 
     private var isPengirim = false
     private var isClickLainnya = false
+    private var isFirstPickDate = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -212,8 +213,8 @@ class PFixRateFragment : Fragment() {
 
             edtTanggalPickup.setOnClickListener {
                 Log.d(TAG, "prepareDataFixRate: $jenisLayanan")
-                Log.d(TAG, "prepareDataFixRate: ${jenisLayanan == null || jenisLayanan == ""}")
-                if (jenisLayanan == null || jenisLayanan == "") {
+                Log.d(TAG, "prepareDataFixRate: ${jenisLayanan == null || jenisLayanan == 0}")
+                if (jenisLayanan == null || jenisLayanan == 0) {
                     showMessage(
                         requireActivity(),
                         getString(R.string.text_warning),
@@ -222,7 +223,9 @@ class PFixRateFragment : Fragment() {
                     )
                     return@setOnClickListener
                 } else {
-                    viewModel.checkStateCutOff(true)
+                    // validasi tanggal
+                    observeCheckCutOff(jenisLayanan!!.toInt(), true)
+//                    viewModel.setStateCutOff(true)
                 }
             }
 
@@ -257,12 +260,10 @@ class PFixRateFragment : Fragment() {
             "gkecpenerima" to data.gkecamatanpenerima.toString(),
             "kecamatanpenerima" to data.kecamatanpenerima.toString(),
         )
-
         val paramsLatLongPengirim = hashMapOf(
             "latpengirim" to data.latpengirim.toString(),
             "longpengirim" to data.longpengirim.toString()
         )
-
         val paramsLatLongPenerima = hashMapOf(
             "latpenerima" to data.latpenerima.toString(),
             "longpenerima" to data.longpenerima.toString()
@@ -389,7 +390,7 @@ class PFixRateFragment : Fragment() {
                 "kecamatanpenerima" to kecamatanPenerima,
                 "alamatpenerima" to patokanAlamatPenerima,
                 "catatanpenerima" to catatanLokasiPenerima,
-                "jenispengiriman" to jenisLayanan,
+                "jenispengiriman" to jenisLayanan.toString(),
                 "jenisukuran" to jenisUkuran,
                 "cabangasal" to cabangAsal,
                 "cabangtujuan" to cabangTujuan,
@@ -434,7 +435,7 @@ class PFixRateFragment : Fragment() {
                     showMessageFieldRequired()
                     return@with
                 }
-                jenisLayanan.isEmpty() -> {
+                jenisLayanan == null || jenisLayanan == 0 -> {
                     showMessageFieldRequired()
                     return@with
                 }
@@ -521,13 +522,12 @@ class PFixRateFragment : Fragment() {
 
         datePicker.show(parentFragmentManager, "TAG")
         datePicker.addOnPositiveButtonClickListener { selection ->
+            isFirstPickDate = true
+
             val date = FormatDate().outputDateFormat(PATTERN_DATE_VIEW).format(selection)
             binding.edtTanggalPickup.setText(date)
 
-            viewModel.apply {
-                checkStateDiskon()
-//                checkStateCutOff()
-            }
+            viewModel.checkStateDiskon()
             observeCheckLibur(FormatDate().formatedDate(date, PATTERN_DATE_VIEW, PATTERN_DATE_POST))
         }
     }
@@ -572,12 +572,16 @@ class PFixRateFragment : Fragment() {
 
     private fun observeJenisLayanan() {
         viewModel.formJenisLayanan.observe(viewLifecycleOwner) { value ->
-            jenisLayanan = value.idlayanan.toString()
+            Log.d(TAG, "observeJenisLayanan: $value")
+            jenisLayanan = value.idlayanan
             binding.edtJenisLayananPickup.setText(value.layanan)
-            viewModel.apply {
-                checkStateSubTotal()
-                checkStateCutOff(false)
+
+            Log.d(TAG, "observeJenisLayanan: $jenisLayanan")
+            if (value.idlayanan != null) {
+                observeCheckCutOff(value.idlayanan, false)
             }
+
+            viewModel.checkStateSubTotal()
         }
     }
 
@@ -596,18 +600,18 @@ class PFixRateFragment : Fragment() {
         }
     }
 
-    private fun observeCheckStateCutOff() {
-        viewModel.checkStateCutOff.observe(viewLifecycleOwner) { map ->
-            Log.d(TAG, "observeCheckStateCutOff: Dipanggil")
-            Log.d(TAG, "observeCheckStateCutOff: $map")
-            if (map != null) {
-                val isFromDate = map["isFromPickDate"] as Boolean
-                if (map["jenisLayanan"] as Boolean) {
-                    observeCheckCutOff(jenisLayanan.toInt(), isFromDate)
-                }
-            }
-        }
-    }
+//    private fun observeCheckStateCutOff() {
+//        viewModel.checkStateCutOff.observe(viewLifecycleOwner) { map ->
+//            Log.d(TAG, "observeCheckStateCutOff: Dipanggil")
+//            Log.d(TAG, "observeCheckStateCutOff: $map")
+//            if (map != null) {
+//                val isFromDate = map["isFromPickDate"] as Boolean
+//                if (map["jenisLayanan"] as Boolean) {
+//                    observeCheckCutOff(jenisLayanan.toInt(), isFromDate)
+//                }
+//            }
+//        }
+//    }
 
     private fun observeCheckStateDiskon() {
         lateinit var params: HashMap<String, Any>
@@ -620,7 +624,7 @@ class PFixRateFragment : Fragment() {
                 params = hashMapOf(
                     "cabangAwal" to cabangAsal.toInt(),
                     "cabangTujuan" to cabangTujuan.toInt(),
-                    "jenisPengiriman" to jenisLayanan.toInt(),
+                    "jenisPengiriman" to jenisLayanan!!.toInt(),
                     "jenisUkuran" to jenisUkuran.toInt(),
                 )
 
@@ -642,7 +646,7 @@ class PFixRateFragment : Fragment() {
                 params = hashMapOf(
                     "cabangAwal" to cabangAsal.toInt(),
                     "cabangTujuan" to cabangTujuan.toInt(),
-                    "jenisPengiriman" to jenisLayanan.toInt(),
+                    "jenisPengiriman" to jenisLayanan!!.toInt(),
                     "jenisUkuran" to jenisUkuran.toInt(),
                 )
 
@@ -672,7 +676,7 @@ class PFixRateFragment : Fragment() {
                 params = hashMapOf(
                     "cabangasal" to cabangAsal,
                     "cabangtujuan" to cabangTujuan,
-                    "jenispengiriman" to jenisLayanan,
+                    "jenispengiriman" to jenisLayanan.toString(),
                     "jenisukuran" to jenisUkuran,
                     "type" to TYPE_PACKAGE_FIXRATE_STRING
                 )
@@ -681,7 +685,7 @@ class PFixRateFragment : Fragment() {
                 params = hashMapOf(
                     "cabangasal" to cabangAsal,
                     "cabangtujuan" to cabangTujuan,
-                    "jenispengiriman" to jenisLayanan,
+                    "jenispengiriman" to jenisLayanan.toString(),
                     "jenisukuran" to jenisUkuran,
                     "type" to TYPE_PACKAGE_FIXRATE_STRING
                 )
@@ -698,9 +702,11 @@ class PFixRateFragment : Fragment() {
             if (response != null) {
                 if (response.success!!) {
                     val status = response.status ?: true
-                    Log.d(TAG, "observeCheckCutOff: status = $status")
                     if (!status) {
-                        validationCutOff()
+                        Log.d(TAG, "observeCheckCutOff: isFirstPickDate = $isFirstPickDate")
+                        if (isFirstPickDate || isFromDate) {
+                            validationCutOff()
+                        }
                     }
 
                     Log.d(TAG, "observeCheckCutOff: isFromDate = $isFromDate")
@@ -734,7 +740,6 @@ class PFixRateFragment : Fragment() {
                 getString(R.string.info_pick_date_cut_off),
                 Snackbar.LENGTH_INDEFINITE
             ).setAction("Oke") {
-
             }
 
             val toast = Toast.makeText(
@@ -750,12 +755,14 @@ class PFixRateFragment : Fragment() {
 
                 Log.d(TAG, "observeCheckCutOff: calendar time = $dateNow")
                 Log.d(TAG, "observeCheckCutOff: formatedSelectedDate = $formatedSelectedDate")
+                Log.d(TAG, "validationCutOff: $dateNow")
                 Log.d(
+
                     TAG,
                     "observeCheckCutOff: compareTo = ${formatedSelectedDate.before(dateNow)}"
                 )
 
-                // jika tanggal di pilih di form ternyata cut off maka tanggal dihapus
+                // jika tanggal di pilih di form ternyata cut off makfa tanggal dihapus
                 if (formatedSelectedDate != null && dateNow != null) {
                     if (formatedSelectedDate.before(dateNow)) {
                         edtTanggalPickup.setText("")
@@ -991,11 +998,6 @@ class PFixRateFragment : Fragment() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        observeCheckStateCutOff()
-    }
-
     override fun onResume() {
         super.onResume()
         setVisibilityBottomHead(requireActivity(), false)
@@ -1141,10 +1143,9 @@ class PFixRateFragment : Fragment() {
             setStateInfoPengirim(false)
             setStateInfoPenerima(false)
             setStateInfoPickup(false)
-            setStateCutOff()
+//            setStateCutOff(false)
             setStateSubTotal(false)
             setStateDiskon(false)
-            checkStateCutOff(false)
             changeOrderPaket(state = false)
         }
     }

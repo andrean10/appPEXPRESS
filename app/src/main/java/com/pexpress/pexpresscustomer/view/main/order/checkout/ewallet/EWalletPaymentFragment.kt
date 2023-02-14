@@ -158,11 +158,11 @@ class EWalletPaymentFragment : Fragment() {
                             val uri = Uri.parse(actions.mobileDeeplinkCheckoutUrl)
                             startActivity(Intent(Intent.ACTION_VIEW, uri))
                         } else if (!actions.mobileWebCheckoutUrl.isNullOrEmpty()) { // web url
-//                            val toEWalletWebView =
-//                                EWalletPaymentFragmentDirections.actionEWalletPaymentFragmentToEWalletWebViewFragment(
-//                                    actions.mobileWebCheckoutUrl
-//                                )
-//                            findNavController().navigate(toEWalletWebView)
+                            val toEWalletWebView =
+                                EWalletPaymentFragmentDirections.actionEWalletPaymentFragmentToEWalletWebViewFragment(
+                                    actions.mobileWebCheckoutUrl
+                                )
+                            findNavController().navigate(toEWalletWebView)
                             val uri = Uri.parse(actions.mobileWebCheckoutUrl)
                             startActivity(Intent(Intent.ACTION_VIEW, uri))
                         }

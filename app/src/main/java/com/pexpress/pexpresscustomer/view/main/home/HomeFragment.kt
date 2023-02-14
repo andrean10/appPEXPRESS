@@ -138,7 +138,10 @@ class HomeFragment : Fragment() {
     private fun prepareMainMenu() {
         with(binding) {
             menuTarifFlat.setOnClickListener { moveToTarifFlat() }
-            menuTarifKilometer.setOnClickListener { moveToTarifKilometer() }
+            menuTarifKilometer.setOnClickListener {
+                showPopUp("Cooming Soon!")
+//                moveToTarifKilometer()
+            }
             menuPexCargo.setOnClickListener {
                 showPopUp(
                     getString(R.string.home_menu_pex_chargo),
@@ -152,13 +155,16 @@ class HomeFragment : Fragment() {
                 )
             }
             menuCekTarif.setOnClickListener { moveToCekTarif() }
-            btnStatusOrder.setOnClickListener { moveToHistory() }
+            menuTracking.setOnClickListener { moveToTracking() }
             btnCompletingProfile.setOnClickListener { moveToProfile() }
+            btnContactUs.setOnClickListener {
+                moveToWhatsapp(getString(R.string.home_contact_us_number_phone))
+            }
         }
     }
 
-    private fun moveToHistory() {
-        findNavController().navigate(R.id.action_navigation_home_to_historyFragment)
+    private fun moveToTracking() {
+        findNavController().navigate(R.id.action_navigation_home_to_trackingOrderFragment)
     }
 
     private fun moveToProfile() {
@@ -187,8 +193,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun moveToWhatsapp(numberPhone: String) {
-//        if (isWhatsappInstalled()) {
-//        }
         startActivity(
             Intent(
                 Intent.ACTION_VIEW,

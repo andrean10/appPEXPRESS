@@ -69,7 +69,7 @@
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_e_wallet_web_view.xml" value="0.16196581196581197" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_history.xml" value="0.22" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_history_old.xml" value="0.22" />
-        <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_item_size_dialog.xml" value="0.22" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_items_bank_dialog.xml" value="0.22" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_items_size_dialog.xml" value="0.19739583333333333" />
@@ -107,7 +107,7 @@
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_tarif_fix_rate_ongkir.xml" value="0.25" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_tarif_kilometer_ongkir.xml" value="0.33" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_testing.xml" value="0.19739583333333333" />
-        <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_tracking_order.xml" value="0.25" />
+        <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_tracking_order.xml" value="0.33" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_va_payment.xml" value="0.25" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_verify_otp.xml" value="0.33" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_virtual_account.xml" value="0.18333333333333332" />

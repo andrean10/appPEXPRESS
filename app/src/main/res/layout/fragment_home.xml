@@ -10,14 +10,14 @@
         android:id="@+id/nestedScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_status_order"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:paddingBottom="@dimen/dimen_16"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -166,20 +166,20 @@
                 android:clickable="true"
                 android:contentDescription="@string/home_icon"
                 android:focusable="true"
+                app:layout_constraintBottom_toBottomOf="@+id/menu_tarif_kilometer"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dummy_layanan_home"
                 app:srcCompat="@drawable/ic_pex_chargo" />
 
             <TextView
                 android:id="@+id/textView"
-                style="@style/PrimaryTextStyle.Medium"
+                style="@style/PrimaryTextStyle.Regular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_4"
                 android:gravity="center"
                 android:text="@string/home_tarif_flat"
                 android:textAlignment="center"
-                android:textAllCaps="true"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="@+id/menu_tarif_flat"
                 app:layout_constraintStart_toStartOf="@+id/menu_tarif_flat"
@@ -187,14 +187,13 @@
 
             <TextView
                 android:id="@+id/placeholder_kilometer"
-                style="@style/PrimaryTextStyle.Medium"
+                style="@style/PrimaryTextStyle.Regular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_4"
                 android:gravity="center"
                 android:text="@string/home_tarif_kilometer"
                 android:textAlignment="center"
-                android:textAllCaps="true"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toStartOf="@+id/gd_menu_vertical2"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -203,14 +202,13 @@
 
             <TextView
                 android:id="@+id/placeholder_pex_cargo"
-                style="@style/PrimaryTextStyle.Medium"
+                style="@style/PrimaryTextStyle.Regular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_4"
                 android:gravity="center"
                 android:text="@string/home_pex_chargo"
                 android:textAlignment="center"
-                android:textAllCaps="true"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/gd_menu_vertical2"
@@ -232,18 +230,44 @@
 
             <TextView
                 android:id="@+id/placeholder_mitra"
-                style="@style/PrimaryTextStyle.Medium"
+                style="@style/PrimaryTextStyle.Regular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_4"
                 android:gravity="center"
                 android:text="@string/home_mitra"
                 android:textAlignment="center"
-                android:textAllCaps="true"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="@+id/menu_mitra"
                 app:layout_constraintStart_toStartOf="@+id/menu_mitra"
                 app:layout_constraintTop_toBottomOf="@+id/menu_mitra" />
+
+            <ImageView
+                android:id="@+id/menu_tracking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:contentDescription="@string/home_icon"
+                android:focusable="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/gd_menu_vertical2"
+                app:layout_constraintTop_toTopOf="@+id/menu_cek_tarif"
+                app:srcCompat="@drawable/ic_tracking" />
+
+            <TextView
+                android:id="@+id/placeholder_tracking"
+                style="@style/PrimaryTextStyle.Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_4"
+                android:gravity="center"
+                android:text="@string/home_tracking"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/placeholder_cek_tarif"
+                app:layout_constraintTop_toBottomOf="@+id/menu_tracking" />
 
             <ImageView
                 android:id="@+id/menu_cek_tarif"
@@ -260,18 +284,55 @@
 
             <TextView
                 android:id="@+id/placeholder_cek_tarif"
-                style="@style/PrimaryTextStyle.Medium"
+                style="@style/PrimaryTextStyle.Regular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_4"
                 android:gravity="center"
                 android:text="@string/home_cek_tarif"
                 android:textAlignment="center"
-                android:textAllCaps="true"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toStartOf="@+id/gd_menu_vertical2"
                 app:layout_constraintStart_toStartOf="@+id/gd_menu_vertical"
                 app:layout_constraintTop_toBottomOf="@+id/menu_cek_tarif" />
+
+            <TextView
+                android:id="@+id/placeholder_contact_us"
+                style="@style/PrimaryTextStyle.Bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_32"
+                android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginEnd="@dimen/dimen_32"
+                android:text="Contact Us"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_cek_tarif" />
+
+            <TextView
+                android:id="@+id/placeholder_desc_contact_us"
+                style="@style/PrimaryTextStyle.Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_32"
+                android:layout_marginEnd="@dimen/dimen_32"
+                android:text="We're here to help you!"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_contact_us" />
+
+            <ImageView
+                android:id="@+id/btn_contact_us"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_32"
+                android:layout_marginTop="@dimen/dimen_2"
+                android:layout_marginEnd="@dimen/dimen_32"
+                android:src="@drawable/img_banner_contact_us"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_desc_contact_us" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/gd_slider"
@@ -298,18 +359,18 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_status_order"
-        style="@style/CustomButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_32"
-        android:layout_marginEnd="@dimen/dimen_32"
-        android:layout_marginBottom="@dimen/dimen_24"
-        android:text="@string/home_status_order"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <!--    <com.google.android.material.button.MaterialButton-->
+    <!--        android:id="@+id/btn_status_order"-->
+    <!--        style="@style/CustomButton"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="@dimen/dimen_32"-->
+    <!--        android:layout_marginEnd="@dimen/dimen_32"-->
+    <!--        android:layout_marginBottom="@dimen/dimen_24"-->
+    <!--        android:text="@string/home_status_order"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

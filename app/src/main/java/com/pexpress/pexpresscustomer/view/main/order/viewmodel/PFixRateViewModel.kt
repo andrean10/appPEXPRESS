@@ -67,7 +67,7 @@ class PFixRateViewModel : ViewModel() {
     private val _formUkuranBarang = MutableLiveData<ResultJenisUkuran>()
     private val _formJenisBarang = MutableLiveData<ResultJenisBarang>()
 
-    private var _checkStateCutOff = MutableLiveData<HashMap<String, Boolean>?>()
+//    private var _checkStateCutOff = MutableLiveData<HashMap<String, Boolean>?>()
     private var _checkStateSubTotal = MutableLiveData<Boolean>()
     private var _checkStateDiskon = MutableLiveData<Boolean>()
 
@@ -103,10 +103,6 @@ class PFixRateViewModel : ViewModel() {
 
     fun setStateInfoPickup(state: Boolean) {
         _stateInfoPickup.value = state
-    }
-
-    fun setStateCutOff() {
-        _checkStateCutOff.value = null
     }
 
     fun setStateSubTotal(state: Boolean) {
@@ -189,12 +185,12 @@ class PFixRateViewModel : ViewModel() {
         _formJenisBarang.value = ResultJenisBarang()
     }
 
-    fun checkStateCutOff(isFromPickDate: Boolean = false) {
-        _checkStateCutOff.value = hashMapOf(
-            "isFromPickDate" to isFromPickDate,
-            "jenisLayanan" to (_formJenisLayanan.value?.idlayanan != null)
-        )
-    }
+//    fun setStateCutOff(isFromPickDate: Boolean = false) {
+//        _checkStateCutOff.value = hashMapOf(
+//            "isFromPickDate" to isFromPickDate,
+//            "jenisLayanan" to (_formJenisLayanan.value?.idlayanan != null)
+//        )
+//    }
 
     fun checkStateSubTotal() {
         _checkStateSubTotal.value = _formAsalPengirim.value?.get("id_cabang_asal") != 0 &&
@@ -422,7 +418,7 @@ class PFixRateViewModel : ViewModel() {
     val formUkuranBarang: LiveData<ResultJenisUkuran> = _formUkuranBarang
     val formJenisBarang: LiveData<ResultJenisBarang> = _formJenisBarang
 
-    val checkStateCutOff: MutableLiveData<HashMap<String, Boolean>?> = _checkStateCutOff
+    //    val checkStateCutOff: MutableLiveData<HashMap<String, Boolean>?> = _checkStateCutOff
     val checkStateSubtotal: LiveData<Boolean> = _checkStateSubTotal
     val checkStateDiskon: LiveData<Boolean> = _checkStateDiskon
 

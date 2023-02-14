@@ -124,6 +124,14 @@
         <item name="android:background">@color/primaryColor</item>
     </style>
 
+    <style name="BlackTextStyle">
+        <item name="android:background">@color/black</item>
+    </style>
+
+    <style name="BlackTextStyle.Regular" parent="BlackTextStyle">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+
     <style name="PrimaryTextButtonStyle" parent="Widget.MaterialComponents.TextView">
         <item name="android:textColor">@color/primaryTextColorLight</item>
         <item name="android:textSize">16sp</item>
