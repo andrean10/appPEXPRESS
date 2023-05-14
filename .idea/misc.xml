@@ -83,7 +83,7 @@
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_milestone.xml" value="0.25" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_ongkir.xml" value="0.19739583333333333" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_otp.xml" value="0.1" />
-        <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_p_fix_rate.xml" value="0.33" />
+        <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_p_fix_rate.xml" value="0.25" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_p_kilometer.xml" value="0.33" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_payout.xml" value="0.25" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_pick_location.xml" value="0.33" />
@@ -92,12 +92,12 @@
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_pick_location_dialog_list_dialog_item.xml" value="0.19739583333333333" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_pick_location_dialog_new.xml" value="0.33" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_pick_location_dialog_old.xml" value="0.19739583333333333" />
-        <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_pick_place_location.xml" value="0.2" />
+        <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_pick_place_location.xml" value="0.33" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_pick_place_location_dialog.xml" value="0.22" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_proof_delivery.xml" value="0.18333333333333332" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_q_r_code_dialog.xml" value="0.25" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_register.xml" value="0.18" />
-        <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_resi.xml" value="0.25" />
+        <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_resi.xml" value="0.22" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_scanner_qr.xml" value="0.25" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_send_code.xml" value="0.22" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/PEXpressCustomer/app/src/main/res/layout/fragment_service_type.xml" value="0.33" />

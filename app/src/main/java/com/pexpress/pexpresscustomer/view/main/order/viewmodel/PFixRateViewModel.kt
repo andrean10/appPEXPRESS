@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
+import com.pexpress.pexpresscustomer.model.batasan.ResponseCheckBatasan
 import com.pexpress.pexpresscustomer.model.checkout.fix_rate.ResponseCheckout
 import com.pexpress.pexpresscustomer.model.checkout.fix_rate.ResponseEditCheckoutFixRate
 import com.pexpress.pexpresscustomer.model.checkout.hari_libur.ResponseCheckHariLibur
@@ -74,6 +75,7 @@ class PFixRateViewModel : ViewModel() {
     private var _checkCutOff: MutableLiveData<ResponseCheckCutOff?>? = null
     private var _checkHariLibur: MutableLiveData<ResponseCheckHariLibur?>? = null
     private var _checkDiskonFixRate: MutableLiveData<ResponseCheckDiskon?>? = null
+    private var _checkBatasan: MutableLiveData<ResponseCheckBatasan?>? = null
     private var _cekOngkirFixRate: MutableLiveData<ResponseCheckOngkirFixRate?>? = null
 
     private var _checkout: MutableLiveData<ResponseCheckout?>? = null
@@ -218,6 +220,12 @@ class PFixRateViewModel : ViewModel() {
         return _checkCutOff as MutableLiveData<ResponseCheckCutOff?>
     }
 
+    fun checkBatasan(params: HashMap<String, String>): LiveData<ResponseCheckBatasan?> {
+        _checkBatasan = MutableLiveData()
+        batasan(params)
+        return _checkBatasan as MutableLiveData<ResponseCheckBatasan?>
+    }
+
     fun checkHariLibur(tanggal: String): LiveData<ResponseCheckHariLibur?> {
         _checkHariLibur = MutableLiveData()
         hariLibur(tanggal)
@@ -254,6 +262,34 @@ class PFixRateViewModel : ViewModel() {
 
             override fun onFailure(call: Call<ResponseCheckCutOff>, t: Throwable) {
                 _checkCutOff!!.postValue(null)
+            }
+        })
+    }
+
+    private fun batasan(params: HashMap<String, String>) {
+        val client = ApiConfig.getApiService().checkBatasan(params)
+        client.enqueue(object : Callback<ResponseCheckBatasan> {
+            override fun onResponse(
+                call: Call<ResponseCheckBatasan>,
+                response: Response<ResponseCheckBatasan>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    result.also {
+                        _checkBatasan!!.postValue(it)
+                    }
+                } else {
+                    val error =
+                        Gson().fromJson(
+                            response.errorBody()?.string(),
+                            ResponseCheckBatasan::class.java
+                        )
+                    _checkBatasan!!.postValue(error)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseCheckBatasan>, t: Throwable) {
+                _checkBatasan!!.postValue(null)
             }
         })
     }

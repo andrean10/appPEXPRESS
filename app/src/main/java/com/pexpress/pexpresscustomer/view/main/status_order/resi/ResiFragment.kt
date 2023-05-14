@@ -209,6 +209,7 @@ class ResiFragment : Fragment() {
             tvNamaPenerima.text = resi.namapenerima
             tvTelponPenerima.text = resi.teleponpenerima
             tvAlamatPenerima.text = resi.gkecamatanpenerima
+            tvPatokan.text = resi.alamatpenerima
             tvCatatanPengiriman.text = resi.catatanpengirim
             tvOngkir.text = formatRupiah(resi.biaya?.toDouble() ?: 0.0)
 

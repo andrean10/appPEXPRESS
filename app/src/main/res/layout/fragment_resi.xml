@@ -283,6 +283,30 @@
                     app:layout_constraintTop_toBottomOf="@+id/placeholder_resi_alamat_penerima"
                     tools:text="Jagakarsa, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta" />
 
+                <TextView
+                    android:id="@+id/placeholder_resi_patokan"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:text="@string/resi_patokan"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_alamat_penerima" />
+
+                <TextView
+                    android:id="@+id/tv_patokan"
+                    style="@style/PrimaryTextStyle.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/placeholder_resi_patokan"
+                    tools:text="Jagakarsa, Kota Jakarta Selatan." />
+
                 <View
                     android:id="@+id/line_resi3"
                     android:layout_width="0dp"
@@ -291,7 +315,7 @@
                     android:background="@drawable/line_resi"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_alamat_penerima" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_patokan" />
 
                 <TextView
                     android:id="@+id/placeholder_resi_berat"

@@ -5,6 +5,7 @@ import com.pexpress.pexpresscustomer.model.auth.ResponseLogin
 import com.pexpress.pexpresscustomer.model.auth.ResponseOTP
 import com.pexpress.pexpresscustomer.model.auth.ResponseRegister
 import com.pexpress.pexpresscustomer.model.auth.session.ResponseSession
+import com.pexpress.pexpresscustomer.model.batasan.ResponseCheckBatasan
 import com.pexpress.pexpresscustomer.model.checkout.ResponseCheckPembayaran
 import com.pexpress.pexpresscustomer.model.checkout.ResponseCheckoutUpdate
 import com.pexpress.pexpresscustomer.model.checkout.asuransi.ResponseAsuransi
@@ -107,6 +108,11 @@ interface ApiService {
     @FormUrlEncoded
     @POST("check-libur")
     fun checkLibur(@Field("hari") hari: String): Call<ResponseCheckHariLibur>
+
+    // Check Batasan
+    @FormUrlEncoded
+    @POST("check-batasan")
+    fun checkBatasan(@FieldMap params: HashMap<String, String>): Call<ResponseCheckBatasan>
 
     // Checkout
     @FormUrlEncoded

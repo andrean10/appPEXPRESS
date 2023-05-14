@@ -6,12 +6,9 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -37,6 +34,7 @@ import com.pexpress.pexpresscustomer.utils.*
 import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_PENERIMA
 import com.pexpress.pexpresscustomer.utils.UtilsCode.FORM_PENGIRIM
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_POST
+import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_TO_API
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_DATE_VIEW
 import com.pexpress.pexpresscustomer.utils.UtilsCode.PATTERN_TIME
 import com.pexpress.pexpresscustomer.utils.UtilsCode.TAG
@@ -202,8 +200,19 @@ class PFixRateFragment : Fragment() {
             /***---------------- DATA PICKUP -------------------****/
             // data info pickup
             edtJenisLayananPickup.setOnClickListener {
-                modalJenisLayanan.newInstance(TYPE_PACKAGE_FIXRATE)
-                    .show(parentFragmentManager, JenisLayananDialogFragment.TAG)
+                val asalPengirim = edtAsalPengirim.text.toString().trim()
+                if (asalPengirim.isNotEmpty()) {
+                    modalJenisLayanan.newInstance(TYPE_PACKAGE_FIXRATE)
+                        .show(parentFragmentManager, JenisLayananDialogFragment.TAG)
+                } else {
+                    showMessage(
+                        requireActivity(),
+                        getString(R.string.text_warning),
+                        "Pilih asal terlebih dahulu sebelum mengisi jenis layanan!",
+                        MotionToast.TOAST_WARNING,
+                    )
+                    return@setOnClickListener
+                }
             }
 
             edtUkuranBarangPickup.setOnClickListener {
@@ -212,8 +221,6 @@ class PFixRateFragment : Fragment() {
             }
 
             edtTanggalPickup.setOnClickListener {
-                Log.d(TAG, "prepareDataFixRate: $jenisLayanan")
-                Log.d(TAG, "prepareDataFixRate: ${jenisLayanan == null || jenisLayanan == 0}")
                 if (jenisLayanan == null || jenisLayanan == 0) {
                     showMessage(
                         requireActivity(),
@@ -224,6 +231,7 @@ class PFixRateFragment : Fragment() {
                     return@setOnClickListener
                 } else {
                     // validasi tanggal
+                    isLoading(true)
                     observeCheckCutOff(jenisLayanan!!.toInt(), true)
 //                    viewModel.setStateCutOff(true)
                 }
@@ -503,11 +511,11 @@ class PFixRateFragment : Fragment() {
 
     private fun openPickDate(isCutOff: Boolean) {
         val today = MaterialDatePicker.todayInUtcMilliseconds()
-        val calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Jakarta"))
-        calendar.apply {
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Jakarta")).apply {
             timeInMillis = today
-            add(Calendar.DAY_OF_YEAR, if (isCutOff) 0 else 1)
+            add(Calendar.DAY_OF_YEAR, if (isCutOff) 1 else 0)
         }
+
         val validator = DateValidatorPointForward.from(calendar.timeInMillis)
 
         val constraintsBuilder =
@@ -529,6 +537,7 @@ class PFixRateFragment : Fragment() {
 
             viewModel.checkStateDiskon()
             observeCheckLibur(FormatDate().formatedDate(date, PATTERN_DATE_VIEW, PATTERN_DATE_POST))
+            observeCheckBatasanOrder()
         }
     }
 
@@ -541,6 +550,10 @@ class PFixRateFragment : Fragment() {
             binding.edtAsalPengirim.setText(asalPengirim)
 
             viewModel.checkStateSubTotal()
+            if (kecamatanPengirim.isNotEmpty()) {
+                isLoading(true)
+                observeCheckBatasanOrder()
+            }
         }
     }
 
@@ -572,12 +585,11 @@ class PFixRateFragment : Fragment() {
 
     private fun observeJenisLayanan() {
         viewModel.formJenisLayanan.observe(viewLifecycleOwner) { value ->
-            Log.d(TAG, "observeJenisLayanan: $value")
             jenisLayanan = value.idlayanan
             binding.edtJenisLayananPickup.setText(value.layanan)
 
-            Log.d(TAG, "observeJenisLayanan: $jenisLayanan")
             if (value.idlayanan != null) {
+                isLoading(true)
                 observeCheckCutOff(value.idlayanan, false)
             }
 
@@ -616,7 +628,7 @@ class PFixRateFragment : Fragment() {
     private fun observeCheckStateDiskon() {
         lateinit var params: HashMap<String, Any>
         viewModel.checkStateDiskon.observe(viewLifecycleOwner) { state ->
-            Log.d(TAG, "observeCheckStateDiskon: checkDiskon state = $state ")
+//            Log.d(TAG, "observeCheckStateDiskon: checkDiskon state = $state ")
             val timeNow = Calendar.getInstance().time
             var tanggalPickup = binding.edtTanggalPickup.text.toString().trim()
 
@@ -671,7 +683,7 @@ class PFixRateFragment : Fragment() {
     private fun observeCheckStateSubTotal() {
         lateinit var params: HashMap<String, String>
         viewModel.checkStateSubtotal.observe(viewLifecycleOwner) { state ->
-            Log.d(TAG, "observeCheckSubTotal: state check subtotal = $state")
+//            Log.d(TAG, "observeCheckSubTotal: state check subtotal = $state")
             if (data != null) {
                 params = hashMapOf(
                     "cabangasal" to cabangAsal,
@@ -696,23 +708,31 @@ class PFixRateFragment : Fragment() {
     }
 
     private fun observeCheckCutOff(layanan: Int, isFromDate: Boolean) {
-//        loadingFragment.loader(parentFragmentManager, true)
+        Log.d(TAG, "observeCheckCutOff: Apakah dijalankan dari tanggal = $isFromDate")
         viewModel.checkCutOff(layanan).observe(viewLifecycleOwner) { response ->
-//            loadingFragment.loader(parentFragmentManager, false)
+            isLoading(false)
             if (response != null) {
                 if (response.success!!) {
+                    Log.d(TAG, "observeCheckCutOff: isCutOff = ${response.status}")
                     val status = response.status ?: true
-                    if (!status) {
+                    if (!status) { // terkena cut-off
                         Log.d(TAG, "observeCheckCutOff: isFirstPickDate = $isFirstPickDate")
-                        if (isFirstPickDate || isFromDate) {
+//                        if (isFirstPickDate || isFromDate) {
+//                            validationCutOff()
+//                        }
+                        val tanggalPickup = binding.edtTanggalPickup.text.toString().trim()
+
+                        if (isFromDate || tanggalPickup.isNotEmpty()) {
                             validationCutOff()
                         }
+                    } else {
+                        Log.d(TAG, "observeCheckCutOff: batasan order dijalankan")
+                        observeCheckBatasanOrder()
                     }
 
-                    Log.d(TAG, "observeCheckCutOff: isFromDate = $isFromDate")
-
+                    // buka tanggal jika user menekan field tanggal
                     if (isFromDate) {
-                        openPickDate(status)
+                        openPickDate(!status)
                     }
                 } else {
                     showMessage(
@@ -726,60 +746,110 @@ class PFixRateFragment : Fragment() {
         }
     }
 
-    private fun validationCutOff() {
-        val calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Jakarta"))
-        calendar.add(Calendar.DAY_OF_YEAR, 1)
-        val formatedDateNow =
-            FormatDate().outputDateFormat(PATTERN_DATE_VIEW).format(calendar.time)
-        val dateNow =
-            FormatDate().outputDateFormat(PATTERN_DATE_VIEW).parse(formatedDateNow)
-
-        with(binding) {
-            val snackbar = Snackbar.make(
-                layoutPfixRate,
-                getString(R.string.info_pick_date_cut_off),
-                Snackbar.LENGTH_INDEFINITE
-            ).setAction("Oke") {
-            }
-
-            val toast = Toast.makeText(
-                requireContext(),
-                getString(R.string.info_pick_date_cut_off),
-                Toast.LENGTH_LONG
+    private fun observeCheckBatasanOrder() {
+        Log.d(TAG, "observeCheckBatasanOrder: Dijalankan")
+        val tanggalPickup = binding.edtTanggalPickup.text.toString().trim()
+        if (kecamatanPengirim.isNotEmpty() && jenisLayanan.toString()
+                .isNotEmpty() && tanggalPickup.isNotEmpty()
+        ) {
+            val tanggalPickupFormated = FormatDate().formatedDate(
+                tanggalPickup,
+                PATTERN_DATE_VIEW,
+                PATTERN_DATE_TO_API
             )
 
+            val params = hashMapOf(
+                "lokasi_pengirim" to kecamatanPengirim,
+                "jenis_pengiriman" to jenisLayanan.toString(),
+                "tanggal_pickup" to tanggalPickupFormated
+            )
+
+            Log.d(TAG, "observeCheckBatasanOrder: $params")
+
+            viewModel.checkBatasan(params).observe(viewLifecycleOwner) { response ->
+                isLoading(false)
+                if (response != null) {
+                    if (response.status != null) {
+                        val status = response.status
+                        Log.d(TAG, "observeCheckBatasanOrder: status = $status")
+
+                        if (!status) { // berarti terkena batasan order
+                            jenisLayanan = null
+                            with(binding) {
+                                edtTanggalPickup.setText("")
+                                edtJenisLayananPickup.setText("")
+                            }
+
+                            showMessageCheck(getString(R.string.info_pick_date_batasan_order))
+                        }
+                    } else {
+                        showMessage(
+                            requireActivity(),
+                            getString(R.string.failed_title),
+                            getString(R.string.failed_description),
+                            MotionToast.TOAST_ERROR
+                        )
+                    }
+                }
+            }
+        } else {
+            Log.d(TAG, "observeCheckBatasanOrder: field masih ada yang kosong")
+            isLoading(false)
+        }
+    }
+
+    private fun validationCutOff() {
+        val formatDate = FormatDate().outputDateFormat(PATTERN_DATE_VIEW)
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Jakarta")).apply {
+            add(Calendar.DAY_OF_YEAR, 1)
+        }
+
+        with(binding) {
+            val formatedDateNow = formatDate.format(calendar.time)
+            val dateNow = formatDate.parse(formatedDateNow)
             val tanggalPickup = edtTanggalPickup.text.toString()
+
             if (tanggalPickup.isNotEmpty()) {
-                val formatedSelectedDate =
-                    FormatDate().outputDateFormat(PATTERN_DATE_VIEW).parse(tanggalPickup)
+                val formatedSelectedDate = formatDate.parse(tanggalPickup)
 
                 Log.d(TAG, "observeCheckCutOff: calendar time = $dateNow")
                 Log.d(TAG, "observeCheckCutOff: formatedSelectedDate = $formatedSelectedDate")
-                Log.d(TAG, "validationCutOff: $dateNow")
                 Log.d(
-
                     TAG,
-                    "observeCheckCutOff: compareTo = ${formatedSelectedDate.before(dateNow)}"
+                    "observeCheckCutOff: isBeforeDateNow = ${formatedSelectedDate?.before(dateNow)}"
                 )
 
-                // jika tanggal di pilih di form ternyata cut off makfa tanggal dihapus
+                // jika tanggal di pilih di form ternyata cut off maka tanggal dihapus
                 if (formatedSelectedDate != null && dateNow != null) {
+                    /*
+                        jika tanggal yang dipilih user sebelum tanggal sekarang dan terkena cut-off
+                        maka hapus tanggal yang telah dipilih sebelumnya.
+                     */
                     if (formatedSelectedDate.before(dateNow)) {
                         edtTanggalPickup.setText("")
+                        showMessageCheck(getString(R.string.info_pick_date_cut_off))
+                        Log.d(
+                            TAG,
+                            "validationCutOff: Tanggal yang dipilih user melewati tanggal " +
+                                    "sekarang ditambah 1"
+                        )
+                    } else {
+                        /*
+                         tanggal yang dipilih tidak di hapus karna sudah sesuai dengan tanggal
+                         cut off.
+                         Lalu cek batasan order setelah itu
+                         */
+                        isLoading(true)
+                        observeCheckBatasanOrder()
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                            snackbar.show()
-                        } else {
-                            toast.show()
-                        }
+                        Log.d(TAG, "validationCutOff: tanggal yang dipilih tidak dihapus")
                     }
+                } else { // tanggal yang dipilih kosong
+                    Log.d(TAG, "validationCutOff: tanggal yang dipilih kosong")
                 }
-            } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    snackbar.show()
-                } else {
-                    toast.show()
-                }
+            } else { // tanggal pickup kosong
+                showMessageCheck(getString(R.string.info_pick_date_cut_off))
+                Log.d(TAG, "validationCutOff: tanggal kosong")
             }
         }
     }
@@ -870,8 +940,6 @@ class PFixRateFragment : Fragment() {
                     val status = response.status
                     if (status != null) {
                         if (status) {
-                            Log.d(TAG, "observeCheckLibur: $status")
-
                             edtTanggalPickup.setText("")
 
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -1109,7 +1177,23 @@ class PFixRateFragment : Fragment() {
         findNavController().navigate(toCheckout)
     }
 
+    private fun isLoading(state: Boolean) {
+        with(binding) {
+            if (state) {
+                layoutLoading.visibility = VISIBLE
+                requireActivity().window.setFlags(
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+                )
+            } else {
+                layoutLoading.visibility = GONE
+                requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            }
+        }
+    }
+
     private fun showMessageFieldRequired() {
+        isLoading(false)
 //        loadingFragment.loader(parentFragmentManager, false)
         showMessage(
             requireActivity(),
@@ -1117,6 +1201,18 @@ class PFixRateFragment : Fragment() {
             "Field wajib masih ada yang kosong, isi terlebih dahulu",
             MotionToast.TOAST_ERROR
         )
+    }
+
+    private fun showMessageCheck(message: String) {
+        val sb = Snackbar.make(binding.layoutPfixRate, message, Snackbar.LENGTH_INDEFINITE)
+            .setAction("Oke") {}
+        val toast = Toast.makeText(requireContext(), message, Toast.LENGTH_LONG)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            sb.show()
+        } else {
+            toast.show()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -13,6 +13,7 @@ object UtilsCode {
     const val PATTERN_DATE_POST = "yyyy-MM-dd"
     const val PATTERN_DATE_FROM_API = "yyyy-MM-dd HH:mm:ss"
     const val PATTERN_DATE_FROM_API2 = "yyyy-MM-dd HH:mm"
+    const val PATTERN_DATE_TO_API = "dd-MM-yyyy"
     const val PATTERN_DATE_VIEW_STATUS_PEMBAYARAN = "dd MMMM yyyy HH:mm"
     const val PATTERN_DATE_VIEW_MILESTONE = "EE, dd MMMM yyyy HH:mm"
     const val PATTERN_TIME_VIEW_MILESTONE = "HH:mm"
